@@ -100,7 +100,12 @@ if (strlen($value) > 0) {
 
                                 // also add this to the river - subject is tagger, object is the tagged user
                                 $tagger = elgg_get_logged_in_user_entity();
-                                add_to_river('river/object/image/tag', 'tag', $tagger->guid, $user->guid, $access_id, 0, $annotation_id);
+                                elgg_create_river_item(array('view' => 'river/object/image/tag',
+                                                             'action_type' => 'tag',
+                                                             'subject_guid' => $tagger->guid,
+                                                             'object_guid' => $user->guid,
+                                                             'access_id' => $access_id,
+                                                             'annotation_id' => $annotation_id));
 
                                 // notify user of tagging as long as not self
                                 if ($tagger->guid != $user->guid) {
@@ -114,7 +119,12 @@ if (strlen($value) > 0) {
                 } else if ($tag->type === 'word') {
                         // also add this to the river - subject is tagger, object is the tagged image
                         $tagger = elgg_get_logged_in_user_entity();
-                        add_to_river('river/object/image/wordtag', 'wordtag', $tagger->guid, $image->guid, $access_id, 0, $annotation_id);
+                        elgg_create_river_item(array('view' => 'river/object/image/wordtag',
+                                                     'action_type' => 'wordtag',
+                                                     'subject_guid' => $tagger->guid,
+                                                     'object_guid' => $image->guid,
+                                                     'access_id' => $access_id,
+                                                     'annotation_id' => $annotation_id));
                 }
                 if ($existing_tags) {
                         system_message(elgg_echo("tidypics:phototagging:success_partly"));

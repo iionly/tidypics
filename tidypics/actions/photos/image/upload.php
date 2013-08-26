@@ -73,15 +73,17 @@ foreach ($_FILES['images']['name'] as $index => $value) {
 		array_push($uploaded_images, $image->getGUID());
 
 		if ($img_river_view == "all") {
-			add_to_river('river/object/image/create', 'create', $image->getOwnerGUID(), $image->getGUID());
+			elgg_create_river_item(array('view' => 'river/object/image/create',
+                                                     'action_type' => 'create',
+                                                     'subject_guid' => $image->getOwnerGUID(),
+                                                     'object_guid' => $image->getGUID()));
                 }
         }
 }
 
 if (count($uploaded_images)) {
 	// Create a new batch object to contain these photos
-	$batch = new ElggObject();
-	$batch->subtype = "tidypics_batch";
+	$batch = new TidypicsBatch();
 	$batch->access_id = $album->access_id;
 	$batch->container_guid = $album->getGUID();
 	if ($batch->save()) {
@@ -94,9 +96,15 @@ if (count($uploaded_images)) {
 
 	// "added images to album" river
 	if ($img_river_view == "batch" && $album->new_album == false) {
-		add_to_river('river/object/tidypics_batch/create', 'create', $batch->getOwnerGUID(), $batch->getGUID());
+		elgg_create_river_item(array('view' => 'river/object/tidypics_batch/create',
+                                             'action_type' => 'create',
+                                             'subject_guid' => $batch->getOwnerGUID(),
+                                             'object_guid' => $batch->getGUID()));
 	} else if ($img_river_view == "1" && $album->new_album == false) {
-                add_to_river('river/object/tidypics_batch/create_single_image', 'create', $batch->getOwnerGUID(), $batch->getGUID());
+                elgg_create_river_item(array('view' => 'river/object/tidypics_batch/create_single_image',
+                                             'action_type' => 'create',
+                                             'subject_guid' => $batch->getOwnerGUID(),
+                                             'object_guid' => $batch->getGUID()));
 	}
 
 	// "created album" river
@@ -106,7 +114,10 @@ if (count($uploaded_images)) {
 
 		$album_river_view = elgg_get_plugin_setting('album_river_view', 'tidypics');
 		if ($album_river_view != "none") {
-                        add_to_river('river/object/album/create', 'create', $album->getOwnerGUID(), $album->getGUID());
+                        elgg_create_river_item(array('view' => 'river/object/album/create',
+                                                     'action_type' => 'create',
+                                                     'subject_guid' => $album->getOwnerGUID(),
+                                                     'object_guid' => $album->getGUID()));
                 }
 
 		// "created album" notifications

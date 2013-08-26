@@ -1,10 +1,14 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.1beta10
-Released: 2013-08-17
+Latest Version: 1.9.1beta11_pre
+Released: 2013-08-26
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013, (C) Cash Costello 2011-2013
 
+
+WARNING! The upgrading of a site from Elgg 1.8 to Elgg 1.9 when Tidypics is already in use is currently not fully supported by this version of Tidypics. I'll try to fix this before the final Elgg 1.9 will get released.
+
+In the meantime: ONLY USE FOR TESTING AND NOT ON A PRODUCTIVE SITE!!!
 
 
 This is a slightly improved version of the Tidypics plugin for Elgg 1.9. Regarding code base it's currently on the same level as 1.8.1beta10 for Elgg 1.8 with only changes necessary to work on Elgg 1.9.
@@ -33,6 +37,14 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed then 
 
 
 Changelog:
+
+Changes for release 1.9.1beta11_pre (by iionly):
+
+- Fix of some deprecation issues,
+- Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9,
+- Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (currently only new comments created on Elgg 1.9 will show a thumbnail. Due to the switch of Elgg 1.9 from annotations to entities for comments and a core upgrade script that modifies all existing river comment entries I will have to include an additional update script to restore the custom view including thumbnails for comments on albums and images that have been created on Elgg 1.8),
+- Fix of river entries appearing twice on image uploads in case the Flash uploader is used and the plugin option is set to create separate entries for each uploaded image.
+
 
 Changes for release 1.9.1beta10 (by iionly):
 

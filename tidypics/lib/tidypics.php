@@ -367,7 +367,7 @@ function tp_is_person() {
  * @return array of guid->name for tagging
  */
 function tp_get_tag_list($viewer) {
-	$friends = get_user_friends($viewer->getGUID(), '', 999, 0);
+	$friends = $viewer->getFriends('', false, 0);
 	$friend_list = array();
 	if ($friends) {
 		foreach($friends as $friend) {

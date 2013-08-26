@@ -1,6 +1,22 @@
 Changelog and contributors list
 
 ------------------------------------------------------------------------
+Version 1.9.1beta11_pre Change List
+Release Date: 26/08/2013
+------------------------------------------------------------------------
+BEGIN VERSION 1.9.1beta11 CHANGES
+------------------------------------------------------------------------
+ * Fix of some deprecation issues,
+ * Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9,
+ * Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (currently only new comments created on Elgg 1.9 will show a thumbnail. Due to the switch of Elgg 1.9 from annotations to entities for comments and a core upgrade script that modifies all existing river comment entries I will have to include an additional update script to restore the custom view including thumbnails for comments on albums and images that have been created on Elgg 1.8),
+ * Fix of river entries appearing twice on image uploads in case the Flash uploader is used and the plugin option is set to create separate entries for each uploaded image.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.9.1beta11_pre CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 Version 1.9.1beta10 Change List
 Release Date: 17/08/2013
 ------------------------------------------------------------------------

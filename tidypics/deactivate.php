@@ -8,3 +8,4 @@
 
 update_subtype('object', 'album');
 update_subtype('object', 'image');
+update_subtype('object', 'tidypics_batch');

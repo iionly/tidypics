@@ -17,6 +17,11 @@ if (get_subtype_id('object', 'image')) {
 } else {
 	add_subtype('object', 'image', 'TidypicsImage');
 }
+if (get_subtype_id('object', 'tidypics_batch')) {
+        update_subtype('object', 'tidypics_batch', 'TidypicsBatch');
+} else {
+        add_subtype('object', 'tidypics_batch', 'TidypicsBatch');
+}
 
 // set default settings
 $plugin = elgg_get_plugin_from_id('tidypics');

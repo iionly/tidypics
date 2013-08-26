@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 		// hack for core bug
 			'untitled' => "untitled",
 
@@ -359,7 +359,5 @@ View and comment on the album:
 			'image:blank' => 'Please give this photo a title.',
 			'image:error' => 'Could not save photo.',
 
-			'tidypics:upgrade:failed' => "The upgrade of Tidypics failed",
+			'tidypics:upgrade:failed' => "The upgrade of Tidypics failed"
 );
-
-add_translation("en", $english);

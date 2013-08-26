@@ -71,17 +71,17 @@ function tidypics_init() {
         elgg_extend_view('groups/tool_latest', 'photos/group_tp_images_module');
 
 	// Register widgets
-	elgg_register_widget_type('album_view', elgg_echo("tidypics:widget:albums"), elgg_echo("tidypics:widget:album_descr"), 'profile');
-	elgg_register_widget_type('latest_photos', elgg_echo("tidypics:widget:latest"), elgg_echo("tidypics:widget:latest_descr"), 'profile');
+	elgg_register_widget_type('album_view', elgg_echo("tidypics:widget:albums"), elgg_echo("tidypics:widget:album_descr"), array('profile'));
+	elgg_register_widget_type('latest_photos', elgg_echo("tidypics:widget:latest"), elgg_echo("tidypics:widget:latest_descr"), array('profile'));
 	
 	if (elgg_is_active_plugin('widget_manager')) {
                 //add index widgets for Widget Manager plugin
-                elgg_register_widget_type('index_latest_photos', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), "index");
-                elgg_register_widget_type('index_latest_albums', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), "index");
+                elgg_register_widget_type('index_latest_photos', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), array('index'));
+                elgg_register_widget_type('index_latest_albums', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), array('index'));
 
                 //add groups widgets for Widget Manager plugin
-                elgg_register_widget_type('groups_latest_photos', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), "groups");
-                elgg_register_widget_type('groups_latest_albums', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), "groups");
+                elgg_register_widget_type('groups_latest_photos', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), array('groups'));
+                elgg_register_widget_type('groups_latest_albums', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), array('groups'));
 
                 //register title urls for widgets
                 elgg_register_plugin_hook_handler('widget_url', 'widget_manager', "tidypics_widget_urls", 499);
@@ -106,7 +106,7 @@ function tidypics_init() {
 	elgg_register_plugin_hook_handler('forward', 'csrf', 'tidypics_ajax_session_handler');
 	
 	// override the default url to view a tidypics_batch object
-        elgg_register_entity_url_handler('object', 'tidypics_batch', 'tidypics_batch_url_handler');
+        elgg_register_plugin_hook_handler('entity:url', 'object', 'tidypics_batch_url_handler');
 
         // no userpoints for commenting on a tidypics_batch as the points are additionally awarded by adding the same comment to the corresponding album
         elgg_register_plugin_hook_handler('userpoints:add', 'object', 'tidypics_userpoints_adding');
@@ -685,15 +685,18 @@ function tidypics_ajax_session_handler($hook, $type, $value, $params) {
 /**
  * return the album url of the album the tidypics_batch entitities belongs to
  */
-function tidypics_batch_url_handler($batch) {
-        if (!$batch->getOwnerEntity()) {
-                // default to a standard view if no owner.
-                return false;
+function tidypics_batch_url_handler($hook, $type, $url, $params) {
+        $batch = $params['entity'];
+        if (elgg_instanceof($entity, 'object', 'tidypics_batch')) {
+                if (!$batch->getOwnerEntity()) {
+                        // default to a standard view if no owner.
+                        return false;
+                }
+
+                $album = get_entity($batch->container_guid);
+
+                return $album->getURL();
         }
-
-        $album = get_entity($batch->container_guid);
-
-        return $album->getURL();
 }
 
 /**
@@ -705,13 +708,15 @@ function tidypics_userpoints_adding($hook, $type, $value, $params) {
         $userpoints_entity = $params['entity'];
         $userpoints_meta_entity = get_entity($userpoints_entity->meta_guid);
 
-        if ($userpoints_meta_entity && $userpoints_meta_entity->getSubtype() == 'tidypics_batch') {
-                return false;
+        if ($userpoints_meta_entity && $userpoints_meta_entity->getSubtype() == 'comment') {
+                $commented_on = get_entity($userpoints_meta_entity->container_guid);
+                if ($commented_on && $commented_on->getSubtype() == 'tidypics_batch') {
+                        return false;
+                }
         } else {
                 return true;
         }
 }
-
 
 /**
  * custom layout for comments on tidypics river entries
@@ -722,23 +727,49 @@ function tidypics_comments_handler($hook, $type, $value, $params) {
 
         $result = $value;
 
-        $subtype = $value['subtype'];
         $action_type = $value['action_type'];
+        if($action_type != 'comment') {
+                return;
+        }
 
-        if ($subtype == 'image' && $action_type == 'comment') {
-                $result['view'] = 'river/annotation/comment/image';
-        } else if ($subtype == 'album' && $action_type == 'comment') {
-                $result['view'] = 'river/annotation/comment/album';
-        } else if ($subtype == 'tidypics_batch' && $action_type == 'comment') {
-                $batch = get_entity($value['object_guid']);
+        $comment_guid =  $value['object_guid'];
+        $target_guid =  $value['target_guid'];
+        if(!$target_guid) {
+                return;
+        }
+        $target_entity = get_entity($target_guid);
+        $subtype = $target_entity->getSubtype();
+
+        if ($subtype == 'image') {
+                // update river entry attributes
+                $result['view'] = 'river/object/comment/image';
+        } else if ($subtype == 'album') {
+                // update river entry attributes
+                $result['view'] = 'river/object/comment/album';
+        } else if ($subtype == 'tidypics_batch') {
+                $batch = $target_entity;
+                $comment_entity = get_entity($comment_guid);
+                // create second comment entity connected to tidypics_batch entity
+                $batch_comment = new ElggComment();
+                $batch_comment->description = $comment_entity->description;
+                $batch_comment->owner_guid = $comment_entity->owner_guid;
+                $batch_comment->container_guid = $comment_entity->container_guid;
+                $batch_comment->access_id = $comment_entity->access_id;
+                $batch_comment->save();
+                // now change container_guid of original comment entity to corresponding album
                 $album = get_entity($batch->container_guid);
-                $annotation = elgg_get_annotation_from_id($value['annotation_id']);
-                create_annotation($album->getGUID(), 'generic_comment', $annotation->value, 'text', $annotation->owner_guid, $album->access_id);
-                $result['type'] = 'object';
-                $result['subtype'] = 'album';
+                $comment_entity->container_guid = $album->guid;
+                if ($comment_entity->save()) {
+                        if (function_exists('userpoints_add')) {
+                                if ($points = elgg_get_plugin_setting('comment', 'elggx_userpoints')) {
+                                        userpoints_add(elgg_get_logged_in_user_guid(), $points, 'comment', 'comment', $comment_entity->guid);
+                                }
+                        }
+                }
+                // update river entry attributes
                 $result['access_id'] = $album->access_id;
-                $result['object_guid'] = $album->getGUID();
-                $result['view'] = 'river/annotation/comment/album';
+                $result['target_guid'] = $album->getGUID();
+                $result['view'] = 'river/object/comment/album';
         } else {
                 return;
         }

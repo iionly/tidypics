@@ -1,6 +1,6 @@
 <?php
 
-$german = array(
+return array(
 		// hack for core bug
 			'untitled' => "Unbenannt",
 
@@ -352,7 +352,5 @@ Schau Dir das Bilderalbum an und schreibe einen Kommentar:
 			'image:blank' => 'Bitte gib diesem Bild einen Titel.',
 			'image:error' => 'Das Bild konnte nicht gespeichert werden.',
 
-			'tidypics:upgrade:failed' => "Das Upgrade des Tidypics-Plugins ist gescheitert",
+			'tidypics:upgrade:failed' => "Das Upgrade des Tidypics-Plugins ist gescheitert"
 	);
-
-	add_translation("de",$german);

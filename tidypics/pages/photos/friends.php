@@ -17,11 +17,19 @@ elgg_push_breadcrumb(elgg_echo('friends'));
 
 $title = elgg_echo('album:friends');
 
-
 $num_albums = 16;
 
-set_input('list_type', 'gallery');
-$content = list_user_friends_objects($owner->guid, 'album', $num_albums, false);
+$content = elgg_list_entities_from_relationship(array('type' => 'object',
+                                           'subtype' => 'album',
+                                           'relationship' => 'friend',
+                                           'relationship_guid' => $owner->guid,
+                                           'relationship_join_on' => 'container_guid',
+                                           'limit' => $num_albums,
+                                           'full_view' => false,
+                                           'list_type' => 'gallery',
+                                           'list_type_toggle' => false,
+                                           'gallery_class' => 'tidypics-gallery'));
+
 if (!$content) {
 	$content = elgg_echo('tidypics:none');
 }

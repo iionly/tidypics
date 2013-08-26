@@ -80,7 +80,7 @@ class TidypicsImage extends ElggFile {
 
 		// update quota
 		$owner = $this->getOwnerEntity();
-		$owner->image_repo_size = (int)$owner->image_repo_size - $this->size();
+		$owner->image_repo_size = (int)$owner->image_repo_size - $this->getSize();
 
 		return parent::delete();
 	}
@@ -282,6 +282,7 @@ class TidypicsImage extends ElggFile {
                                                                 break;
                                                 }
                                                 imagejpeg($image, $data['tmp_name']);
+                                                imagedestroy($image);
                                         }
                                 }
                         }
@@ -314,7 +315,7 @@ class TidypicsImage extends ElggFile {
 		}
 
 		$owner = $this->getOwnerEntity();
-		$owner->image_repo_size = (int)$owner->image_repo_size + $this->size();
+		$owner->image_repo_size = (int)$owner->image_repo_size + $this->getSize();
 
 		return true;
 	}

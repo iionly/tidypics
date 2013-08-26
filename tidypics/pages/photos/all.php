@@ -11,7 +11,6 @@ elgg_push_breadcrumb(elgg_echo('tidypics:albums'));
 
 $num_albums = 16;
 
-$offset = (int)get_input('offset', 0);
 $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'album',
