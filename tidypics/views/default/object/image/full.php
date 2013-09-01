@@ -15,8 +15,6 @@ $img = elgg_view_entity_icon($image, 'large', array(
 	'img_class' => 'tidypics-photo',
 	'link_class' => 'tidypics-lightbox',
 ));
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "photos/owner/" . $photo->getOwnerEntity()->username,

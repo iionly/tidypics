@@ -35,8 +35,6 @@ elgg_push_breadcrumb($album->getTitle());
 $content = elgg_view_entity($album, array('full_view' => true));
 
 if (elgg_is_logged_in()) {
-        elgg_load_js('lightbox');
-        elgg_load_css('lightbox');
         if (elgg_instanceof($owner, 'group')) {
                 $logged_in_guid = $owner->guid;
         } else {
@@ -66,6 +64,20 @@ if ($album->canEdit() && $album->getSize() > 0) {
 		'link_class' => 'elgg-button elgg-button-action',
 		'priority' => 200,
 	));
+}
+
+// only show slideshow link if slideshow is enabled in plugin settings and there are images
+if (elgg_get_plugin_setting('slideshow', 'tidypics') && $album->getSize() > 0) {
+        $offset = (int)get_input('offset', 0);
+        $url = $album->getURL() . "?limit=64&offset=$offset&view=rss";
+        $url = elgg_format_url($url);
+        $slideshow_link = "javascript:PicLensLite.start({maxScale:0, feedUrl:'$url'})";
+        elgg_register_menu_item('title', array('name' => 'slideshow',
+                                                'href' => $slideshow_link,
+                                                'text' => "<img src=\"".elgg_get_site_url() ."mod/tidypics/graphics/slideshow.png\" alt=\"".elgg_echo('album:slideshow')."\">",
+                                                'title' => elgg_echo('album:slideshow'),
+                                                'class' => 'elgg-button elgg-button-action',
+                                                'priority' => 300));
 }
 
 $body = elgg_view_layout('content', array(

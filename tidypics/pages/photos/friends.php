@@ -17,14 +17,16 @@ elgg_push_breadcrumb(elgg_echo('friends'));
 
 $title = elgg_echo('album:friends');
 
-$num_albums = 16;
+$limit = (int)get_input('limit', 16);
+$offset = (int)get_input('offset', 0);
 
 $content = elgg_list_entities_from_relationship(array('type' => 'object',
                                            'subtype' => 'album',
                                            'relationship' => 'friend',
                                            'relationship_guid' => $owner->guid,
                                            'relationship_join_on' => 'container_guid',
-                                           'limit' => $num_albums,
+                                           'limit' => $limit,
+                                           'offset' => $offset,
                                            'full_view' => false,
                                            'list_type' => 'gallery',
                                            'list_type_toggle' => false,
@@ -34,13 +36,11 @@ if (!$content) {
 	$content = elgg_echo('tidypics:none');
 }
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
 $logged_in_guid = elgg_get_logged_in_user_guid();
 elgg_register_menu_item('title', array('name' => 'addphotos',
                                        'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
                                        'text' => elgg_echo("photos:addphotos"),
-                                       'class' => 'elgg-button elgg-button-action elgg-lightbox'));
+                                       'link_class' => 'elgg-button elgg-button-action elgg-lightbox'));
 
 elgg_register_title_button();
 

@@ -2,19 +2,49 @@ Changelog and contributors list
 
 ------------------------------------------------------------------------
 Version 1.9.1beta11_pre Change List
-Release Date: 26/08/2013
+Release Date: 01/09/2013
 ------------------------------------------------------------------------
 BEGIN VERSION 1.9.1beta11 CHANGES
 ------------------------------------------------------------------------
- * Fix of some deprecation issues,
- * Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9,
- * Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (currently only new comments created on Elgg 1.9 will show a thumbnail. Due to the switch of Elgg 1.9 from annotations to entities for comments and a core upgrade script that modifies all existing river comment entries I will have to include an additional update script to restore the custom view including thumbnails for comments on albums and images that have been created on Elgg 1.8),
- * Fix of river entries appearing twice on image uploads in case the Flash uploader is used and the plugin option is set to create separate entries for each uploaded image.
+ * Same code base as 1.8.1beta11 with necessary modifications to work on Elgg 1.9.
+ * addtional Elgg 1.9 specific changes:
+   - Fix of some deprecation issues that turned up on Elgg 1.9,
+   - Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9 (necessary due to the change in Elgg 1.9 of handling comments as ElggComment entities instead of annotations),
+   - Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (ATTENTIONS: currently only new comments created on Elgg 1.9 will show a thumbnail. Due to the switch of Elgg 1.9 from annotations to entities for comments and a core upgrade script that modifies all existing river comment entries accordingly I will have to write an additional update script to restore the custom view including thumbnails for comments on albums and images that have been previously created on Elgg 1.8).
 Contributors:
   * iionly
 ------------------------------------------------------------------------
 END VERSION 1.9.1beta11_pre CHANGES
 ------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+Version 1.8.1beta11 Change List
+Release Date: 01/09/2013
+------------------------------------------------------------------------
+BEGIN VERSION 1.8.1beta11 CHANGES
+------------------------------------------------------------------------
+ * Some general code cleanup,
+ * Fix of river entries appearing twice on image uploads in case the Flash uploader is used and the plugin option is set to create separate entries for each uploaded image (issue introduced in beta10),
+ * Added TidypicsBatch class (that extends ElggObject class) used for creation of objects of subtype "tidypics_batch" (used for handling "batches" of uploaded images) instead of creation the objects as ElggObject and assinging the subtype,
+ * Improvements on slideshow:
+   - a slideshow can be started on all pages that display a suitable list of images (but the slideshow feature is only available if the slideshow plugin option introduced in beta10 is enabled in the plugin settings),
+   - start of slideshow via title menu button,
+   - slideshow will include the next 64 images (i.e. 5 pages of images) of the current displayed image list taking into account the current page offset (i.e. on page 1 the slideshow will display pages 1-5 while on page 10 it will display the images of pages 10-14 etc.). (Longtime goal for future Tidypics versions: no limitation of number of images in slideshow and most likely replacing the PicLensLite slideshow by something else / something better. Currently, the number of images to be included in a slideshow is somewhat limited by avoiding running into memory issues. Also, the PicLensLite slideshow library requires the Flash plugin on client browsers which is annoying and the 3D wall feature does no longer work),
+ * Improvements on image orientation correction at image uploading:
+   - using best methods available depending on image library selected,
+   - update orientation information saved in image file after a change of image orientation if the image library used supports this (GD library unfortunately does not support it but the exif info saved in the image file is lost on image orientation correction anyway),
+   - support of orientation correction not only of rotated but also of mirrowed (and possibly additionally rotated) images,
+   - some remarks regarding which image library to use for Tidypics:
+     * if possible and available on your server use the "ImageMagick executable". Generally, this library has a much smaller memory requirement compared to the GD library both for image resizing (i.e. creation of thumbnail preview images) and orientation correction of images. Additionally, the exif information saved in an image file will be preserved both during resizing and orientation correction processing,
+     * next best choice after "ImageMagick executable" is the "imagick PHP extension". It also has a low memory consumption compared to the GD library but you might lose exif information during image processing,
+     * the GD library should be available on any server (as Elgg core requires it anyway). The memory requirement of the GD library can be quite high both for creation of thumbnails and image orientation corrections. The memory requirement is depending not on the image file size in the first place but on image resolution, color depth per pixel and color channels per pixel (so even a small sized image file might require more memory than available on the server). If you use the GD library for Tidypics on your server, your users might not be able to upload larger images. Additionaly, exif information saved in the image files might get lost during image orientation correction.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.8.1beta11 CHANGES
+------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.9.1beta10 Change List
@@ -28,6 +58,7 @@ Contributors:
 ------------------------------------------------------------------------
 END VERSION 1.9.1beta10 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.8.1beta10 Change List
@@ -67,6 +98,7 @@ Contributors:
 END VERSION 1.8.1beta9 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.8.1beta8 Change List
 Release Date: 25/06/2013
@@ -97,6 +129,7 @@ Contributors:
 END VERSION 1.8.1beta8 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.8.1beta7 Change List
 Release Date: 20/05/2013
@@ -118,6 +151,7 @@ Contributors:
 END VERSION 1.8.1beta7 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.8.1beta6 Change List
 Release Date: 28/04/2013
@@ -134,6 +168,7 @@ Contributors:
 END VERSION 1.8.1beta6 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.8.1beta5 Change List
 Release Date: 01/04/2013
@@ -146,6 +181,7 @@ Contributors:
 ------------------------------------------------------------------------
 END VERSION 1.8.1beta5 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.8.1beta4 Change List
@@ -177,6 +213,7 @@ Contributors:
 END VERSION 1.8.1beta3 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.8.1beta2 Change List
 Release Date: 03/10/2013
@@ -193,6 +230,7 @@ Contributors:
 ------------------------------------------------------------------------
 END VERSION 1.8.1beta2 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.8.1beta1 Change List
@@ -219,6 +257,7 @@ Contributors:
 END VERSION 1.8.1beta1 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.8.0 RC1 Change List
 Release Date: 07/14/2012
@@ -233,6 +272,7 @@ Contributors:
 END VERSION 1.8.0 RC1 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.7.3 Change List
 Release Date: 11/09/2011
@@ -245,6 +285,7 @@ BEGIN VERSION 1.7.3 CHANGES
 ------------------------------------------------------------------------
 END VERSION 1.7.3 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.7.2 Change List
@@ -260,6 +301,7 @@ BEGIN VERSION 1.7.2 CHANGES
 END VERSION 1.7.2 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.7.1 Change List
 Release Date: 07/10/2011
@@ -272,6 +314,7 @@ BEGIN VERSION 1.7.1 CHANGES
 ------------------------------------------------------------------------
 END VERSION 1.7.1 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.7.0 Change List
@@ -298,6 +341,7 @@ BEGIN VERSION 1.7.0 CHANGES
 END VERSION 1.7.0 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.6.8 Change List
 Release Date: 05/01/2010
@@ -317,6 +361,7 @@ BEGIN VERSION 1.6.8 CHANGES
 END VERSION 1.6.8 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.6.7 Change List
 Release Date: 04/24/2010
@@ -329,6 +374,7 @@ BEGIN VERSION 1.6.7 CHANGES
 ------------------------------------------------------------------------
 END VERSION 1.6.7 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.6.6 Change List
@@ -343,6 +389,7 @@ BEGIN VERSION 1.6.6 CHANGES
 ------------------------------------------------------------------------
 END VERSION 1.6.6 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.6.5 Change List
@@ -375,6 +422,7 @@ BEGIN VERSION 1.6.4 CHANGES
 END VERSION 1.6.4 CHANGES
 ------------------------------------------------------------------------
 
+
 ------------------------------------------------------------------------
 Version 1.6.3 Change List
 Release Date: 09/13/2009
@@ -389,6 +437,7 @@ BEGIN VERSION 1.6.3 CHANGES
 ------------------------------------------------------------------------
 END VERSION 1.6.3 CHANGES
 ------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 Version 1.6.2 Change List
@@ -496,7 +545,6 @@ BEGIN VERSION 1.5 CHANGES
 ------------------------------------------------------------------------
 END VERSION 1.5 CHANGES
 ------------------------------------------------------------------------
-
 
 
 ------------------------------------------------------------------------
@@ -658,4 +706,3 @@ BEGIN VERSION 1.06 CHANGES
 ------------------------------------------------------------------------
 END VERSION 1.06 CHANGES
 ------------------------------------------------------------------------
-

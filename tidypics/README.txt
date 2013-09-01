@@ -1,17 +1,17 @@
 Tidypics plugin for Elgg 1.9
 Latest Version: 1.9.1beta11_pre
-Released: 2013-08-26
+Released: 2013-09-01
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013, (C) Cash Costello 2011-2013
 
 
-WARNING! The upgrading of a site from Elgg 1.8 to Elgg 1.9 when Tidypics is already in use is currently not fully supported by this version of Tidypics. I'll try to fix this before the final Elgg 1.9 will get released.
+WARNING! The upgrading of a site from Elgg 1.8 to Elgg 1.9 when Tidypics is already in use is currently not yet fully supported by this version of Tidypics. I'll try to fix this before the final Elgg 1.9 will get released.
 
 In the meantime: ONLY USE FOR TESTING AND NOT ON A PRODUCTIVE SITE!!!
 
 
-This is a slightly improved version of the Tidypics plugin for Elgg 1.9. Regarding code base it's currently on the same level as 1.8.1beta10 for Elgg 1.8 with only changes necessary to work on Elgg 1.9.
+This is a slightly improved version of the Tidypics plugin for Elgg 1.9. Regarding code base it's currently on the same level as 1.8.1beta11 for Elgg 1.8 with only changes necessary to work on Elgg 1.9.
 
 ATTENTION:
 
@@ -23,7 +23,7 @@ Currently still in beta! Most things should work. If you notice any issues, plea
 Known issues:
 
 - watermarking not fully working,
-- slightshow not fully working.
+- slideshow not working on Elgg 1.9.
 
 
 
@@ -39,15 +39,32 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed then 
 Changelog:
 
 Changes for release 1.9.1beta11_pre (by iionly):
+- Same code base as 1.8.1beta11 with necessary modifications to work on Elgg 1.9.
+- addtional Elgg 1.9 specific changes:
+  * Fix of some deprecation issues that turned up on Elgg 1.9,
+  * Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9 (necessary due to the change in Elgg 1.9 of handling comments as ElggComment entities instead of annotations),
+  * Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (ATTENTIONS: currently only new comments created on Elgg 1.9 will show a thumbnail. Due to the switch of Elgg 1.9 from annotations to entities for comments and a core upgrade script that modifies all existing river comment entries accordingly I will have to write an additional update script to restore the custom view including thumbnails for comments on albums and images that have been previously created on Elgg 1.8).
 
-- Fix of some deprecation issues,
-- Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9,
-- Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (currently only new comments created on Elgg 1.9 will show a thumbnail. Due to the switch of Elgg 1.9 from annotations to entities for comments and a core upgrade script that modifies all existing river comment entries I will have to include an additional update script to restore the custom view including thumbnails for comments on albums and images that have been created on Elgg 1.8),
-- Fix of river entries appearing twice on image uploads in case the Flash uploader is used and the plugin option is set to create separate entries for each uploaded image.
+
+Changes for release 1.8.1beta11 (by iionly):
+- Some general code cleanup,
+- Fix of river entries appearing twice on image uploads in case the Flash uploader is used and the plugin option is set to create separate entries for each uploaded image (issue introduced in beta10),
+- Added TidypicsBatch class (that extends ElggObject class) used for creation of objects of subtype "tidypics_batch" (used for handling "batches" of uploaded images) instead of creation the objects as ElggObject and assinging the subtype,
+- Improvements on slideshow:
+  * a slideshow can be started on all pages that display a suitable list of images (but the slideshow feature is only available if the slideshow plugin option introduced in beta10 is enabled in the plugin settings),
+  * start of slideshow via title menu button,
+  * slideshow will include the next 64 images (i.e. 5 pages of images) of the current displayed image list taking into account the current page offset (i.e. on page 1 the slideshow will display pages 1-5 while on page 10 it will display the images of pages 10-14 etc.). (Longtime goal for future Tidypics versions: no limitation of number of images in slideshow and most likely replacing the PicLensLite slideshow by something else / something better. Currently, the number of images to be included in a slideshow is somewhat limited by avoiding running into memory issues. Also, the PicLensLite slideshow library requires the Flash plugin on client browsers which is annoying and the 3D wall feature does no longer work),
+- Improvements on image orientation correction at image uploading:
+  * using best methods available depending on image library selected,
+  * update orientation information saved in image file after a change of image orientation if the image library used supports this (GD library unfortunately does not support it but the exif info saved in the image file is lost on image orientation correction anyway),
+  * support of orientation correction not only of rotated but also of mirrowed (and possibly additionally rotated) images,
+  * some remarks regarding which image library to use for Tidypics:
+    - if possible and available on your server use the "ImageMagick executable". Generally, this library has a much smaller memory requirement compared to the GD library both for image resizing (i.e. creation of thumbnail preview images) and orientation correction of images. Additionally, the exif information saved in an image file will be preserved both during resizing and orientation correction processing,
+    - next best choice after "ImageMagick executable" is the "imagick PHP extension". It also has a low memory consumption compared to the GD library but you might lose exif information during image processing,
+    - the GD library should be available on any server (as Elgg core requires it anyway). The memory requirement of the GD library can be quite high both for creation of thumbnails and image orientation corrections. The memory requirement is depending not on the image file size in the first place but on image resolution, color depth per pixel and color channels per pixel (so even a small sized image file might require more memory than available on the server). If you use the GD library for Tidypics on your server, your users might not be able to upload larger images. Additionaly, exif information saved in the image files might get lost during image orientation correction.
 
 
 Changes for release 1.9.1beta10 (by iionly):
-
 - Same code base as 1.8.1beta10 with necessary modifications to work on Elgg 1.9.
 
 
@@ -61,7 +78,7 @@ Changes for release 1.8.1beta10 (by iionly):
 - Improved image orientation correction on image upload. When using GD library it will only be done when memory requirement is fullfilled. Additionally, Imagick php extension or ImageMagick library is used when defined as image library in Tidypics plugin settings,
 - New tab on Tidypics plugin settings: image deletion by providing GUID of image (in case the image entry can't be deleted via site front-end),
 - Includes the following changes in Tidypics from official Tidypics repo at https://github.com/cash/Tidypics:
-    * correction of text in notifications about image uploads in case the uploader is not the owner of the album (by Jerome Bakker).
+  * correction of text in notifications about image uploads in case the uploader is not the owner of the album (by Jerome Bakker).
 
 
 Changes for release 1.8.1beta9 (by iionly):
@@ -69,46 +86,44 @@ Changes for release 1.8.1beta9 (by iionly):
 
 
 Changes for release 1.8.1beta8 (by iionly):
- - Requires Elgg 1.8.16 due to bugfix https://github.com/Elgg/Elgg/issues/5564 for the pagination on list pages to work,
- - Pagination support for the list pages (like "Most views" / "Recently commented" etc.) to show more than only a hardcoded number of photos in each list view,
- - List pages (like "Most views" / "Recently commented" etc.) to work correctly when logged out and to show only photos that the viewer is allowed to see based on access level settings,
- - "All", "Friends", "Mine" tabs hidden on "All photos" page when logged-out,
- - "Upload photos" button hidden when logged-out,
- - "Photos you are tagged in" sidebar entry hidden when logged-out,
- - "Tag" entity menu entry hidden when logged out,
- - "Photos you are tagged in" page revised,
- - List of members tagged in a image in sidebar when viewing an image (by including a code snippet of the Tagged People plugin by Kevin Jardine),
- - Fix in image and album save actions for deleting all image/album tags to work (referring to the usual Elgg Entity tags),
- - Improvements in handling Tidypics user and word tags of images (including CSS improvements) to play well together with the image entity tags (avoiding double tags to be added, removal of corresponding image entity tags when an Tidypics image word tag is removed),
- - River entry on adding word tags to an image,
- - Includes the following changes in Tidypics from official Tidypics repo at https://github.com/cash/Tidypics:
-    * made the albums notifications overridable rather than calling object_notifications() directly (by Cash Costello),
-    * fixed: security issue with showing malicious exif data (by Jerome Bakker).
+- Requires Elgg 1.8.16 due to bugfix https://github.com/Elgg/Elgg/issues/5564 for the pagination on list pages to work,
+- Pagination support for the list pages (like "Most views" / "Recently commented" etc.) to show more than only a hardcoded number of photos in each list view,
+- List pages (like "Most views" / "Recently commented" etc.) to work correctly when logged out and to show only photos that the viewer is allowed to see based on access level settings,
+- "All", "Friends", "Mine" tabs hidden on "All photos" page when logged-out,
+- "Upload photos" button hidden when logged-out,
+- "Photos you are tagged in" sidebar entry hidden when logged-out,
+- "Tag" entity menu entry hidden when logged out,
+- "Photos you are tagged in" page revised,
+- List of members tagged in a image in sidebar when viewing an image (by including a code snippet of the Tagged People plugin by Kevin Jardine),
+- Fix in image and album save actions for deleting all image/album tags to work (referring to the usual Elgg Entity tags),
+- Improvements in handling Tidypics user and word tags of images (including CSS improvements) to play well together with the image entity tags (avoiding double tags to be added, removal of corresponding image entity tags when an Tidypics image word tag is removed),
+- River entry on adding word tags to an image,
+- Includes the following changes in Tidypics from official Tidypics repo at https://github.com/cash/Tidypics:
+  * made the albums notifications overridable rather than calling object_notifications() directly (by Cash Costello),
+  * fixed: security issue with showing malicious exif data (by Jerome Bakker).
 
 
 Changes for release 1.8.1beta7 (by iionly):
- - auto-correction of image orientation on image upload (thanks to Jimmy Coder for the code snippet for image rotation),
- - word tags (as opposed to tagging a user): tags that don't correspond with a username will be added to the tags of the photo (searchable),
- - Includes the following changes in Tidypics from official Tidypics repo at https://github.com/cash/Tidypics:
-    * set tiny size for sites that may not have it set (e.g. possibly sites updated from Elgg 1.6) (by Cash Costello),
-    * stripping non word characters from title when pulled from image filename (by Cash Costello),
-    * added tagging to river with notification to user (by Cash Costello, Kevin Jardine).
+- auto-correction of image orientation on image upload (thanks to Jimmy Coder for the code snippet for image rotation),
+- word tags (as opposed to tagging a user): tags that don't correspond with a username will be added to the tags of the photo (searchable),
+- Includes the following changes in Tidypics from official Tidypics repo at https://github.com/cash/Tidypics:
+  * set tiny size for sites that may not have it set (e.g. possibly sites updated from Elgg 1.6) (by Cash Costello),
+  * stripping non word characters from title when pulled from image filename (by Cash Costello),
+  * added tagging to river with notification to user (by Cash Costello, Kevin Jardine).
 
 
 Changes for release 1.8.1beta6 (by iionly):
- - Fix for Tidypics to work in Elgg 1.8.15 (creating new albums),
- - Updated uploadify flash uploader to version 3.2 (this might only be a preliminary solution as I might need to switch to another flash (html5) uploader as the Uploadify uploader has some limitations and also seems no longer fully supported),
- - Fixed some deprecated function calls (they were not in actively used code but some people might have wondered about it nonetheless as the Code Analyzer plugin gave some warnings about them),
- - Fixed html code in widgets' content.php for better theme compatibility (as suggested by ura soul).
+- Fix for Tidypics to work in Elgg 1.8.15 (creating new albums),
+- Updated uploadify flash uploader to version 3.2 (this might only be a preliminary solution as I might need to switch to another flash (html5) uploader as the Uploadify uploader has some limitations and also seems no longer fully supported),
+- Fixed some deprecated function calls (they were not in actively used code but some people might have wondered about it nonetheless as the Code Analyzer plugin gave some warnings about them),
+- Fixed html code in widgets' content.php for better theme compatibility (as suggested by ura soul).
 
 
 Changes for release 1.8.1beta5 (by iionly):
-
 - Fix in river entry creation (hopefully last fix necessary for now...).
 
 
 Changes for release 1.8.1beta4 (by iionly):
-
 - River entries code reworked (solution introduced in beta3 did not work as intended),
 - Option to include preview images in river entries when comments were made on albums and images,
 - Fix a few errors in language files (en and de),
@@ -116,12 +131,10 @@ Changes for release 1.8.1beta4 (by iionly):
 
 
 Changes for release 1.8.1beta3 (by iionly):
-
 - River entries fixed (note: commenting on existing "batch" river entries does not work. It will only work for river entries created after upgrading to 1.8.1beta3!)
 
 
 Changes for release 1.8.1beta2 (by iionly):
-
 - Fixed quota support,
 - Fixed issue with image entries (without images available) getting created on failed image uploads,
 - Fixed an issue introduced in beta1 that resulted in (harmless but many) log entries getting created,
@@ -130,7 +143,6 @@ Changes for release 1.8.1beta2 (by iionly):
 
 
 Changes for release 1.8.1beta1 (by iionly):
-
 - removal of option to set access level for images. Images always get the same access level as the album they are uploaded to. On changing the access level of an album all its images get assigned the same access level, too.
 - new plugin navigation / pages: more centered on (recent) images than albums,
 - support of Widget Manager index page and groups' pages widgets,
@@ -139,11 +151,10 @@ Changes for release 1.8.1beta1 (by iionly):
 
 
 Changes since 1.8.0 Release Candidate 1:
-
 - Pull requests made on github included. These PR were made by
-    * Cash Costello
-    * Brett Profitt
-    * Kevin Kardine
-    * Sem (sembrestels)
-    * Steve Clay
-    * Luciano Lima
+   * Cash Costello
+   * Brett Profitt
+   * Kevin Kardine
+   * Sem (sembrestels)
+   * Steve Clay
+   * Luciano Lima

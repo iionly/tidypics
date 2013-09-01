@@ -120,8 +120,8 @@ class TidypicsAlbum extends ElggObject {
 
 		$defaults = array(
 			'count' => $count,
-			'limit' => 16,
-			'offset' => max(get_input('offset'), 0),
+			'limit' => (int)get_input('limit', 16),
+			'offset' => (int)get_input('offset', 0),
 			'full_view' => false,
 			'list_type' => 'gallery',
 			'list_type_toggle' => false,

@@ -21,14 +21,15 @@ elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
 elgg_push_breadcrumb($owner->name);
 
-
-$num_albums = 16;
+$offset = (int)get_input('offset', 0);
+$limit = (int)get_input('limit', 16);
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'album',
 	'container_guid' => $owner->getGUID(),
-	'limit' => $num_albums,
+	'limit' => $limit,
+	'offset' => $offset,
 	'full_view' => false,
 	'list_type' => 'gallery',
 	'list_type_toggle' => false,
@@ -39,8 +40,6 @@ if (!$content) {
 }
 
 if (elgg_is_logged_in()) {
-        elgg_load_js('lightbox');
-        elgg_load_css('lightbox');
         $logged_in_guid = elgg_get_logged_in_user_guid();
         elgg_register_menu_item('title', array('name' => 'addphotos',
                                                'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,

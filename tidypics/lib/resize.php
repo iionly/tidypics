@@ -185,6 +185,7 @@ function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheig
 			$rtn_code = imagegif($newimage, $output_name);
 			break;
 	}
+
 	imagedestroy($newimage);
 	imagedestroy($oldimage);
 

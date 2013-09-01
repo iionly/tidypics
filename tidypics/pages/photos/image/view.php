@@ -43,8 +43,6 @@ elgg_push_breadcrumb($album->getTitle(), $album->getURL());
 elgg_push_breadcrumb($photo->getTitle());
 
 if (elgg_is_logged_in()) {
-        elgg_load_js('lightbox');
-        elgg_load_css('lightbox');
         if (elgg_instanceof($owner, 'group')) {
                 $logged_in_guid = $owner->guid;
         } else {
