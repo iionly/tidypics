@@ -40,7 +40,11 @@ if (!$content) {
 }
 
 if (elgg_is_logged_in()) {
-        $logged_in_guid = elgg_get_logged_in_user_guid();
+        if ($owner instanceof ElggGroup) {
+                $logged_in_guid = $owner->getGUID();
+        } else {
+                $logged_in_guid = elgg_get_logged_in_user_guid();
+        }
         elgg_register_menu_item('title', array('name' => 'addphotos',
                                                'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
                                                'text' => elgg_echo("photos:addphotos"),

@@ -532,7 +532,7 @@ function tidypics_widget_urls($hook_name, $entity_type, $return_value, $params){
  * @return mixed
  */
 function tidypics_group_permission_override($hook, $type, $result, $params) {
-	if (get_input('action') == 'photos/image/upload') {
+	if (get_input('action') == 'photos/image/upload' || get_input('action') == 'photos/image/ajax_upload' || get_input('action') == 'photos/image/ajax_upload_complete') {
 		if (isset($params['container'])) {
 			$album = $params['container'];
 		} else {
@@ -675,7 +675,7 @@ function tidypics_ajax_session_handler($hook, $type, $value, $params) {
  */
 function tidypics_batch_url_handler($hook, $type, $url, $params) {
         $batch = $params['entity'];
-        if (elgg_instanceof($entity, 'object', 'tidypics_batch')) {
+        if (elgg_instanceof($batch, 'object', 'tidypics_batch')) {
                 if (!$batch->getOwnerEntity()) {
                         // default to a standard view if no owner.
                         return false;

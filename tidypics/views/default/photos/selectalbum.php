@@ -5,7 +5,7 @@
  *
  * Selection of album to upload new images to
  *
- * (c) iionly 2013
+ * (c) iionly 2013-2014
  * Contact: iionly@gmx.de
  * Website: https://github.com/iionly
  * License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -14,13 +14,13 @@
 
 $owner_guid = get_input('owner_guid', elgg_get_logged_in_user_guid());
 $owner = get_entity($owner_guid);
-if (!($owner instanceof ElggUser) && !($owner instanceof ElggGroup)) {
+if (!($owner instanceof ElggUser || $owner instanceof ElggGroup)) {
     $owner = elgg_get_logged_in_user_entity();
 }
 
 $action = "action/photos/image/selectalbum";
 
-$albums = elgg_get_entities(array('type' => 'object', 'subtype' => 'album', 'owner_guid' => NULL, 'container_guid' => $owner->getGUID(), 'limit' => false));
+$albums = elgg_get_entities(array('type' => 'object', 'subtype' => 'album', 'container_guid' => $owner->getGUID(), 'limit' => false));
 
 $album_options = array();
 $album_options[-1] = elgg_echo('album:create');

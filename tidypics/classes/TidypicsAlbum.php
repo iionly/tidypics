@@ -337,7 +337,7 @@ class TidypicsAlbum extends ElggObject {
 	 */
 	protected function deleteImages() {
 		$images = elgg_get_entities(array(
-			"type=" => "object",
+			"type" => "object",
 			"subtype" => "image",
 			"container_guid" => $this->guid,
 			"limit" => ELGG_ENTITIES_NO_VALUE,
@@ -366,8 +366,24 @@ class TidypicsAlbum extends ElggObject {
 		$tmpfile->save();
 		$albumdir = eregi_replace('/._tmp_del_tidypics_album_', '', $tmpfile->getFilenameOnFilestore());
 		$tmpfile->delete();
-		if (is_dir($albumdir)) {
-			rmdir($albumdir);
-		}
+
+                // sanity check: must be a directory
+                if (!$handle = opendir($albumdir)) {
+                        return false;
+                }
+
+                // loop through all files that might still remain undeleted in this directory and delete them
+                // note: this does not delete the corresponding image entities from the database
+                while (($file = readdir($handle)) !== false) {
+                        if (in_array($file, array('.', '..'))) {
+                                continue;
+                        }
+                        $path = "$albumdir/$file";
+                        unlink($path);
+                }
+
+                // remove empty directory
+                closedir($handle);
+                return rmdir($albumdir);
 	}
 }

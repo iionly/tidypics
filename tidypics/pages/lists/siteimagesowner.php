@@ -5,8 +5,6 @@
  *
  */
 
-gatekeeper();
-
 $owner_guid = get_input('guid');
 $owner = get_entity($owner_guid);
 if(!$owner || !(elgg_instanceof($owner, 'user'))) {
@@ -51,7 +49,7 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
                                                 'href' => $slideshow_link,
                                                 'text' => "<img src=\"".elgg_get_site_url() ."mod/tidypics/graphics/slideshow.png\" alt=\"".elgg_echo('album:slideshow')."\">",
                                                 'title' => elgg_echo('album:slideshow'),
-                                                'class' => 'elgg-button elgg-button-action'));
+                                                'link_class' => 'elgg-button elgg-button-action'));
 }
 
 if (!empty($result)) {

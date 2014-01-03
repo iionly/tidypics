@@ -12,6 +12,12 @@ group_gatekeeper();
 $album_guid = (int) get_input('guid');
 $album = get_entity($album_guid);
 if (!$album) {
+        register_error(elgg_echo('noaccess'));
+        $_SESSION['last_forward_from'] = current_page_url();
+        forward('');
+}
+$container = $album->getContainerEntity();
+if (!$container) {
 	register_error(elgg_echo('noaccess'));
 	$_SESSION['last_forward_from'] = current_page_url();
 	forward('');
@@ -76,7 +82,7 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && $album->getSize() > 0) {
                                                 'href' => $slideshow_link,
                                                 'text' => "<img src=\"".elgg_get_site_url() ."mod/tidypics/graphics/slideshow.png\" alt=\"".elgg_echo('album:slideshow')."\">",
                                                 'title' => elgg_echo('album:slideshow'),
-                                                'class' => 'elgg-button elgg-button-action',
+                                                'link_class' => 'elgg-button elgg-button-action',
                                                 'priority' => 300));
 }
 

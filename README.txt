@@ -1,14 +1,10 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.1beta11_pre
-Released: 2013-09-01
+Latest Version: 1.9.1beta12
+Released: 2014-01-03
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
-Copyright: (c) iionly 2013, (C) Cash Costello 2011-2013
+Copyright: (c) iionly 2013-2014, (C) Cash Costello 2011-2014
 
-
-WARNING! The upgrading of a site from Elgg 1.8 to Elgg 1.9 when Tidypics is already in use is currently not yet fully supported by this version of Tidypics. I'll try to fix this before the final Elgg 1.9 will get released.
-
-In the meantime: ONLY USE FOR TESTING AND NOT ON A PRODUCTIVE SITE!!!
 
 
 This is a slightly improved version of the Tidypics plugin for Elgg 1.9. Regarding code base it's currently on the same level as 1.8.1beta11 for Elgg 1.8 with only changes necessary to work on Elgg 1.9.
@@ -17,7 +13,6 @@ ATTENTION:
 
 Requires Elgg 1.9 at minimum! Please upgrade your Elgg installation first before upgrading the Tidypics plugin.
 
-Currently still in beta! Most things should work. If you notice any issues, please tell me!
 
 
 Known issues:
@@ -38,12 +33,23 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed then 
 
 Changelog:
 
-Changes for release 1.9.1beta11_pre (by iionly):
-- Same code base as 1.8.1beta11 with necessary modifications to work on Elgg 1.9.
+Changes for release 1.9.1beta12 (by iionly):
+- Same code base as 1.8.1beta12 with necessary modifications to work on Elgg 1.9.
 - addtional Elgg 1.9 specific changes:
   * Fix of some deprecation issues that turned up on Elgg 1.9,
   * Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9 (necessary due to the change in Elgg 1.9 of handling comments as ElggComment entities instead of annotations),
-  * Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (ATTENTIONS: currently only new comments created on Elgg 1.9 will show a thumbnail. Due to the switch of Elgg 1.9 from annotations to entities for comments and a core upgrade script that modifies all existing river comment entries accordingly I will have to write an additional update script to restore the custom view including thumbnails for comments on albums and images that have been previously created on Elgg 1.8).
+  * Fix of river comment entries to optionally include a thumbnail of the image / the album cover to work again on Elgg 1.9 (ATTENTION: only new river entries will show the thumbnail images automatically. For getting existing river entries - especially entries created on Elgg 1.8 previously - to also show the thumbnail images again you will have to execute an upgrade script. You can execute this script by clicking on the "Upgrade" button on the Tidypics settings page. BEFORE executing the Tidypics-specific upgrade FIRST execute any outstanding upgrades of Elgg 1.9 core - especially the migration of all comment annotations to the new Elgg comment objects!!!).
+
+
+Changes for release 1.8.1beta12 (by iionly):
+- Added placeholder images to be displayed in case no images have been uploaded to an album yet in the image sizes previously missing,
+- On deletion of an album the corresponding album folder in data directory gets deleted and no longer the (empty) album folder remains,
+- Flash uploader fixed in the case of group albums when someone else than the album creator wants to upload images to a group album,
+- Navigation arrows hidden if an album contains only a single image,
+- Correction of title of group pages "Most recent albums" widget,
+- "View all" link in Latest Photos widget on profile pages working for site visitors not logged in,
+- Fixed list of offered existing albums to select from for image uploads when in group context,
+- Fixed display of image and album gallery pages when images or albums exist that belong to groups with restricted access (The images or albums shown in the gallery pages depend on the viewing user having the necessary right for viewing depending on the access level defined for these albums including the images within these albums. For example a user gets to see all albums with "public" access level regardless if logged in or not. But if you set the access level "public" or "logged in" for a group album this results in even a non-group member being able to get access to such albums and their content. But if the group itself is a restricted group certain problems arise when this group contains "public" or "logged-in" content. In case of the gallery views within Tidypics the outcome is a fatal error occuring on these pages. This fix avoids the fatal error from happening. Still the group images and albums of restricted albums are included in the listings due to the access level set for them. If you don't want any albums or images of restricted groups to be seen by non-group-members you must set the access level of these albums to the corresponding group's level).
 
 
 Changes for release 1.8.1beta11 (by iionly):

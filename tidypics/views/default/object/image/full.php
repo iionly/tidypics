@@ -9,6 +9,7 @@
  */
 
 $image = $photo = $vars['entity'];
+$album = $image->getContainerEntity();
 
 $img = elgg_view_entity_icon($image, 'large', array(
 	'href' => $image->getIconURL('master'),
@@ -49,7 +50,9 @@ $summary = elgg_view_image_block($owner_icon, $list_body, $params);
 echo $summary;
 
 echo '<div class="tidypics-photo-wrapper center">';
-echo elgg_view('object/image/navigation', $vars);
+if ($album->getSize() > 1) {
+        echo elgg_view('object/image/navigation', $vars);
+}
 echo elgg_view('photos/tagging/help', $vars);
 echo elgg_view('photos/tagging/select', $vars);
 echo $img;

@@ -63,7 +63,7 @@ foreach ($_FILES['images']['name'] as $index => $value) {
 	try {
 		$result = $image->save($data);
 	} catch (Exception $e) {
-	        delete_entity($image->getGUID());
+	        $image->delete();
 	        $result = false;
 		array_push($not_uploaded, $name);
 		array_push($error_msgs, $e->getMessage());

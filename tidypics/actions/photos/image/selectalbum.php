@@ -5,7 +5,7 @@
  *
  * Selection of album to upload new images to
  *
- * (c) iionly 2013
+ * (c) iionly 2013-2014
  * Contact: iionly@gmx.de
  * Website: https://github.com/iionly
  * License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2

@@ -12,6 +12,13 @@ group_gatekeeper();
 $photo_guid = (int) get_input('guid');
 $photo = get_entity($photo_guid);
 if (!$photo) {
+        register_error(elgg_echo('noaccess'));
+        $_SESSION['last_forward_from'] = current_page_url();
+        forward('');
+}
+$album = $photo->getContainerEntity();
+$album_container = $album->getContainerEntity();
+if (!$album_container) {
 	register_error(elgg_echo('noaccess'));
 	$_SESSION['last_forward_from'] = current_page_url();
 	forward('');
@@ -25,7 +32,6 @@ if (elgg_get_plugin_setting('tagging', 'tidypics')) {
 }
 
 // set page owner based on owner of photo album
-$album = $photo->getContainerEntity();
 if ($album) {
 	elgg_set_page_owner_guid($album->getContainerGUID());
 }
