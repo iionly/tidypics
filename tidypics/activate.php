@@ -38,7 +38,7 @@ $defaults = array(
 	'uploader' => false,
 	'exif' => false,
 	'download_link' => true,
-	'album_comments' => false,
+	'album_comments' => true,
 	'slideshow' => false,
 
 	'maxfilesize' => 5,
