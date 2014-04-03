@@ -44,7 +44,7 @@ if (elgg_is_logged_in()) {
         $new_link = elgg_view('output/url', array(
                               'href' => "ajax/view/photos/selectalbum/?owner_guid=" .$group->guid,
                               'text' => elgg_echo("photos:addphotos"),
-                              'class' => 'elgg-lightbox',
+                              'link_class' => 'elgg-lightbox',
                               'is_trusted' => true,
                              ));
 }

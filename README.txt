@@ -1,13 +1,13 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.1beta12
-Released: 2014-01-03
+Latest Version: 1.9.1beta13
+Released: 2014-04-02
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013-2014, (C) Cash Costello 2011-2014
 
 
 
-This is a slightly improved version of the Tidypics plugin for Elgg 1.9. Regarding code base it's currently on the same level as 1.8.1beta11 for Elgg 1.8 with only changes necessary to work on Elgg 1.9.
+This is a slightly improved version of the Tidypics plugin for Elgg 1.9. Regarding code base it's currently on the same level as 1.8.1beta13 for Elgg 1.8 with only changes necessary to work on Elgg 1.9.
 
 ATTENTION:
 
@@ -21,17 +21,49 @@ Known issues:
 - slideshow not working on Elgg 1.9.
 
 
+Todo:
+
+- Add option to remove the original uploaded image after resized thumbnail images have been created.
+- Replace the Flash uploader with Plupload uploader (support of HTML5),
+- Replace PiclensLite slideshow with Galleria slideshow (no flash required, responsive).
+
+
 
 Installation and configuration:
 
 IMPORTANT: If you have a previous version of the tidypics plugin installed then disable the plugin on your site and remove the tidypics folder from the mod folder on your server before installing the new version!
 1. copy the tidypics plugin folder into the mod folder on your server,
 2. enable the plugin in the admin section of your site,
-3. configure the plugin settings. Especially, check if there's an "Upgrade" button visible on the Tidypics plugin settings page and if yes, execute the upgrade.
+4. check if there's an "Upgrade" button visible on the Tidypics plugin settings page and if yes, FIRST make a DATABASE BACKUP and then execute the upgrade.
+3. configure the plugin settings.
 
 
 
 Changelog:
+
+Changes for release 1.9.1beta13 (by iionly and Juho Jaakkola):
+
+ATTENTION: before executing the upgrade script that comes with this version you should have finished the upgrade process of Elgg core from 1.8 to 1.9 if you are not starting on a fresh Elgg 1.9 installation. It's important that all existing comment annotations have already been converted to comment entities. And PLEASE BACKUP YOUR DATABASE before executing the Tidypics upgrade. The backup is important because the script might possibly take some time to finish depending on how many database entries are in need to be updated.
+
+- Same code base as 1.8.1beta12 with necessary modifications to work on Elgg 1.9.
+- The upgrade script that comes with this version does basically the same as the upgrade script included in 1.8.1beta13: comments formerly made on the activity page are assigned to the uploaded image (on single image uploads) or albums. This is necessary for all existing comments to show up in the same way as future comments. The comments will still be displayed on the activity page but in addition also automatically on image pages or album pages respectively. In addition to the changes done by the Elgg 1.8 version of Tidypics 1.8.1beta13 the version for Elgg 1.9 also restores the specific Tidypics comment views (with thumbnails) on the activity page that were changed to a default comments view by Elgg core when upgrading to 1.9.
+
+
+Changes for release 1.8.1beta13 (by iionly and Juho Jaakkola):
+
+ATTENTION: this new release contains an update script that changes database entries related to comments and likes made on Tidypics image upload river entries. Read the changelog carefully BEFORE running the upgrade to understand what it does and in any case make a database backup before executing the upgrade to be able to revert to the former state if you are not content with the result. The backup is also important because the script might possibly take some time to finish depending on how many database entries are in need to be updated.
+
+- Code cleanup,
+- Flash uploader: limit number of images that can be added in one go to 10,
+- Fix on friends tab pages of "All Photos" and "All photo albums" to check if user has friends and display a fitting message if not instead of saying the friends would not have uploaded image yet (which shows when the user has friends but they have not yet uploaded images),
+- Removed plugin setting to turn commenting on albums on/off. Commenting on albums is now always on,
+- Commenting on image uploads on the Activity page (commenting on Tidypics_batch entities): when commenting on an upload of a single image the comment will be added to this image and when commenting on an upload of more than a single image the comment will be added to the corresponding album (in both cases the comment made will still be shown also on the activity page below this river entry),
+- the same with liking image uploads entries on the Activity page: if a single image was uploaded this image will get the like and if more than a single image was uploaded the corresponding album will get the like (in both cases the like will also be shown on the activity page in the river menu of this entry),
+- IMPORTANT!!!!!! Please read: upgrade script to assign existing comments and likes made on image upload river entries either to the corresponding image or album. This script makes the existing comments and likes consistent with the future comments and likes created on Tidypics 1.8.1beta13. The update script (mod/tidypics/upgrades/2013121201.php) does the folling:
+		1. upgrading of comments on river entries that were made with Tidypics 1.8.0rc1 or earlier,
+		2. slightly different procedure for upgrading comments on river entries made with a Tidypics 1.8.1betaXX version: for these comments a second database entry was created for the comment to show not only on the activity page but also on the albums' pages. The upgrade script identifies these second comment entries by the lack of corresponding river entries in the database and then deletes these entries. If you have by any means deleted entries on the activity page informing about comments made on album pages or if you prevent such entries to be created on your site somehow then these comments will also get deleted. Unfortunately, there's no other way of getting rid of the duplicate comments entries that are now no longer needed. If in doubt, comment out "Part 3" of the upgrade code in mod/tidypics/upgrades/2013121201.php.
+		3. upgrading of likes on river entries: here's a check included if a user has already liked the album or image the like made to the river entry would get moved to. If there's not already an existing like the like will get moved from the river entry and added to the album/image. If the user has already liked the image or corresponding album the like will not get added to avoid duplicate likings.
+
 
 Changes for release 1.9.1beta12 (by iionly):
 - Same code base as 1.8.1beta12 with necessary modifications to work on Elgg 1.9.

@@ -38,7 +38,7 @@ if (elgg_is_logged_in()) {
         $image_html .= elgg_view('output/url', array(
                                  'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $container_guid,
                                  'text' => elgg_echo("photos:addphotos"),
-                                 'class' => 'elgg-lightbox',
+                                 'link_class' => 'elgg-lightbox',
                                  'is_trusted' => true,
                                 ));
 }

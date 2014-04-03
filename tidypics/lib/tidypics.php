@@ -244,15 +244,15 @@ function tp_guid_callback($row) {
  * @return true/false
  */
 function tp_is_person() {
-        $known = array('msie', 'mozilla', 'firefox', 'safari', 'webkit', 'opera', 'netscape', 'konqueror', 'gecko');
+	$known = array('msie', 'mozilla', 'firefox', 'safari', 'webkit', 'opera', 'netscape', 'konqueror', 'gecko');
 
-        $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
-        foreach ($known as $browser) {
-                if (strpos($agent, $browser) !== false) {
-                        return true;
-                }
-        }
+	foreach ($known as $browser) {
+		if (strpos($agent, $browser) !== false) {
+			return true;
+		}
+	}
 
-        return false;
+	return false;
 }

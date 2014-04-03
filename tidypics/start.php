@@ -54,8 +54,6 @@ function tidypics_init() {
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');
 
-	elgg_register_plugin_hook_handler('register', 'menu:river', 'tidypics_river_menu_setup');
-
 	// Add admin menu item
 	elgg_register_admin_menu_item('configure', 'photos', 'settings');
 
@@ -106,7 +104,7 @@ function tidypics_init() {
 
 	// flash session work around for uploads when use_only_cookies is set
 	elgg_register_plugin_hook_handler('forward', 'csrf', 'tidypics_ajax_session_handler');
-	
+
 	// override the default url to view a tidypics_batch object
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'tidypics_batch_url_handler');
 
@@ -134,7 +132,7 @@ function tidypics_init() {
 	elgg_register_action("photos/admin/create_thumbnails", "$base_dir/admin/create_thumbnails.php", 'admin');
 	elgg_register_action("photos/admin/delete_image", "$base_dir/admin/delete_image.php", 'admin');
 	elgg_register_action("photos/admin/upgrade", "$base_dir/admin/upgrade.php", 'admin');
-	
+
 	elgg_register_action('photos/image/selectalbum', "$base_dir/image/selectalbum.php");
 }
 
@@ -154,7 +152,7 @@ function tidypics_page_handler($page) {
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
 	if (elgg_get_plugin_setting('slideshow', 'tidypics')) {
-	elgg_load_js('tidypics:slideshow');
+		elgg_load_js('tidypics:slideshow');
 	}
 
 	$base = elgg_get_plugins_path() . 'tidypics/pages/photos';
@@ -486,7 +484,7 @@ function tidypics_widget_urls($hook_name, $entity_type, $return_value, $params){
 
 	if(empty($result) && ($widget instanceof ElggWidget)) {
 		$owner = $widget->getOwnerEntity();
-	switch($widget->handler) {
+		switch($widget->handler) {
 			case "latest_photos":
 				$result = "/photos/siteimagesowner/" . $owner->guid;
 				break;
@@ -696,13 +694,12 @@ function tidypics_comments_handler($hook, $type, $value, $params) {
 	$result = $value;
 
 	$action_type = $value['action_type'];
-	if($action_type != 'comment') {
+	if ($action_type != 'comment') {
 		return;
 	}
 
-	$comment_guid =  $value['object_guid'];
 	$target_guid =  $value['target_guid'];
-	if(!$target_guid) {
+	if (!$target_guid) {
 		return;
 	}
 	$target_entity = get_entity($target_guid);
@@ -719,43 +716,4 @@ function tidypics_comments_handler($hook, $type, $value, $params) {
 	}
 
 	return $result;
-}
-
-/**
- * Make the comment icon of tidypics_batch to refer to the album
- *
- * @param string         $hook   'register'
- * @param string         $type   'menu:riverä
- * @param ElggMenuItem[] $return Array of ElggMenuItem objects
- * @param array          $params Menu params ('item' => ElggRiverItem)
- * @return ElggMenuItem[] $return Array of ElggMenuItem objects
- */
-function tidypics_river_menu_setup($hook, $type, $return, $params) {
-	$river_item = $params['item'];
-
-	$object = $river_item->getObjectEntity();
-	if ($object instanceof TidypicsBatch) {
-		$images = elgg_get_entities_from_relationship(array(
-			'relationship' => 'belongs_to_batch',
-			'relationship_guid' => $object->getGUID(),
-			'inverse_relationship' => true,
-			'type' => 'object',
-			'subtype' => 'image',
-			'offset' => 0,
-		));
-		foreach ($return as $key => $item) {
-			if ($item->getName() == 'comment') {
-				if (count($images) == 1) {
-					$item->setHref("#comments-add-{$images[0]->guid}");
-					break;
-				} else {
-					$album_guid = $object->getContainerGUID();
-					$item->setHref("#comments-add-{$album_guid}");
-					break;
-				}
-			}
-		}
-	}
-
-	return $return;
 }

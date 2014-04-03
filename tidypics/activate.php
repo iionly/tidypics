@@ -18,9 +18,9 @@ if (get_subtype_id('object', 'image')) {
 	add_subtype('object', 'image', 'TidypicsImage');
 }
 if (get_subtype_id('object', 'tidypics_batch')) {
-        update_subtype('object', 'tidypics_batch', 'TidypicsBatch');
+	update_subtype('object', 'tidypics_batch', 'TidypicsBatch');
 } else {
-        add_subtype('object', 'tidypics_batch', 'TidypicsBatch');
+	add_subtype('object', 'tidypics_batch', 'TidypicsBatch');
 }
 
 // set default settings
@@ -38,7 +38,6 @@ $defaults = array(
 	'uploader' => false,
 	'exif' => false,
 	'download_link' => true,
-	'album_comments' => true,
 	'slideshow' => false,
 
 	'maxfilesize' => 5,
