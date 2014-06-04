@@ -22,7 +22,7 @@ elgg.tidypics.uploading.init = function() {
 		}
 	});
 
-	 $("#uploader").pluploadQueue({
+	 $("#uploader").plupload({
 	        // General settings
 	        runtimes : 'html5,flash,silverlight,html4',
 	        url : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
