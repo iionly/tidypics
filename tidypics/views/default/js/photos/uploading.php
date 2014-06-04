@@ -2,12 +2,12 @@
 /**
  * AJAX uploading
  */
-
-$maxfilesize = (int) elgg_get_plugin_setting('maxfilesize', 'tidypics');
+$maxfilesize = ( int ) elgg_get_plugin_setting ( 'maxfilesize', 'tidypics' );
 $maxfilesize *= 1024;
 ?>
 
-//<script>
+//
+<script>
 elgg.provide('elgg.tidypics.uploading');
 
 elgg.tidypics.uploading.init = function() {
@@ -53,7 +53,26 @@ elgg.tidypics.uploading.init = function() {
 	        flash_swf_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.swf',
 	     
 	        // Silverlight settings
-	        silverlight_xap_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.xap'
+	        silverlight_xap_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.xap',
+	        // Post init events, bound after the internal events
+	        init : {
+	            UploadComplete: function(up, files) {
+	                // Called when all files are either uploaded or failed
+	                log('[UploadComplete]');
+	                elgg.action('photos/image/ajax_upload_complete', {
+						data: {
+								album_guid: data.album_guid,
+								batch: data.batch
+						},
+						success: function(json) {
+							var url = elgg.normalize_url('photos/edit/' + json.batch_guid)
+							window.location.href = url;
+						}
+					});
+					
+	            }
+	 
+	        }
 	    });
 
 	$("#uploadify").uploadify({
