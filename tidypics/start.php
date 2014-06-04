@@ -50,6 +50,7 @@ function tidypics_init() {
 
 	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js', 'footer');
 	elgg_register_js('jquery.uploadify-tp', 'mod/tidypics/vendors/uploadify/jquery.uploadify.min.js', 'footer');
+	elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/plupload.full.min.js', 'footer');
 
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');

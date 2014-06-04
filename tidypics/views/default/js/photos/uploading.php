@@ -22,6 +22,40 @@ elgg.tidypics.uploading.init = function() {
 		}
 	});
 
+	 $("#uploader").pluploadQueue({
+	        // General settings
+	        runtimes : 'html5,flash,silverlight,html4',
+	        url : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
+	         
+	        chunk_size : '1mb',
+	        rename : true,
+	        dragdrop: true,
+	         
+	        filters : {
+	            // Maximum file size
+	            max_file_size : '10mb',
+	            // Specify what files to browse for
+	            mime_types: [
+	                {title : "Image files", extensions : "jpg,gif,png"}
+	            ]
+	        },
+	        multipart_params : data,
+// 	        // Resize images on clientside if we can
+// 	        resize: {
+// 	            width : 200,
+// 	            height : 200,
+// 	            quality : 90,
+// 	            crop: true // crop to exact dimensions
+// 	        },
+	 
+	 
+	        // Flash settings
+	        flash_swf_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.swf',
+	     
+	        // Silverlight settings
+	        silverlight_xap_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.xap'
+	    });
+
 	$("#uploadify").uploadify({
 		'swf'           : elgg.config.wwwroot + 'mod/tidypics/vendors/uploadify/uploadify.swf',
 		'uploader'      : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
