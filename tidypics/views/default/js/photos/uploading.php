@@ -21,7 +21,7 @@ elgg.tidypics.uploading.init = function() {
 		}
 	});
 
-	 $("#uploader").plupload({
+	 $("#uploader").pluploadQueue({
 	        // General settings
 	        runtimes : 'html5,flash,silverlight,html4',
 	        url : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
@@ -57,7 +57,6 @@ elgg.tidypics.uploading.init = function() {
 	        init : {
 	            UploadComplete: function(up, files) {
 	                // Called when all files are either uploaded or failed
-	                log('[UploadComplete]');
 	                elgg.action('photos/image/ajax_upload_complete', {
 						data: {
 								album_guid: data.album_guid,

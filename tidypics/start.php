@@ -51,8 +51,8 @@ function tidypics_init() {
 	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js', 'footer');
 	elgg_register_js('jquery.uploadify-tp', 'mod/tidypics/vendors/uploadify/jquery.uploadify.min.js', 'footer');
     elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
-    elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js', 'footer');
-    elgg_register_css('jquery.plupload.ui', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css');
+    elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.plupload.queue/jquery.plupload.queue.min.js', 'footer');
+    elgg_register_css('jquery.plupload.ui', 'mod/tidypics/vendors/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css');
 
 	
 

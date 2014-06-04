@@ -6,7 +6,7 @@
 elgg_load_library('tidypics:upload');
 
 $album_guid = (int) get_input('album_guid');
-$file_var_name = get_input('file_var_name', 'Image');
+$file_var_name = get_input('file_var_name', 'file');
 $batch = get_input('batch');
 
 $album = get_entity($album_guid);
