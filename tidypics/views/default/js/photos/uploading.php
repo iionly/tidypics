@@ -26,27 +26,18 @@ elgg.tidypics.uploading.init = function() {
 	        runtimes : 'html5,flash,silverlight,html4',
 	        url : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
 	         
-	        chunk_size : '1mb',
 	        rename : true,
 	        dragdrop: true,
 	         
 	        filters : {
 	            // Maximum file size
-	            max_file_size : '10mb',
+	            max_file_size : '<?php echo $maxfilesize; ?>mb',
 	            // Specify what files to browse for
 	            mime_types: [
-	                {title : "Image files", extensions : "jpg,gif,png"}
+	                {title : "<?php echo elgg_echo('tidypics:uploader:filetype'); ?>", extensions : "jpg,gif,png"}
 	            ]
 	        },
 	        multipart_params : data,
-// 	        // Resize images on clientside if we can
-// 	        resize: {
-// 	            width : 200,
-// 	            height : 200,
-// 	            quality : 90,
-// 	            crop: true // crop to exact dimensions
-// 	        },
-	 
 	 
 	        // Flash settings
 	        flash_swf_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.swf',

@@ -35,7 +35,11 @@ echo elgg_echo ( 'tidypics:uploader:instructs', array (
 					value="<?php echo $batch; ?>" /> <input type="hidden" name="tidypics_token" value="<?php echo $tidypics_token; ?>" /> <input type="hidden" name="user_guid"
 					value="<?php echo elgg_get_logged_in_user_guid(); ?>" /> <input type="hidden" name="Elgg" value="<?php echo session_id(); ?>" />
 		<div id="uploader">
-			<p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
+			<p>
+			<?php
+			elgg_echo ( 'tidypics:uploader:no_flash' );
+			?>
+			</p>
 		</div>
 	</li>
 

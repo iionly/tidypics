@@ -193,7 +193,7 @@ return array(
 		'album:cover_link' => 'Make cover',
 		'tidypics:title:quota' => 'Quota',
 		'tidypics:quota' => "Quota usage:",
-		'tidypics:uploader:no_flash' => "Failed to identify flash version or no flash installed. Please use the basic uploader.",
+		'tidypics:uploader:no_flash' => "Your browser doesn't have Flash, Silverlight or HTML5 support.",
 		'tidypics:uploader:choose' => "Choose photos",
 		'tidypics:uploader:upload' => "Upload photos",
 		'tidypics:uploader:describe' => "Describe photos",
@@ -204,6 +204,7 @@ return array(
 		'tidypics:sort:no_images' => 'No photos found to sort. Upload photos using the link above.',
 		'tidypics:album_select' => 'Before you can start with uploading your photos you need to select one of your albums you want to add the photos to or you can select to create a new album: ',
 		'tidypics:continue' => 'Continue',
+		'tidypics:uploader:filetype' => 'Image files',
 
 		// Albums
 		'album:created_by' => 'By ',
