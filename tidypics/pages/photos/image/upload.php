@@ -46,6 +46,7 @@ if ($uploader == 'basic') {
 	elgg_load_js('jquery.plupload-tp');
 	elgg_load_js('jquery.plupload.ui-tp');
 	elgg_load_js('jquery.plupload.ui.lang-tp');
+	elgg_load_css('jquery.plupload.jqueryui-theme');
 	elgg_load_css('jquery.plupload.ui');
 	
 	elgg_load_js('tidypics:uploading');

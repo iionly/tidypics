@@ -21,48 +21,53 @@ elgg.tidypics.uploading.init = function() {
 		}
 	});
 
-	 $("#uploader").pluploadQueue({
-	        // General settings
-	        runtimes : 'html5,flash,silverlight,html4',
-	        url : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
-	         
-	        rename : true,
-	        dragdrop: true,
-	         
-	        filters : {
-	            // Maximum file size
-	            max_file_size : '<?php echo $maxfilesize; ?>mb',
-	            // Specify what files to browse for
-	            mime_types: [
-	                {title : "<?php echo elgg_echo('tidypics:uploader:filetype'); ?>", extensions : "jpg,gif,png"}
-	            ]
-	        },
-	        multipart_params : data,
-	 
-	        // Flash settings
-	        flash_swf_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.swf',
+	$("#uploader").plupload({
+        // General settings
+        runtimes : 'html5,flash,silverlight,html4',
+        url : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
+
+        rename : true,
+        dragdrop: true,
+
+        max_file_size : '<?php echo $maxfilesize; ?>mb',
+
+        filters : [
+        	{title : "<?php echo elgg_echo('tidypics:uploader:filetype'); ?>", extensions : "jpg,gif,png"}
+        ],
+        multipart_params : data,
+
+        // Sort files
+        sortable: true,
+
+        // Views to activate
+        views: {
+        	list: true,
+            thumbs: true, // Show thumbs
+            active: 'thumbs'
+        },
+	
+	    // Flash settings
+	    flash_swf_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.swf',
 	     
-	        // Silverlight settings
-	        silverlight_xap_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.xap',
-	        // Post init events, bound after the internal events
-	        init : {
-	            UploadComplete: function(up, files) {
-	                // Called when all files are either uploaded or failed
-	                elgg.action('photos/image/ajax_upload_complete', {
-						data: {
-								album_guid: data.album_guid,
-								batch: data.batch
-						},
-						success: function(json) {
-							var url = elgg.normalize_url('photos/edit/' + json.batch_guid)
+	    // Silverlight settings
+	    silverlight_xap_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.xap',
+	    // Post init events, bound after the internal events
+	    init : {
+	    	UploadComplete: function(up, files) {
+	        // Called when all files are either uploaded or failed
+	        	elgg.action('photos/image/ajax_upload_complete', {
+					data: {
+						album_guid: data.album_guid,
+						batch: data.batch
+					},
+					success: function(json) {
+						var url = elgg.normalize_url('photos/edit/' + json.batch_guid)
 							window.location.href = url;
-						}
-					});
-					
-	            }
-	 
-	        }
-	    });
+					}
+				});					
+			}
+	 	}
+	});
 
 	
 };
