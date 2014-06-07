@@ -4,43 +4,36 @@
  *
  * @uses $vars['entity']
  */
-$album = $vars ['entity'];
 
-$ts = time ();
-$batch = time ();
-$tidypics_token = md5 ( session_id () . get_site_secret () . $ts . elgg_get_logged_in_user_entity ()->salt );
-$basic_uploader_url = current_page_url () . '/basic';
+$album = $vars['entity'];
 
-$maxfilesize = ( float ) elgg_get_plugin_setting ( 'maxfilesize', 'tidypics' );
-if (! $maxfilesize) {
+$ts = time();
+$batch = time();
+$tidypics_token = md5(session_id() . get_site_secret() . $ts . elgg_get_logged_in_user_entity()->salt);
+$basic_uploader_url = current_page_url() . '/basic';
+
+$maxfilesize = (float) elgg_get_plugin_setting('maxfilesize', 'tidypics');
+if (!$maxfilesize) {
 	$maxfilesize = 5;
 }
 
 ?>
 
 <p>
-<?php
-echo elgg_echo ( 'tidypics:uploader:instructs', array (
-		$maxfilesize,
-		$basic_uploader_url 
-) );
-?>
+	<?php
+		echo elgg_echo('tidypics:uploader:instructs', array($maxfilesize));
+	?>
 </p>
 
-
-
-<ul id="tidypics-uploader-steps">
-	<li class="mbm">
-	<input type="hidden" name="album_guid" value="<?php echo $album->getGUID(); ?>" /> <input type="hidden" name="batch"
-					value="<?php echo $batch; ?>" /> <input type="hidden" name="tidypics_token" value="<?php echo $tidypics_token; ?>" /> <input type="hidden" name="user_guid"
-					value="<?php echo elgg_get_logged_in_user_guid(); ?>" /> <input type="hidden" name="Elgg" value="<?php echo session_id(); ?>" />
-		<div id="uploader">
-			<p>
-			<?php
-			elgg_echo ( 'tidypics:uploader:no_flash' );
-			?>
-			</p>
-		</div>
-	</li>
-
-</ul>
+<div id="uploader">
+	<input type="hidden" name="album_guid" value="<?php echo $album->getGUID(); ?>" />
+	<input type="hidden" name="batch" value="<?php echo $batch; ?>" />
+	<input type="hidden" name="tidypics_token" value="<?php echo $tidypics_token; ?>" />
+	<input type="hidden" name="user_guid" value="<?php echo elgg_get_logged_in_user_guid(); ?>" />
+	<input type="hidden" name="Elgg" value="<?php echo session_id(); ?>" />
+	<p>
+		<?php
+			elgg_echo('tidypics:uploader:no_flash');
+		?>
+	</p>
+</div>

@@ -1,51 +1,70 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.1beta13
-Released: 2014-04-02
+Latest Version: 1.9.1beta14
+Released: 2014-06-09
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013-2014, (C) Cash Costello 2011-2014
 
 
+The photo gallery plugin for Elgg 1.9.
 
-This is a slightly improved version of the Tidypics plugin for Elgg 1.9. Regarding code base it's currently on the same level as 1.8.1beta13 for Elgg 1.8 with only changes necessary to work on Elgg 1.9.
+Features:
 
-ATTENTION:
-
-Requires Elgg 1.9 at minimum! Please upgrade your Elgg installation first before upgrading the Tidypics plugin.
-
-
-
-Known issues:
-
-- watermarking not fully working,
-- slideshow not working on Elgg 1.9.
+ - Photos organized in albums or group albums,
+ - Commenting on photos and albums,
+ - Tagging (members or word tags),
+ - Slideshow,
+ - Watermarking,
+ - Upload multiple photos at once (HTML5/HTML4 uploader or web form),
+ - Sorting photos in albums,
+ - RSS feeds,
+ - Notifications on new uploads,
+ - Activity (river) integration,
+ - Views counter,
+ - Exif data support,
+ - Userpoints support (requires Elggx Userpoints plugin),
+ - Various listing options (All/Mine/Friends photos, All/Mine/Friends albums, listing photos sorted by number/date of views, number/date of comments, number/date/average of ratings),
+ - Admin Customization: supports GD, Imagick and ImageMagick, quotas, size restrictions, and more.
 
 
 Todo:
 
-- Add option to remove the original uploaded image after resized thumbnail images have been created.
-- Replace the Flash uploader with Plupload uploader (support of HTML5),
+- Get watermarking fully working (original uploaded image file gets not yet watermarked but only the resized image files),
+- Add option to remove the original uploaded image after resized thumbnail images have been created,
 - Replace PiclensLite slideshow with Galleria slideshow (no flash required, responsive).
 
 
 
 Installation and configuration:
 
-IMPORTANT: If you have a previous version of the tidypics plugin installed then disable the plugin on your site and remove the tidypics folder from the mod folder on your server before installing the new version!
-1. copy the tidypics plugin folder into the mod folder on your server,
-2. enable the plugin in the admin section of your site,
-4. check if there's an "Upgrade" button visible on the Tidypics plugin settings page and if yes, FIRST make a DATABASE BACKUP and then execute the upgrade.
-3. configure the plugin settings.
+IMPORTANT: If you have a previous version of the tidypics plugin installed, first disable the Tidypics plugin on your site, then remove the tidypics folder from the mod folder on your server before installing the new version!
+1. Copy the tidypics plugin folder into the mod folder on your server,
+2. Enable the plugin in the admin section of your site,
+3. Check if there's an "Upgrade" button visible on the Tidypics plugin settings page and if yes, FIRST make a DATABASE BACKUP and then execute the upgrade.
+4. Configure the plugin settings.
 
 
 
 Changelog:
 
+Changes for release 1.9.1beta14 (by iionly, YaNoo and Joaquín):
+
+- Same code base as 1.8.1beta14 with necessary modifications to work on Elgg 1.9,
+- Nicer UI theme for the HTML5/HTML4 uploader with list view or thumbnails preview (default) of image files in upload queue,
+- Limit size of lightbox view to a maximum of 95% of width/height of window.
+
+
+Changes for release 1.8.1beta14 (by iionly, YaNoo and Joaquín):
+
+- Uploadify flash uploader replaced by Plupload HTML5/HTML4 uploader (thanks to YaNoo for taking the initiative and providing a PR - otherwise you would have had to wait longer for me to implement it),
+- Spanish language file added (provided by Joaquín).
+
+
 Changes for release 1.9.1beta13 (by iionly and Juho Jaakkola):
 
 ATTENTION: before executing the upgrade script that comes with this version you should have finished the upgrade process of Elgg core from 1.8 to 1.9 if you are not starting on a fresh Elgg 1.9 installation. It's important that all existing comment annotations have already been converted to comment entities. And PLEASE BACKUP YOUR DATABASE before executing the Tidypics upgrade. The backup is important because the script might possibly take some time to finish depending on how many database entries are in need to be updated.
 
-- Same code base as 1.8.1beta12 with necessary modifications to work on Elgg 1.9.
+- Same code base as 1.8.1beta13 with necessary modifications to work on Elgg 1.9,
 - The upgrade script that comes with this version does basically the same as the upgrade script included in 1.8.1beta13: comments formerly made on the activity page are assigned to the uploaded image (on single image uploads) or albums. This is necessary for all existing comments to show up in the same way as future comments. The comments will still be displayed on the activity page but in addition also automatically on image pages or album pages respectively. In addition to the changes done by the Elgg 1.8 version of Tidypics 1.8.1beta13 the version for Elgg 1.9 also restores the specific Tidypics comment views (with thumbnails) on the activity page that were changed to a default comments view by Elgg core when upgrading to 1.9.
 
 
@@ -66,7 +85,7 @@ ATTENTION: this new release contains an update script that changes database entr
 
 
 Changes for release 1.9.1beta12 (by iionly):
-- Same code base as 1.8.1beta12 with necessary modifications to work on Elgg 1.9.
+- Same code base as 1.8.1beta12 with necessary modifications to work on Elgg 1.9,
 - addtional Elgg 1.9 specific changes:
   * Fix of some deprecation issues that turned up on Elgg 1.9,
   * Fix of "Recently commented  photos" and "Most commented..." pages to work again on Elgg 1.9 (necessary due to the change in Elgg 1.9 of handling comments as ElggComment entities instead of annotations),

@@ -49,14 +49,12 @@ function tidypics_init() {
 	elgg_register_js('tidypics:uploading', $js, 'footer');
 
 	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js', 'footer');
-    elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
-    elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js', 'footer');
-    elgg_register_js('jquery.plupload.ui.lang-tp', 'mod/tidypics/vendors/plupload/js/i18n/' . get_current_language() . '.js', 'footer');
-    elgg_register_css('jquery.plupload.jqueryui-theme', 'mod/tidypics/vendors/jqueryui/css/smoothness/jquery-ui-1.10.4.custom.min.css');
-    elgg_register_css('jquery.plupload.ui', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css');
-    
-
-	
+	elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
+	elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js', 'footer');
+	$plupload_language = get_plugload_language();
+	elgg_register_js('jquery.plupload.ui.lang-tp', 'mod/tidypics/vendors/plupload/js/i18n/' . $plupload_language . '.js', 'footer');
+	elgg_register_css('jquery.plupload.jqueryui-theme', 'mod/tidypics/vendors/jqueryui/css/smoothness/jquery-ui-1.10.4.custom.min.css');
+	elgg_register_css('jquery.plupload.ui', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css');
 
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');
@@ -108,9 +106,6 @@ function tidypics_init() {
 
 	// allow people in a walled garden to use flash uploader
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'tidypics_walled_garden_override');
-
-	// flash session work around for uploads when use_only_cookies is set
-	elgg_register_plugin_hook_handler('forward', 'csrf', 'tidypics_ajax_session_handler');
 
 	// override the default url to view a tidypics_batch object
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'tidypics_batch_url_handler');
@@ -603,78 +598,6 @@ function tidypics_walled_garden_override($hook, $type, $pages) {
 }
 
 /**
- * Work around for Flash/session issues
- *
- * Catches Elgg attempting to forward the Flash uploader because it doesn't
- * have a session cookie. Instead manually runs the action.
- *
- * @param string $hook   The name of the hook
- * @param string $type   The type of the hook
- * @param string $value  Location being forwarded to
- * @param array  $params Parameters related to the forward() call
- * @return void
- */
-function tidypics_ajax_session_handler($hook, $type, $value, $params) {
-	$www_root = elgg_get_config('wwwroot');
-	$url = $params['current_url'];
-
-	if ($url !== "{$www_root}action/photos/image/ajax_upload") {
-		return;
-	}
-
-	if (elgg_get_logged_in_user_guid() != 0) {
-		return;
-	}
-
-	// action_gatekeeper rejected ajax call from Flash due to session issue
-
-	// Validate token
-	$token = get_input('__elgg_token');
-	$ts = get_input('__elgg_ts');
-	$session_id = get_input('Elgg');
-	$session_token = get_input('session_token');
-	$tidypics_token = get_input('tidypics_token');
-	$user_guid = get_input('user_guid');
-	$user = get_user($user_guid);
-	$timeout = elgg_get_config('action_token_timeout');
-	if (!$timeout) {
-		$timeout = 2;
-	}
-
-	if (!$user) {
-		trigger_error('Tidypics warning: failed to get user in flash uploader', E_USER_WARNING);
-		return;
-	}
-
-	if (!$token || !$ts || !$session_id || !$tidypics_token) {
-		trigger_error('Tidypics warning: token information missing in flash uploader', E_USER_WARNING);
-		return;
-	}
-
-	$hour = 60*60;
-	$now = time();
-	if ($ts < $now-$hour || $ts > $now+$hour) {
-		trigger_error('Tidypics warning: failed time check in flash uploader', E_USER_WARNING);
-		return;
-	}
-
-	$generated_token = md5($session_id . get_site_secret() . $ts . $user->salt);
-
-	if ($tidypics_token !== $generated_token) {
-		trigger_error('Tidypics warning: token check failed in flash uploader', E_USER_WARNING);
-		return;
-	}
-
-	// passed token test, so login and process action
-	login($user);
-	$actions = array();
-	$actions = _elgg_services()->actions->getAllActions();
-	include $actions['photos/image/ajax_upload']['file'];
-
-	exit;
-}
-
-/**
  * return the album url of the album the tidypics_batch entitities belongs to
  */
 function tidypics_batch_url_handler($hook, $type, $url, $params) {
@@ -723,4 +646,16 @@ function tidypics_comments_handler($hook, $type, $value, $params) {
 	}
 
 	return $result;
+}
+
+function get_plugload_language() {
+
+	if ($current_language = get_current_language()) {
+		$path = elgg_get_plugins_path() . "tidypics/vendors/plupload/js/i18n";
+		if (file_exists("$path/$current_language.js")) {
+			return $current_language;
+		}
+	}
+
+	return 'en';
 }

@@ -7,9 +7,6 @@
  */
 ?>
 
-/* ***************************************
-	TIDYPICS
-*************************************** */
 .elgg-module-tidypics-album,
 .elgg-module-tidypics-image {
 	width: 161px;
@@ -71,32 +68,6 @@
 	vertical-align: top;
 }
 
-/* ***************************************
-	Tagging
-*************************************** */
-.tidypics-tagging-border1 {
-	border: solid 2px white;
-}
-
-.tidypics-tagging-border1, .tidypics-tagging-border2,
-.tidypics-tagging-border3, .tidypics-tagging-border4 {
-    filter: alpha(opacity=50);
-	opacity: 0.5;
-}
-
-.tidypics-tagging-handle {
-    background-color: #fff;
-    border: solid 1px #000;
-    filter: alpha(opacity=50);
-    opacity: 0.5;
-}
-
-.tidypics-tagging-outer {
-    background-color: #000;
-    filter: alpha(opacity=50);
-    opacity: 0.5;
-}
-
 .tidypics-tagging-help {
 	position: absolute;
 	left: 35%;
@@ -128,70 +99,8 @@
 	color: #666;
 }
 
-/* ***************************************
-	Tagging
-*************************************** */
-#tidypics_uploader {
-	position:relative;
-	width:400px;
-	min-height:20px;
-}
-
-#tidypics_choose_button {
-	position:absolute;
-	top:0;
-	left:0;
-	z-index:0;
-	display:block;
-	float:left;
-}
-
-#tidypics_flash_uploader {
-	position:relative;
-	z-index:100;
-}
-
-/* ***************************************
-	AJAX UPLOADER
-*************************************** */
-#tidypics-uploader-steps {
-	list-style: none;
-}
-
-#tidypics-uploader-steps li a {
-	font-weight:bold;
-}
-
-.tidypics-choose-button-hover {
-	color:#0054a7;
-	text-decoration:underline;
-}
-
-.tidypics-disable {
-	color:#cccccc;
-}
-
-.tidypics-disable:hover {
-color:#cccccc;
-text-decoration:none;
-}
-
 #tidypics-uploader {
 	position:relative;
-	width:400px;
+	width:540px;
 	min-height:20px;
-}
-
-#tidypics-choose-button {
-position:absolute;
-top:0;
-left:0;
-z-index:0;
-display:block;
-float:left;
-}
-
-#tidypics-flash-uploader {
-position:relative;
-z-index:100;
 }
