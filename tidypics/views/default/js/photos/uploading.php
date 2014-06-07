@@ -2,8 +2,7 @@
 /**
  * AJAX uploading
  */
-
-$maxfilesize = (int) elgg_get_plugin_setting('maxfilesize', 'tidypics');
+$maxfilesize = ( int ) elgg_get_plugin_setting ( 'maxfilesize', 'tidypics' );
 $maxfilesize *= 1024;
 ?>
 
@@ -22,79 +21,55 @@ elgg.tidypics.uploading.init = function() {
 		}
 	});
 
-	$("#uploadify").uploadify({
-		'swf'           : elgg.config.wwwroot + 'mod/tidypics/vendors/uploadify/uploadify.swf',
-		'uploader'      : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
-		'fileObjName'   : 'Image',
-		'fileSizeLimit' : <?php echo $maxfilesize; ?>,
-		'uploadLimit'   : 10,
-		'fileTypeDesc'  : 'Image Files',
-		'fileTypeExts'  : '*.gif; *.jpg; *.png', 
-		'multi'         : true,
-		'auto'          : false,
-		'buttonText'    : '1. <?php echo elgg_echo('tidypics:uploader:choose'); ?>',
-		'height'        : $('#tidypics-choose-button').height(),
-		'width'         : $('#tidypics-choose-button').width(),
-		'formData'      : data,
-		'onFallback'    : function() {
-								alert('<?php echo elgg_echo('tidypics:uploader:no_flash'); ?>');
-							},
-		'onDialogClose' : function(queueData) {
-								if (queueData.queueLength > 0) {
-									$("#tidypics-upload-button").removeClass('tidypics-disable');
-								}
-							},
-		'onUploadStart' : function(file) {
-								// @todo do something
-							},
-		'onQueueComplete' : function(queueData) {
-								elgg.action('photos/image/ajax_upload_complete', {
-									data: {
-											album_guid: data.album_guid,
-											batch: data.batch
-									},
-									success: function(json) {
-										var url = elgg.normalize_url('photos/edit/' + json.batch_guid)
-										window.location.href = url;
-									}
-								});
-							},
-		'onUploadSuccess' : function(file, data, response) {
-								// check for errors here
-								if (response != 'success') {
-									$("#uploadify" + file.name + " .percentage").text(" - " + response);
-									$("#uploadify" + file.name).addClass('uploadifyError');
-								}
-								$("#uploadify" + file.name + " > .cancel").remove();
-								return false;
-							},
-		'onUploadComplete' : function(file) {
-									// @todo do something
-								},
-		'onCancel' : function(file) {
-							// @todo do something
-						},
-		'onClearQueue' : function(queueItemCount) {
-								// @todo do something
-							},
-		'onUploadError' : function (file, errorCode, errorMsg, errorString) {
-								// @todo do something
-							}
+	$("#uploader").plupload({
+        // General settings
+        runtimes : 'html5,flash,silverlight,html4',
+        url : elgg.config.wwwroot + 'action/photos/image/ajax_upload',
+
+        rename : true,
+        dragdrop: true,
+
+        max_file_size : '<?php echo $maxfilesize; ?>mb',
+
+        filters : [
+        	{title : "<?php echo elgg_echo('tidypics:uploader:filetype'); ?>", extensions : "jpg,gif,png"}
+        ],
+        multipart_params : data,
+
+        // Sort files
+        sortable: true,
+
+        // Views to activate
+        views: {
+        	list: true,
+            thumbs: true, // Show thumbs
+            active: 'thumbs'
+        },
+	
+	    // Flash settings
+	    flash_swf_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.swf',
+	     
+	    // Silverlight settings
+	    silverlight_xap_url : elgg.config.wwwroot + 'mod/tidypics/vendors/plupload/Moxie.xap',
+	    // Post init events, bound after the internal events
+	    init : {
+	    	UploadComplete: function(up, files) {
+	        // Called when all files are either uploaded or failed
+	        	elgg.action('photos/image/ajax_upload_complete', {
+					data: {
+						album_guid: data.album_guid,
+						batch: data.batch
+					},
+					success: function(json) {
+						var url = elgg.normalize_url('photos/edit/' + json.batch_guid)
+							window.location.href = url;
+					}
+				});					
+			}
+	 	}
 	});
 
-	// bind to choose button
-	$('#tidypics-choose-button').live('click', function(e) {
-		var $uploadify = $('#uploadify');
-		$uploadify.uploadify('disable', false);
-		e.preventDefault();
-	});
-
-	// bind to upload button
-	$('#tidypics-upload-button').live('click', function(e) {
-		var $uploadify = $('#uploadify');
-		$uploadify.uploadify('upload','*');
-		e.preventDefault();
-	});
-}
+	
+};
 
 elgg.register_hook_handler('init', 'system', elgg.tidypics.uploading.init);

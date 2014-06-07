@@ -6,7 +6,7 @@
 elgg_load_library('tidypics:upload');
 
 $album_guid = (int) get_input('album_guid');
-$file_var_name = get_input('file_var_name', 'Image');
+$file_var_name = get_input('file_var_name', 'file');
 $batch = get_input('batch');
 
 $album = get_entity($album_guid);
@@ -24,18 +24,9 @@ if (empty($_FILES)) {
 
 $file = $_FILES[$file_var_name];
 
-$mime = tp_upload_get_mimetype($file['name']);
-if ($mime == 'unknown') {
-	echo 'Not an image';
-	exit;
-}
-
-// we have to override the mime type because uploadify sends everything as application/octet-string
-$file['type'] = $mime;
-
 $image = new TidypicsImage();
 $image->container_guid = $album->getGUID();
-$image->setMimeType($mime);
+$image->setMimeType($file['type']);
 $image->access_id = $album->access_id;
 $image->batch = $batch;
 

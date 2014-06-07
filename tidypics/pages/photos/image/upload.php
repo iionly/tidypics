@@ -43,7 +43,12 @@ $uploader = get_input('uploader');
 if ($uploader == 'basic') {
 	$content = elgg_view('forms/photos/basic_upload', array('entity' => $album));
 } else {
-	elgg_load_js('jquery.uploadify-tp');
+	elgg_load_js('jquery.plupload-tp');
+	elgg_load_js('jquery.plupload.ui-tp');
+	elgg_load_js('jquery.plupload.ui.lang-tp');
+	elgg_load_css('jquery.plupload.jqueryui-theme');
+	elgg_load_css('jquery.plupload.ui');
+	
 	elgg_load_js('tidypics:uploading');
 	$content = elgg_view('forms/photos/ajax_upload', array('entity' => $album));
 }

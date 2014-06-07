@@ -49,7 +49,14 @@ function tidypics_init() {
 	elgg_register_js('tidypics:uploading', $js, 'footer');
 
 	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js', 'footer');
-	elgg_register_js('jquery.uploadify-tp', 'mod/tidypics/vendors/uploadify/jquery.uploadify.min.js', 'footer');
+    elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
+    elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js', 'footer');
+    elgg_register_js('jquery.plupload.ui.lang-tp', 'mod/tidypics/vendors/plupload/js/i18n/' . get_current_language() . '.js', 'footer');
+    elgg_register_css('jquery.plupload.jqueryui-theme', 'mod/tidypics/vendors/jqueryui/css/smoothness/jquery-ui-1.10.4.custom.min.css');
+    elgg_register_css('jquery.plupload.ui', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css');
+    
+
+	
 
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');
