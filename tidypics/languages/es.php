@@ -165,6 +165,14 @@ return array(
 		'tidypics:thumbnail_tool:create_failed' => 'Error al crear miniaturas.',
 		'tidypics:thumbnail_tool:created' => 'Miniaturas creadas.',
 
+		// Delete image tool
+		'tidypics:delete_image' => "Borrar foto",
+		'tidypics:delete_image_id' => "ID de la foto",
+		'tidypics:delete_image_blurb' => 'Esta página le permite eliminar la entrada de una foto en el caso de que la imagen no se puede eliminar a través del botón borrar en el front end del sitio. Podría ser necesario en el caso de algún error al subir la foto (!Se espera que se produzca muy raramente!) y la página correspondiente a esta foto esté defectuosa. Localice el identificador único de la foto (el llamado GUID que es el número casi al final de la url perteneciente a la entrada la foto) y lo introduce a continuación.',
+		'tidypics:delete_image:no_guid' => 'No hay elemento Elgg con este GUID.',
+		'tidypics:delete_image:success' => 'Se ha eliminado la imagen-elemento Tidypics.',
+		'tidypics:delete_image:no_image' => 'Este GUID no pertenece a una imagenen-elemento Tidypics. Borrado cancelado.',
+
 		// Actions
 		'album:create' => "Crear nuevo álbum",
 		'album:add' => "Añadir Álbum de fotos",
@@ -184,7 +192,7 @@ return array(
 		'album:cover_link' => 'Hacer portada',
 		'tidypics:title:quota' => 'Cuota',
 		'tidypics:quota' => "Uso de cuotas:",
-		'tidypics:uploader:no_flash' => "No se pudo identificar la versión flash o sin flash instalado. Utilice el cargador básico.",
+		'tidypics:uploader:no_flash' => "Desafortunadamente su navegador no dispone de suficiente HTML5 o soporte HTML4, la carga de fotos no funcionará. Por favor, actualice su navegador.",
 		'tidypics:uploader:choose' => "Elija las fotos",
 		'tidypics:uploader:upload' => "Suba las fotos",
 		'tidypics:uploader:describe' => "Describa las fotos",
@@ -194,8 +202,10 @@ return array(
 		'tidypics:sort:no_images' => 'No se encontraron fotos para ordenar. Sube fotos usando el enlace de arriba.',
 		'tidypics:album_select' => 'Antes de poder comenzar con la carga de sus fotografías es necesario seleccionar uno de sus álbumes al que desea añadir las fotos o se puede optar por crear un nuevo álbum: ',
 		'tidypics:continue' => 'Continuar',
+		'tidypics:uploader:filetype' => 'Tipos de archivos de imagen permitidos',
 
 		// Albums
+		'album:created_by' => 'Por ',
 		'album:num' => '%s fotos',
 
 		// Views
@@ -270,6 +280,20 @@ La foto se puede ver aquí: %s",
 		'tidypics:updatealbum_subject' => 'Nuevas fotos en el álbum',
 		'tidypics:updatealbum' => "%s cargado nuevas fotos en el álbum %s.",
 
+		'tidypics:notify:summary_newalbum' => 'Crear un álbum llamado %s',
+		'tidypics:notify:subject_newalbum' => 'Crear un álbum: %s',
+		'tidypics:notify:body_newalbum' => '%s ha creado un nuevo álbum de fotos: %s
+
+Ver y hacer comentarios sobre el álbum:
+%s',
+
+		'tidypics:notify:summary_updatealbum' => 'Nuevas fotos en el álbum: %s',
+		'tidypics:notify:subject_updatealbum' => 'Nuevas fotos en el álbum: %s',
+		'tidypics:notify:body_updatealbum' => '%s ha subido nuevas fotos al álbum %s
+
+Ver y hacer comentarios sobre el álbum:
+%s',
+
 		// Status messages
 		'tidypics:upl_success' => "Sus fotos fueron cargadas con éxito.",
 		'image:saved' => "Su foto se ha guardado correctamente.",
@@ -293,6 +317,7 @@ La foto se puede ver aquí: %s",
 		'tidypics:partialuploadfailure' => "Hubo errores cargando algunas de las fotos (%s de %s fotos).",
 		'tidypics:completeuploadfailure' => "Error cargando las fotos.",
 		'tidypics:exceedpostlimit' => "Fotos demasiados grandes - tratar de subir menos o fotos más pequeñas.",
+		'tidypics:exceedmax_number' => "La subida se limita a un número máximo de %s fotos a la vez.",
 		'tidypics:noimages' => "No hay fotos seleccionadas.",
 		'tidypics:image_mem' => "La foto es demasiado grande - demasiados bytes.",
 		'tidypics:image_pixels' => "La foto tiene demasiados píxeles.",

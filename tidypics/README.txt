@@ -27,6 +27,7 @@ Features:
  - Admin Customization: supports GD, Imagick and ImageMagick, quotas, size restrictions, and more.
 
 
+
 Todo:
 
 - Get watermarking fully working (original uploaded image file gets not yet watermarked but only the resized image files),
