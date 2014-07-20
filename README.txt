@@ -1,6 +1,6 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.1beta14
-Released: 2014-06-09
+Latest Version: 1.9.1beta15
+Released: 2014-07-20
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013-2014, (C) Cash Costello 2011-2014
@@ -47,6 +47,17 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed, firs
 
 
 Changelog:
+
+Changes for release 1.9.1beta15 (by iionly):
+
+- Same code base as 1.8.1beta15 with necessary modifications to work on Elgg 1.9 (fix of limitation to 10 images to be uploaded in one batch when using Plupload HTML5/HTML4 uploader),
+- Fix of deprecated usage of getFriends() function on Elgg 1.9.
+
+
+Changes for release 1.8.1beta15 (by iionly):
+
+- Fix of limitation to 10 images to be uploaded in one batch when using Plupload HTML5/HTML4 uploader.
+
 
 Changes for release 1.9.1beta14 (by iionly, YaNoo and Joaquín):
 

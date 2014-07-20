@@ -17,7 +17,7 @@ elgg_push_breadcrumb(elgg_echo('friends'));
 $offset = (int)get_input('offset', 0);
 $limit = (int)get_input('limit', 16);
 
-if ($friends = $owner->getFriends('', false, 0)) {
+if ($friends = $owner->getFriends(array('limit' => false))) {
 	$friendguids = array();
 	foreach ($friends as $friend) {
 		$friendguids[] = $friend->getGUID();

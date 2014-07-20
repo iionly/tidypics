@@ -1,6 +1,33 @@
 Changelog and contributors list
 
 ------------------------------------------------------------------------
+Version 1.9.1beta15 Change List
+Release Date: 20/07/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.9.1beta15 CHANGES
+------------------------------------------------------------------------
+ * Same code base as 1.8.1beta15 with necessary modifications to work on Elgg 1.9 (fix of limitation to 10 images to be uploaded in one batch when using Plupload HTML5/HTML4 uploader),
+ * Fix of deprecated usage of getFriends() function on Elgg 1.9.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.9.1beta15 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Version 1.8.1beta15 Change List
+Release Date: 20/07/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.8.1beta15 CHANGES
+------------------------------------------------------------------------
+ * Fix of limitation to 10 images to be uploaded in one batch when using Plupload HTML5/HTML4 uploader.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.8.1beta15 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 Version 1.9.1beta14 Change List
 Release Date: 09/06/2014
 ------------------------------------------------------------------------

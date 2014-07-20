@@ -55,21 +55,24 @@ elgg.tidypics.uploading.init = function() {
 					}
 				});
 			},
+
 			FilesAdded: function(up, files) {
-				var max_files = <?php echo $max_files;?>;
-				plupload.each(files, function(file) {
-					if (up.files.length > max_files) {
-						alert("<?php echo elgg_echo('tidypics:exceedmax_number', array($max_files));?>");
-						up.removeFile(file);
-					}
-				});
-				if (up.files.length >= max_files) {
-					$('#pickfiles').hide('slow');
+				var maxfiles = <?php echo $max_files;?>;
+				if(up.files.length > maxfiles ) {
+					alert("<?php echo elgg_echo('tidypics:exceedmax_number', array($max_files));?>");
+				}
+				if(up.files.length > maxfiles ) {
+					up.splice(maxfiles);
+				}
+				if (up.files.length >= maxfiles) {
+					up.disableBrowse(true);
 				}
 			},
+
 			FilesRemoved: function(up, files) {
-				if (up.files.length < max_files) {
-					$('#pickfiles').fadeIn('slow');
+				var maxfiles = <?php echo $max_files;?>;
+				if (up.files.length < maxfiles) {
+					up.disableBrowse(false);
 				}
 			}
 		}

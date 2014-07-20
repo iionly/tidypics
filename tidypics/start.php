@@ -48,7 +48,7 @@ function tidypics_init() {
 	elgg_register_simplecache_view('js/photos/uploading');
 	elgg_register_js('tidypics:uploading', $js, 'footer');
 
-	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js', 'footer');
+	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js');
 	elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
 	elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js', 'footer');
 	$plupload_language = get_plugload_language();
