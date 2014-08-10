@@ -1,6 +1,35 @@
 Changelog and contributors list
 
 ------------------------------------------------------------------------
+Version 1.9.1beta16 Change List
+Release Date: 10/08/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.9.1beta16 CHANGES
+------------------------------------------------------------------------
+ * Same code base as 1.8.1beta16 with necessary modifications to work on Elgg 1.9,
+ * Allow sorting of images in queue before starting uploading using HTML5 uploader.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.9.1beta16 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Version 1.8.1beta16 Change List
+Release Date: 10/08/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.8.1beta16 CHANGES
+------------------------------------------------------------------------
+ * Fix in latest upgrade script that might resulted in not all database entries having been updated successfully (new "Upgrade" run necessary to complete),
+ * Fix for HTML5 uploader to correctly disable/enable the "Add files" button if the maximum number of allowed photos (or more) had been selected for upload,
+ * Using ElggBatch for image deletion when deleting an album (and its possibly numberous images) to avoid memory issues.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.8.1beta16 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 Version 1.9.1beta15 Change List
 Release Date: 20/07/2014
 ------------------------------------------------------------------------

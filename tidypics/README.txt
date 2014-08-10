@@ -1,6 +1,6 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.1beta15
-Released: 2014-07-20
+Latest Version: 1.9.1beta16
+Released: 2014-08-10
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013-2014, (C) Cash Costello 2011-2014
@@ -47,6 +47,19 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed, firs
 
 
 Changelog:
+
+Changes for release 1.9.1beta16 (by iionly):
+
+- Same code base as 1.8.1beta16 with necessary modifications to work on Elgg 1.9,
+- Allow sorting of images in queue before starting uploading using HTML5 uploader.
+
+
+Changes for release 1.8.1beta16 (by iionly):
+
+- Fix in latest upgrade script that might resulted in not all database entries having been updated successfully (new "Upgrade" run necessary to complete),
+- Fix for HTML5 uploader to correctly disable/enable the "Add files" button if the maximum number of allowed photos (or more) had been selected for upload,
+- Using ElggBatch for image deletion when deleting an album (and its possibly numberous images) to avoid memory issues.
+
 
 Changes for release 1.9.1beta15 (by iionly):
 

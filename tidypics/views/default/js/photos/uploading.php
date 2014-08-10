@@ -27,6 +27,7 @@ elgg.tidypics.uploading.init = function() {
 		file_data_name : 'Image',
 
 		dragdrop: true,
+		sortable: true,
 		multipart_params : data,
 		max_file_size : '<?php echo $maxfilesize; ?>mb',
 

@@ -9,7 +9,7 @@ $album = $vars['entity'];
 
 $ts = time();
 $batch = time();
-$tidypics_token = md5(session_id() . get_site_secret() . $ts . elgg_get_logged_in_user_entity()->salt);
+$tidypics_token = generate_action_token($ts);
 $basic_uploader_url = current_page_url() . '/basic';
 
 $maxfilesize = (float) elgg_get_plugin_setting('maxfilesize', 'tidypics');
