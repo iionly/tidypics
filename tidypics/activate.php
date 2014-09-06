@@ -46,6 +46,7 @@ $defaults = array(
 	'img_river_view' => 'batch',
 	'album_river_view' => 'cover',
 	'river_comments_thumbnails' => 'none',
+	'river_thumbnails_size' => 'tiny',
 
 	'image_sizes' => $image_sizes,
 

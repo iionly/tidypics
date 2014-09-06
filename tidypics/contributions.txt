@@ -1,6 +1,37 @@
 Changelog and contributors list
 
 ------------------------------------------------------------------------
+Version 1.9.2 Change List
+Release Date: 06/09/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.9.2 CHANGES
+------------------------------------------------------------------------
+* Same code base as 1.8.2 with necessary modifications to work on Elgg 1.9,
+* Fix of group album handling. Group members (who are no admin) can upload images again to any group album (not only their own).
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.9.2 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Version 1.8.2 Change List
+Release Date: 06/09/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.8.2 CHANGES
+------------------------------------------------------------------------
+* No longer beta! Apart from the things mentioned in the ToDo section everything should work. If not, please tell me,
+* Rework of river activity settings (check the settings and make adjustments if necessary):
+  - new option to set preview image size for all kind of Tidypics' river entries,
+  - click on preview image in river now opens full size version of the image in a lightbox popup.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.8.2 CHANGES
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
 Version 1.9.1beta16 Change List
 Release Date: 10/08/2014
 ------------------------------------------------------------------------

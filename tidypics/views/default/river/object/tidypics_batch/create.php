@@ -7,6 +7,10 @@
  *
  */
 
+elgg_load_js('tidypics');
+elgg_load_js('lightbox');
+elgg_load_css('lightbox');
+
 $batch = $vars['item']->getObjectEntity();
 
 // Get images related to this batch
@@ -38,11 +42,20 @@ $subject_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+$attachments = '';
 if (count($images)) {
+	$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics');
+	if(!$preview_size) {
+		$preview_size = 'tiny';
+	}
 	$attachments = '<ul class="tidypics-river-list">';
 	foreach($images as $image) {
 		$attachments .= '<li class="tidypics-photo-item">';
-		$attachments .= elgg_view_entity_icon($image, 'tiny');
+		$attachments .= elgg_view_entity_icon($image, $preview_size, array(
+			'href' => $image->getIconURL('master'),
+			'img_class' => 'tidypics-photo',
+			'link_class' => 'tidypics-lightbox',
+		));
 		$attachments .= '</li>';
 	}
 	$attachments .= '</ul>';
