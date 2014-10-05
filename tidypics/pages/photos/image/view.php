@@ -12,9 +12,9 @@ group_gatekeeper();
 $photo_guid = (int) get_input('guid');
 $photo = get_entity($photo_guid);
 if (!$photo) {
-        register_error(elgg_echo('noaccess'));
-        $_SESSION['last_forward_from'] = current_page_url();
-        forward('');
+	register_error(elgg_echo('noaccess'));
+	$_SESSION['last_forward_from'] = current_page_url();
+	forward('');
 }
 $album = $photo->getContainerEntity();
 $album_container = $album->getContainerEntity();
@@ -49,15 +49,23 @@ elgg_push_breadcrumb($album->getTitle(), $album->getURL());
 elgg_push_breadcrumb($photo->getTitle());
 
 if (elgg_is_logged_in()) {
-        if (elgg_instanceof($owner, 'group')) {
-                $logged_in_guid = $owner->guid;
-        } else {
-                $logged_in_guid = elgg_get_logged_in_user_guid();
-        }
-        elgg_register_menu_item('title', array('name' => 'addphotos',
-                                               'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
-                                               'text' => elgg_echo("photos:addphotos"),
-                                               'link_class' => 'elgg-button elgg-button-action elgg-lightbox'));
+	if ($owner instanceof ElggGroup) {
+		if ($owner->isMember(elgg_get_logged_in_user_entity())) {
+			elgg_register_menu_item('title', array(
+				'name' => 'addphotos',
+				'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
+				'text' => elgg_echo("photos:addphotos"),
+				'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+			));
+		}
+	} else {
+		elgg_register_menu_item('title', array(
+			'name' => 'addphotos',
+			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . elgg_get_logged_in_user_guid(),
+			'text' => elgg_echo("photos:addphotos"),
+			'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+		));
+	}
 }
 
 if (elgg_get_plugin_setting('download_link', 'tidypics')) {

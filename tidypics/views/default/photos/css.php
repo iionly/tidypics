@@ -104,3 +104,7 @@
 	width:540px;
 	min-height:20px;
 }
+
+#uploader {
+	text-shadow: none;
+}

@@ -89,7 +89,7 @@ function tidypics_init() {
 		elgg_register_widget_type('groups_latest_albums', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), array('groups'));
 
 		//register title urls for widgets
-		elgg_register_plugin_hook_handler('widget_url', 'widget_manager', "tidypics_widget_urls", 499);
+		elgg_register_plugin_hook_handler("entity:url", "object", "tidypics_widget_urls");
 	}
 
 	// RSS extensions for embedded media
