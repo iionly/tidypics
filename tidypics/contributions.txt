@@ -1,6 +1,33 @@
 Changelog and contributors list
 
 ------------------------------------------------------------------------
+Version 1.9.4 Change List
+Release Date: 07/10/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.9.4 CHANGES
+------------------------------------------------------------------------
+* Same code base as 1.8.4 with necessary modifications to work on Elgg 1.9,
+* Getting slideshow to work again (thanks to chenkai for providing some info in a discussion post on the community site that put me on the right track to fix it). As on Elgg 1.8 the slideshow also has a "No-Flash required" fallback now.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.9.4 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Version 1.8.4 Change List
+Release Date: 07/10/2014
+------------------------------------------------------------------------
+BEGIN VERSION 1.8.4 CHANGES
+------------------------------------------------------------------------
+* "No-Flash required" fallback for slideshow.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.8.4 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 Version 1.9.3 Change List
 Release Date: 05/10/2014
 ------------------------------------------------------------------------

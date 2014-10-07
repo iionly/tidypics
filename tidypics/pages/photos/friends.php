@@ -26,16 +26,16 @@ if ($friends = $owner->getFriends(array('limit' => false))) {
 		$friendguids[] = $friend->getGUID();
 	}
 	$result = elgg_list_entities(array(
-				'type' => 'object',
-				'subtype' => 'album',
-				'owner_guids' => $friendguids,
-				'limit' => $limit,
-				'offset' => $offset,
-				'full_view' => false,
-				'pagination' => true,
-				'list_type' => 'gallery',
-				'list_type_toggle' => false,
-				'gallery_class' => 'tidypics-gallery'
+		'type' => 'object',
+		'subtype' => 'album',
+		'owner_guids' => $friendguids,
+		'limit' => $limit,
+		'offset' => $offset,
+		'full_view' => false,
+		'pagination' => true,
+		'list_type' => 'gallery',
+		'list_type_toggle' => false,
+		'gallery_class' => 'tidypics-gallery'
 	));
 
 	if (!empty($result)) {
@@ -48,10 +48,11 @@ if ($friends = $owner->getFriends(array('limit' => false))) {
 }
 
 $logged_in_guid = elgg_get_logged_in_user_guid();
-elgg_register_menu_item('title', array('name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
-		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+elgg_register_menu_item('title', array(
+	'name' => 'addphotos',
+	'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
+	'text' => elgg_echo("photos:addphotos"),
+	'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
 ));
 
 elgg_register_title_button();

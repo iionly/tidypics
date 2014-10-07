@@ -55,13 +55,15 @@ if (elgg_is_logged_in()) {
 if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 	$url = elgg_get_site_url() . "photos/siteimagesgroup/$container_guid?limit=64&offset=$offset&view=rss";
 	$url = elgg_format_url($url);
-	$slideshow_link = "javascript:PicLensLite.start({maxScale:0, feedUrl:'$url'})";
+	$lite_url = elgg_get_site_url() . "mod/tidypics/vendors/PicLensLite/";
+	$slideshow_link = "javascript:PicLensLite.setLiteURLs({lite:'$lite_url'});PicLensLite.start({maxScale:0, feedUrl:'$url'});";
 	elgg_register_menu_item('title', array(
 		'name' => 'slideshow',
 		'href' => $slideshow_link,
 		'text' => "<img src=\"".elgg_get_site_url() ."mod/tidypics/graphics/slideshow.png\" alt=\"".elgg_echo('album:slideshow')."\">",
 		'title' => elgg_echo('album:slideshow'),
-		'link_class' => 'elgg-button elgg-button-action'));
+		'link_class' => 'elgg-button elgg-button-action'
+	));
 }
 
 if (!empty($result)) {

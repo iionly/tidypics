@@ -85,7 +85,8 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && $album->getSize() > 0) {
 	$offset = (int)get_input('offset', 0);
 	$url = $album->getURL() . "?limit=64&offset=$offset&view=rss";
 	$url = elgg_format_url($url);
-	$slideshow_link = "javascript:PicLensLite.start({maxScale:0, feedUrl:'$url'})";
+	$lite_url = elgg_get_site_url() . "mod/tidypics/vendors/PicLensLite/";
+	$slideshow_link = "javascript:PicLensLite.setLiteURLs({lite:'$lite_url'});PicLensLite.start({maxScale:0, feedUrl:'$url'});";
 	elgg_register_menu_item('title', array(
 		'name' => 'slideshow',
 		'href' => $slideshow_link,

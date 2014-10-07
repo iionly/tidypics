@@ -1,6 +1,6 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.3
-Released: 2014-10-05
+Latest Version: 1.9.4
+Released: 2014-10-07
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013-2014, (C) Cash Costello 2011-2014
@@ -32,7 +32,7 @@ Todo:
 
 - Get watermarking fully working (original uploaded image file gets not yet watermarked but only the resized image files),
 - Add option to remove the original uploaded image after resized thumbnail images have been created,
-- Replace PiclensLite slideshow with Galleria slideshow (no flash required, responsive). Replace it even more so because PiclensLite does not work on Elgg 1.9 anymore.
+- Replace PiclensLite slideshow with Galleria slideshow (no flash required, responsive).
 
 
 
@@ -47,6 +47,15 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed, firs
 
 
 Changelog:
+
+Changes for release 1.9.4 (by iionly):
+- Same code base as 1.8.4 with necessary modifications to work on Elgg 1.9,
+- Getting slideshow to work again (thanks to chenkai for providing some info in a discussion post on the community site that put me on the right track to fix it). As on Elgg 1.8 the slideshow also has a "No-Flash required" fallback now.
+
+
+Changes for release 1.8.4 (by iionly):
+- "No-Flash required" fallback for slideshow.
+
 
 Changes for release 1.9.3 (by iionly):
 - Same code base as 1.8.3 with necessary modifications to work on Elgg 1.9,
