@@ -4,6 +4,11 @@
  * Update view path of river entries for comments made on Tidypics images, albums and tidypics_batches (image uploads)
  *
  * This is a follow-up upgrade to be executed AFTER the Elgg core upgrade from Elgg 1.8 to Elgg 1.9.
+ *
+ * Due to a bug in Elgg core (fixed in 1.9.5) this upgrade here has to be repeated after upgrading to Elgg 1.9.5
+ * (and possibly finishing the comments migration only now...)
+ * to catch any database entries that might have not been upgraded before
+ *
  * The Elgg core upgrade script changes comments from annotations to entities and updates the river entries accordingly.
  * This Tidypics-specific script then updates the views referred in river entries for comments made on Tidypics entities
  * to allow for using the Tidypics-specific river comment views (which add optionally a thumbnail image of the image/album
