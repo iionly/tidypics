@@ -55,6 +55,14 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed, firs
 
 Changelog:
 
+Changes for release 1.9.5 (by iionly):
+- Same code base as 1.8.5 with necessary modifications to work on Elgg 1.9.
+
+
+Changes for release 1.8.5 (by iionly):
+- Image file extension "jpeg" added to list of allowed extension for html5 uploader.
+
+
 Changes for release 1.9.4.1 (by iionly):
 
 - Added Tidypics upgrade script to be executed after upgrading a site to Elgg 1.9.5 to catch any comments made on images and albums possibly not yet upgraded by Tidypics previously due to a bug in Elgg core resulting in the comments migration when upgrading from Elgg 1.8 left incomplete (fixed in Elgg 1.9.5).
