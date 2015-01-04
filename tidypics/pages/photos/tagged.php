@@ -10,6 +10,10 @@ $guid = get_input('guid');
 
 $user = get_entity($guid);
 
+if(!$user || !(elgg_instanceof($user, 'user'))) {
+	forward(REFERER);
+}
+
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:usertagged'));

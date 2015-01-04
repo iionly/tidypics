@@ -10,7 +10,7 @@ elgg_set_page_owner_guid($container_guid);
 group_gatekeeper();
 $container = get_entity($container_guid);
 if(!$container || !(elgg_instanceof($container, 'group'))) {
-	return;
+	forward(REFERER);
 }
 
 $db_prefix = elgg_get_config('dbprefix');

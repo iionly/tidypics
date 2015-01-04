@@ -8,8 +8,12 @@
 $owner_guid = get_input('guid');
 $owner = get_entity($owner_guid);
 if(!$owner || !(elgg_instanceof($owner, 'user'))) {
-	$owner = elgg_get_logged_in_user_entity();
-	$filter = elgg_view('filter_override/siteimages', array('selected' => 'mine'));
+	if (!$owner = elgg_get_logged_in_user_entity()) {
+		// no one logged in and no user guid provided so forward to REFERER
+		forward(REFERER);
+	} else {
+		$filter = elgg_view('filter_override/siteimages', array('selected' => 'mine'));
+	}
 } else {
 	$filter = '';
 }
@@ -35,13 +39,15 @@ $result = elgg_list_entities(array(
 
 $title = elgg_echo('tidypics:siteimagesowner', array($owner->name));
 
-$owner_guid = elgg_get_logged_in_user_guid();
-elgg_register_menu_item('title', array(
-	'name' => 'addphotos',
-	'href' => "ajax/view/photos/selectalbum/?owner_guid=$owner_guid",
-	'text' => elgg_echo("photos:addphotos"),
-	'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
-));
+if (elgg_is_logged_in()) {
+	$logged_in_guid = elgg_get_logged_in_user_guid();
+	elgg_register_menu_item('title', array(
+		'name' => 'addphotos',
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
+		'text' => elgg_echo("photos:addphotos"),
+		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+	));
+}
 
 // only show slideshow link if slideshow is enabled in plugin settings and there are images
 if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
