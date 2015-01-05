@@ -6,6 +6,9 @@
  *
  */
 
+elgg_load_js('lightbox');
+elgg_load_css('lightbox');
+
 // get widget settings
 $count = sanitise_int($vars["entity"]->tp_latest_photos_count, false);
 if(empty($count)){
@@ -31,5 +34,18 @@ $image_html = elgg_list_entities(array(
 	'gallery_class' => 'tidypics-gallery-widget',
 ));
 elgg_set_context($prev_context);
+
+if (elgg_is_logged_in()) {
+	$group = get_entity($container_guid);
+	if ($group->isMember(elgg_get_logged_in_user_entity())) {
+		$image_html .= elgg_view('output/url', array(
+			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $container_guid,
+			'text' => elgg_echo("photos:addphotos"),
+			'class' => 'elgg-lightbox',
+			'link_class' => 'elgg-lightbox',
+			'is_trusted' => true,
+		));
+	}
+}
 
 echo $image_html;

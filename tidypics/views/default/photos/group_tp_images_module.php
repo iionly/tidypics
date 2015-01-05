@@ -3,6 +3,9 @@
  * Group images module
  */
 
+elgg_load_js('lightbox');
+elgg_load_css('lightbox');
+
 $group = $vars['entity'];
 
 if ($group->tp_images_enable == "no") {
@@ -14,6 +17,19 @@ $all_link = elgg_view('output/url', array(
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
+
+$new_link = '';
+if (elgg_is_logged_in()) {
+	if ($group->isMember(elgg_get_logged_in_user_entity())) {
+		$new_link = elgg_view('output/url', array(
+			'href' => "ajax/view/photos/selectalbum/?owner_guid=" .$group->guid,
+			'text' => elgg_echo("photos:addphotos"),
+			'class' => 'elgg-lightbox',
+			'link_class' => 'elgg-lightbox',
+			'is_trusted' => true,
+		));
+	}
+}
 
 $container_guid =  elgg_get_page_owner_guid();
 $db_prefix = elgg_get_config('dbprefix');
@@ -42,4 +58,5 @@ echo elgg_view('groups/profile/module', array(
 	'title' => elgg_echo('tidypics:mostrecent'),
 	'content' => $content,
 	'all_link' => $all_link,
+	'add_link' => $new_link,
 ));

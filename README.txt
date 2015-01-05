@@ -62,6 +62,7 @@ Changes for release 1.9.5 (by iionly):
 
 Changes for release 1.8.5 (by iionly):
 - Fixed an error in 2013121301.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2013121401.php),
+- Added "Upload photos" link to "Latest group photos" widget on group profile pages (without and with Widget Manager plugin in use),
 - Image file extension "jpeg" added to list of allowed extension for html5 uploader,
 - Fixes in page views (siteimagesowner, siteimagesgroup, tagged) in case of missing guid on input or viewer is logged out,
 - Added missing CSS classes for tagging borders again that were mistakenly removed in release 1.8.1beta14.
