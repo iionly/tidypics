@@ -57,9 +57,11 @@ Changelog:
 
 Changes for release 1.9.5 (by iionly):
 - Same code base as 1.8.5 with necessary modifications to work on Elgg 1.9.
+- Fixed an error in 2014111701.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2014111801.php),
 
 
 Changes for release 1.8.5 (by iionly):
+- Fixed an error in 2013121301.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2013121401.php),
 - Image file extension "jpeg" added to list of allowed extension for html5 uploader,
 - Fixes in page views (siteimagesowner, siteimagesgroup, tagged) in case of missing guid on input or viewer is logged out,
 - Added missing CSS classes for tagging borders again that were mistakenly removed in release 1.8.1beta14.

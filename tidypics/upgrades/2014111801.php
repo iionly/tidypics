@@ -94,6 +94,7 @@ if ($river_entry_ids) {
 		SET view = 'river/object/comment/album'
 		WHERE id IN ($river_entry_ids)";
 	update_data($query);
+	unset($river_entry_ids);
 }
 // End of Update PART 1/5
 
@@ -266,7 +267,8 @@ $batch = new ElggBatch('elgg_get_entities', array(
 	'wheres' => array("al.subtype = $album_subtype_id"),
 	'limit' => false
 ));
-$batch->setIncrementOffset(false);
+// now collect the ids of the duplicate comment entities that should be deleted
+$album_comment_entry_guids = array();
 foreach ($batch as $album_comment) {
 	$river_entry_count = elgg_get_river(array(
 		'type' => 'object',
@@ -278,8 +280,17 @@ foreach ($batch as $album_comment) {
 	));
 	
 	if($river_entry_count < 1) {
-		$album_comment->delete();
+		$album_comment_entry_guids[] = $album_comment->guid;
 	}
+}
+
+// and finally delete the rows in the entities table if there have been any duplicate comment entities found
+if ($album_comment_entry_guids) {
+	$album_comment_entry_guids = implode(', ', $album_comment_entry_guids);
+	$del_album_entity_query = "DELETE FROM {$db_prefix}entities
+							WHERE guid IN ($album_comment_entry_guids)";
+	delete_data($del_album_entity_query);
+	unset($album_comment_entry_guids);
 }
 // End of Update Part 4/5
 
@@ -291,7 +302,8 @@ $batch = new ElggBatch('elgg_get_annotations', array(
 	'wheres' => array("li.subtype = $tidypics_batch_subtype_id"),
 	'limit' => false
 ));
-$batch->setIncrementOffset(false);
+// collect the ids of like annotations that would be duplicates after assinging them to images or albums
+$like_annotation_ids = array();
 foreach ($batch as $like_entry) {
 	// Get the batch entity
 	$tidypics_batch = get_entity($like_entry->entity_guid);
@@ -312,7 +324,7 @@ foreach ($batch as $like_entry) {
 		// in case the same user who liked the Tidypics batch entry on the activity already
 		// liked the album delete the annotation to prevent double likes
 		if (elgg_annotation_exists($album->guid, 'likes', $like_entry->owner_guid)) {
-			elgg_delete_annotation_by_id($like_entry->id);
+			$like_annotation_ids[] = $like_entry->id; // deleting follows later
 		} else {
 			// fix annotation
 			$query = "
@@ -328,7 +340,7 @@ foreach ($batch as $like_entry) {
 		// in case the same user who liked the Tidypics batch entry on the activity already
 		// liked the image delete the annotation to prevent double likes
 		if (elgg_annotation_exists($images[0]->guid, 'likes', $like_entry->owner_guid)) {
-			elgg_delete_annotation_by_id($like_entry->id);
+			$like_annotation_ids[] = $like_entry->id; // deleting follows later
 		} else {
 			// fix annotation
 			$query = "
@@ -340,6 +352,15 @@ foreach ($batch as $like_entry) {
 			update_data($query);
 		}
 	}
+}
+
+// and finally delete the rows in the annotations table if there have been any duplicate likes found
+if ($like_annotation_ids) {
+	$like_annotation_ids = implode(', ', $like_annotation_ids);
+	$del_like_annotations_query = "DELETE FROM {$db_prefix}annotations
+							WHERE id IN ($like_annotation_ids)";
+	delete_data($del_like_annotations_query);
+	unset($like_annotation_ids);
 }
 // End of Update Part 5/5
 
