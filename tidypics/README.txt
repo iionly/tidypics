@@ -61,7 +61,8 @@ Changes for release 1.9.5 (by iionly):
 
 Changes for release 1.8.5 (by iionly):
 - Image file extension "jpeg" added to list of allowed extension for html5 uploader,
-- Fixes in page views (siteimagesowner, siteimagesgroup, tagged) in case of missing guid on input or viewer is logged out.
+- Fixes in page views (siteimagesowner, siteimagesgroup, tagged) in case of missing guid on input or viewer is logged out,
+- Added missing CSS classes for tagging borders again that were mistakenly removed in release 1.8.1beta14.
 
 
 Changes for release 1.9.4.1 (by iionly):

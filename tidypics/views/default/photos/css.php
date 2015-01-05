@@ -68,6 +68,29 @@
 	vertical-align: top;
 }
 
+.tidypics-tagging-border1 {
+	border: solid 2px white;
+}
+
+.tidypics-tagging-border1, .tidypics-tagging-border2,
+.tidypics-tagging-border3, .tidypics-tagging-border4 {
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+
+.tidypics-tagging-handle {
+	background-color: #fff;
+	border: solid 1px #000;
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+
+.tidypics-tagging-outer {
+	background-color: #000;
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+
 .tidypics-tagging-help {
 	position: absolute;
 	left: 35%;
