@@ -12,10 +12,14 @@ if(!$owner || !(elgg_instanceof($owner, 'user'))) {
 		// no one logged in and no user guid provided so forward to REFERER
 		forward(REFERER);
 	} else {
+		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 		$filter = elgg_view('filter_override/siteimages', array('selected' => 'mine'));
 	}
+} else if ($owner_guid == elgg_get_logged_in_user_guid()) {
+	$filter = elgg_view('filter_override/siteimages', array('selected' => 'mine'));
 } else {
-	$filter = '';
+	elgg_set_page_owner_guid($owner_guid);
+	$filter = elgg_view('filter_override/siteimages', array('selected' => ''));
 }
 
 // set up breadcrumbs
