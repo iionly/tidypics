@@ -221,12 +221,15 @@ return array(
 		'image:index' => "%u de %u",
 
 		// Tagging
-		'tidypics:taginstruct' => 'Seleccione el área que deseas etiquetar o %s.<br> Escriba el nombre de un amigo o agrege una palabra como etiqueta a la foto.',
+		'tidypics:taginstruct' => 'Seleccione el área que deseas etiquetar o %s.<br> Escriba el nombre de un miembro o agrege una palabra como etiqueta a la foto.',
 		'tidypics:quit' => 'Dejar de',
 		'tidypics:finish_tagging' => 'Parar de etiquetar',
 		'tidypics:tagthisphoto' => 'Etiquetar esta foto',
 		'tidypics:actiontag' => 'Etiqueta',
 		'tidypics:actioncancel' => 'Cancelar',
+		'tidypics:tags:wordtags' => 'Etiqueta(s): ',
+		'tidypics:tags:membertag' => 'Miembro: ',
+		'tidypics:tags:taggedby' => ' (etiquetados por %s)',
 		'tidypics:usertagged' => "Fotos en las que está etiquetado",
 		'tidypics_tagged_members' => "Amigos etiquetados en estas fotos",
 		'tidypics:usertag' => "%s etiquetados en fotos",

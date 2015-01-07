@@ -221,12 +221,15 @@ return array(
 		'image:index' => "%u of %u",
 
 		// Tagging
-		'tidypics:taginstruct' => 'Select the area that you want to tag or %s.<br> Type a friend\'s name in or add a word tag to the photo.',
+		'tidypics:taginstruct' => 'Select the area that you want to tag or %s.<br> Type a site member\'s name in or add a word tag to the photo.',
 		'tidypics:quit' => 'Quit',
 		'tidypics:finish_tagging' => 'Stop tagging',
 		'tidypics:tagthisphoto' => 'Tag this photo',
 		'tidypics:actiontag' => 'Tag',
 		'tidypics:actioncancel' => 'Cancel',
+		'tidypics:tags:wordtags' => 'Tag(s): ',
+		'tidypics:tags:membertag' => 'Member: ',
+		'tidypics:tags:taggedby' => ' (tagged by %s)',
 		'tidypics:usertagged' => "Photos you are tagged in",
 		'tidypics_tagged_members' => "Tagged members in this photos",
 		'tidypics:usertag' => "%s tagged in photos",

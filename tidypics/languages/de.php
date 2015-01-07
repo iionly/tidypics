@@ -221,12 +221,15 @@ return array(
 		'image:index' => "%u von %u",
 
 		// Tagging
-		'tidypics:taginstruct' => 'Wähle den Bereich im Bild, für das Du ein Tag setzen willst, oder %s. <br> Gebe den Namen eines Freundes ein oder füge ein Wort-Tag zu Bild hinzu.',
+		'tidypics:taginstruct' => 'Wähle den Bereich im Bild, für das Du ein Tag setzen willst, oder %s. <br> Gebe den Namen eines Mitglieds ein oder füge ein Wort-Tag zu Bild hinzu.',
 		'tidypics:quit' => 'Beenden',
 		'tidypics:finish_tagging' => 'Taggen beenden',
 		'tidypics:tagthisphoto' => 'Bild taggen',
 		'tidypics:actiontag' => 'Tag setzen',
 		'tidypics:actioncancel' => 'Abbrechen',
+		'tidypics:tags:wordtags' => 'Tag(s): ',
+		'tidypics:tags:membertag' => 'Mitglied: ',
+		'tidypics:tags:taggedby' => ' (getaggt von %s)',
 		'tidypics:usertagged' => "Bilder mit Tags bezogen auf Dich",
 		'tidypics_tagged_members' => "In diesem Bild getaggte Mitglieder",
 		'tidypics:usertag' => "%s getaggt in Bildern",
