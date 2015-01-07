@@ -65,6 +65,7 @@ Changes for release 1.8.5 (by iionly):
 - Added "Upload photos" link to "Latest group photos" widget on group profile pages (without and with Widget Manager plugin in use),
 - Display of filter tabs (no tab selected) and owner block when viewing the images of another user (i.e. made the siteimagesowner page to behave like pages of other type of content),
 - Image file extension "jpeg" added to list of allowed extension for html5 uploader,
+- Allow tagging of all site members (including yourself) on an image,
 - Fixes in page views (siteimagesowner, siteimagesgroup, tagged) in case of missing guid on input or viewer is logged out,
 - Added missing CSS classes for tagging borders again that were mistakenly removed in release 1.8.1beta14.
 
