@@ -62,6 +62,7 @@ Changes for release 1.9.5 (by iionly):
 
 Changes for release 1.8.5 (by iionly):
 - Fixed an error in 2013121301.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2013121401.php),
+- Do not show "Upgrade" button on a new install of Tidypics,
 - Added "Upload photos" link to "Latest group photos" widget on group profile pages (without and with Widget Manager plugin in use),
 - Display of filter tabs (no tab selected) and owner block when viewing the images of another user (i.e. made the siteimagesowner page to behave like pages of other type of content),
 - Image file extension "jpeg" added to list of allowed extension for html5 uploader,

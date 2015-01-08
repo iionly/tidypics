@@ -139,7 +139,7 @@ function tidypics_is_upgrade_available() {
 	require_once elgg_get_plugins_path() . "tidypics/version.php";
 
 	$local_version = elgg_get_plugin_setting('version', 'tidypics');
-	if ($local_version === false) {
+	if ($local_version === null) {
 		// no version set so either new install or really old one
 		if (!get_subtype_class('object', 'image') || !get_subtype_class('object', 'album')) {
 			$local_version = 0;
