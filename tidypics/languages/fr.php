@@ -227,4 +227,3 @@ La photo peut être consultée ici: %s',
 	'album:blank' => 'Donnez un titre et une description à cet album',
 	'tidypics:upgrade:failed' => 'Mise à jour de Tydipics infructueuse',
 );
-
