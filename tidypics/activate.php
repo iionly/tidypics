@@ -34,6 +34,7 @@ $image_sizes = serialize($image_sizes);
 
 $defaults = array(
 	'tagging' => false,
+	'restrict_tagging' => false,
 	'view_count' => true,
 	'uploader' => true,
 	'exif' => false,

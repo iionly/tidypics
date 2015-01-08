@@ -463,7 +463,8 @@ function tidypics_entity_menu_setup($hook, $type, $return, $params) {
 			$return[] = ElggMenuItem::factory($options);
 		}
 
-		if (elgg_get_plugin_setting('tagging', 'tidypics') && elgg_is_logged_in()) {
+		$restrict_tagging = elgg_get_plugin_setting('restrict_tagging', 'tidypics');
+		if (elgg_get_plugin_setting('tagging', 'tidypics') && elgg_is_logged_in() && (!$restrict_tagging || ($restrict_tagging && $entity->canEdit()))) {
 			$options = array(
 				'name' => 'tagging',
 				'text' => elgg_echo('tidypics:actiontag'),

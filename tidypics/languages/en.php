@@ -99,6 +99,7 @@ return array(
 		'tidypics:settings:help' => "Help",
 		'tidypics:settings:download_link' => "Show download link",
 		'tidypics:settings:tagging' => "Enable photo tagging",
+		'tidypics:settings:restrict_tagging' => "If tagging is enabled, allow tagging only to owner of a photo (and admins)",
 		'tidypics:settings:exif' => "Display EXIF data",
 		'tidypics:settings:view_count' => "Display view count",
 		'tidypics:settings:slideshow' => 'Enable slideshow',

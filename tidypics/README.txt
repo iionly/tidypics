@@ -68,6 +68,7 @@ Changes for release 1.8.5 (by iionly):
 - Image file extension "jpeg" added to list of allowed extension for html5 uploader,
 - Allow tagging of all site members (including yourself) on an image,
 - Prevent the photo to be opened in the lightbox popup while adding a tag,
+- Added plugin setting to allow for restricting tagging of a photo to the owner of the photo (and admins) only,
 - Change in tag labels for a better indication of difference between word-tags ("Tag(s): bla") and member tags ("Member: Mr. X (tagged by Mr. Y)"),
 - Fixes in page views (siteimagesowner, siteimagesgroup, tagged) in case of missing guid on input or viewer is logged out,
 - Added missing CSS classes for tagging borders again that were mistakenly removed in release 1.8.1beta14.
