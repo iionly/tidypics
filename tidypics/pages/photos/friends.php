@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $owner = elgg_get_page_owner_entity();
 

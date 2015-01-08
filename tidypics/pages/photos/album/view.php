@@ -6,8 +6,6 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-group_gatekeeper();
-
 // get the album entity
 $album_guid = (int) get_input('guid');
 $album = get_entity($album_guid);
@@ -25,6 +23,7 @@ if (!$container) {
 
 elgg_set_page_owner_guid($album->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
+elgg_group_gatekeeper();
 
 $title = elgg_echo($album->getTitle());
 

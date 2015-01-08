@@ -6,8 +6,6 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-group_gatekeeper();
-
 // get the photo entity
 $photo_guid = (int) get_input('guid');
 $photo = get_entity($photo_guid);
@@ -24,18 +22,19 @@ if (!$album_container) {
 	forward('');
 }
 
+// set page owner based on owner of photo album
+if ($album) {
+	elgg_set_page_owner_guid($album->getContainerGUID());
+}
+$owner = elgg_get_page_owner_entity();
+elgg_group_gatekeeper();
+
 $photo->addView();
 
 if (elgg_get_plugin_setting('tagging', 'tidypics')) {
 	elgg_load_js('tidypics:tagging');
 	elgg_load_js('jquery.imgareaselect');
 }
-
-// set page owner based on owner of photo album
-if ($album) {
-	elgg_set_page_owner_guid($album->getContainerGUID());
-}
-$owner = elgg_get_page_owner_entity();
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');

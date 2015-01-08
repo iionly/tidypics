@@ -5,6 +5,8 @@
  * List all photos tagged with a user
  */
 
+elgg_gatekeeper();
+
 // Get user guid
 $guid = get_input('guid');
 
