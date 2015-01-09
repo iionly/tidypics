@@ -16,11 +16,11 @@ if (!elgg_instanceof($album, 'object', 'album')) {
 }
 
 $params = array(
-	'type'            => 'object',
-	'subtype'         => 'image',
-	'metadata_names'  => 'batch',
+	'type' => 'object',
+	'subtype' => 'image',
+	'metadata_names' => 'batch',
 	'metadata_values' => $batch,
-	'limit'           => 0
+	'limit' => 0
 );
 
 $images = elgg_get_entities_from_metadata($params);
@@ -42,15 +42,21 @@ if ($images) {
 
 // "added images to album" river
 if ($img_river_view == "batch" && $album->new_album == false) {
-	elgg_create_river_item(array('view' => 'river/object/tidypics_batch/create',
-                                     'action_type' => 'create',
-                                     'subject_guid' => $batch->getOwnerGUID(),
-                                     'object_guid' => $batch->getGUID()));
+	elgg_create_river_item(array(
+		'view' => 'river/object/tidypics_batch/create',
+		'action_type' => 'create',
+		'subject_guid' => $batch->getOwnerGUID(),
+		'object_guid' => $batch->getGUID(),
+		'target_guid' => $album->getGUID(),
+	));
 }  else if ($img_river_view == "1" && $album->new_album == false) {
-        elgg_create_river_item(array('view' => 'river/object/tidypics_batch/create_single_image',
-                                     'action_type' => 'create',
-                                     'subject_guid' => $batch->getOwnerGUID(),
-                                     'object_guid' => $batch->getGUID()));
+	elgg_create_river_item(array(
+		'view' => 'river/object/tidypics_batch/create_single_image',
+		'action_type' => 'create',
+		'subject_guid' => $batch->getOwnerGUID(),
+		'object_guid' => $batch->getGUID(),
+		'target_guid' => $album->getGUID(),
+	));
 }
 
 // "created album" river
@@ -59,18 +65,21 @@ if ($album->new_album) {
 	$album->first_upload = true;
 
 	$album_river_view = elgg_get_plugin_setting('album_river_view', 'tidypics');
-        if ($album_river_view != "none") {
-                elgg_create_river_item(array('view' => 'river/object/album/create',
-                                             'action_type' => 'create',
-                                             'subject_guid' => $album->getOwnerGUID(),
-                                             'object_guid' => $album->getGUID()));
-        }
+	if ($album_river_view != "none") {
+		elgg_create_river_item(array(
+			'view' => 'river/object/album/create',
+			'action_type' => 'create',
+			'subject_guid' => $album->getOwnerGUID(),
+			'object_guid' => $album->getGUID(),
+			'target_guid' => $album->getGUID(),
+		));
+	}
 
 	// "created album" notifications
 	// we throw the notification manually here so users are not told about the new album until
 	// there are at least a few photos in it
 	if ($album->shouldNotify()) {
-                elgg_trigger_event('album_first', 'album', $album);
+		elgg_trigger_event('album_first', 'album', $album);
 		$album->last_notified = time();
 	}
 } else {
@@ -80,7 +89,7 @@ if ($album->new_album) {
 	}
 
 	if ($album->shouldNotify()) {
-                elgg_trigger_event('album_more', 'album', $album);
+		elgg_trigger_event('album_more', 'album', $album);
 		$album->last_notified = time();
 	}
 }

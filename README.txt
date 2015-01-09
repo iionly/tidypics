@@ -57,7 +57,10 @@ Changelog:
 
 Changes for release 1.9.5 (by iionly):
 - Same code base as 1.8.5 with necessary modifications to work on Elgg 1.9.
+Additionally:
 - Fixed an error in 2014111701.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2014111801.php),
+- River entries modified (target_guid of corresponding album added) for river entries connected to group albums to show up in lists of group activities,
+- Upgrade script added for existing river entries to also show up in lists of group activities.
 
 
 Changes for release 1.8.5 (by iionly):
