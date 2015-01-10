@@ -1,6 +1,51 @@
 Changelog and contributors list
 
 ------------------------------------------------------------------------
+Version 1.9.5 Change List
+Release Date: 10/01/2015
+------------------------------------------------------------------------
+BEGIN VERSION 1.9.5 CHANGES
+------------------------------------------------------------------------
+* Same code base as 1.8.5 with necessary modifications to work on Elgg 1.9.
+Additionally:
+* Fixed an error in 2014111701.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2014111801.php),
+* River entries modified (target_guid of corresponding album added) for river entries connected to group albums to show up in lists of group activities,
+* Upgrade script added for existing river entries to also show up in lists of group activities.
+Contributors:
+  * iionly
+------------------------------------------------------------------------
+END VERSION 1.9.5 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+Version 1.8.5 Change List
+Release Date: 10/01/2015
+------------------------------------------------------------------------
+BEGIN VERSION 1.8.5 CHANGES
+------------------------------------------------------------------------
+* Fixed an error in 2013121301.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2013121401.php),
+* Do not show "Upgrade" button on a new install of Tidypics,
+* Added script for re-sizing all image thumbnails after changing thumbnail size settings (available on Thumbnail Creation tab on Tidypics plugin settings page). NOTICE: when changing the default thumbnail sized it's very likely that you need to make adjustments in Tidypics' CSS (that's for YOU to do),
+* Corrections in group access check to prevent full view display of group albums and group images in hidden group to non-members of the group,
+* Added "Upload photos" link to "Latest group photos" widget on group profile pages (without and with Widget Manager plugin in use),
+* Display of filter tabs (no tab selected) and owner block when viewing the images of another user (i.e. made the siteimagesowner page to behave like pages of other type of content),
+* Display the categories selected for a photo in its full view output,
+* Image file extension "jpeg" added to list of allowed extension for html5 uploader,
+* Allow tagging of all site members (including yourself) on an image,
+* Prevent the photo to be opened in the lightbox popup while adding a tag,
+* Added plugin setting to allow for restricting tagging of a photo to the owner of the photo (and admins) only,
+* Change in tag labels for a better indication of difference between word-tags ("Tag(s): bla") and member tags ("Member: Mr. X (tagged by Mr. Y)"),
+* Fixes in page views (siteimagesowner, siteimagesgroup, tagged) in case of missing guid on input or viewer is logged out,
+* Added missing CSS classes for tagging borders again that were mistakenly removed in release 1.8.1beta14,
+* French translations added.
+Contributors:
+  * iionly
+  * Facyla
+------------------------------------------------------------------------
+END VERSION 1.8.5 CHANGES
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
 Version 1.9.4.1 Change List
 Release Date: 17/11/2014
 ------------------------------------------------------------------------

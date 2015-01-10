@@ -1,9 +1,9 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.4.1
-Released: 2014-11-17
+Latest Version: 1.9.5
+Released: 2015-01-10
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
-Copyright: (c) iionly 2013-2014, (C) Cash Costello 2011-2014
+Copyright: (c) iionly 2013-2015, (C) Cash Costello 2011-2015
 
 
 The photo gallery plugin for Elgg 1.9.
