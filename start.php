@@ -47,6 +47,9 @@ function tidypics_init() {
 	$js = elgg_get_simplecache_url('js', 'photos/uploading');
 	elgg_register_simplecache_view('js/photos/uploading');
 	elgg_register_js('tidypics:uploading', $js, 'footer');
+	$js = elgg_get_simplecache_url('js', 'photos/resize_thumbnails');
+	elgg_register_simplecache_view('js/photos/resize_thumbnails');
+	elgg_register_js('tidypics:resize_thumbnails', $js, 'footer');
 
 	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js');
 	elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
@@ -132,6 +135,7 @@ function tidypics_init() {
 
 	elgg_register_action("photos/admin/settings", "$base_dir/admin/settings.php", 'admin');
 	elgg_register_action("photos/admin/create_thumbnails", "$base_dir/admin/create_thumbnails.php", 'admin');
+	elgg_register_action("photos/admin/resize_thumbnails", "$base_dir/admin/resize_thumbnails.php", 'admin');
 	elgg_register_action("photos/admin/delete_image", "$base_dir/admin/delete_image.php", 'admin');
 	elgg_register_action("photos/admin/upgrade", "$base_dir/admin/upgrade.php", 'admin');
 

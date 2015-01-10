@@ -99,7 +99,7 @@ return array(
 		'tidypics:settings:help' => "Hilfe",
 		'tidypics:settings:download_link' => "Zeige Download-Link",
 		'tidypics:settings:tagging' => "Tagging von Bildern erlauben",
-		'tidypics:settings:restrict_tagging' => "Wenn Tagging aktiviert ist, erlaube das Hinzufügen eines Tags nur dem Besitzer eines Photos (und Admins)",
+		'tidypics:settings:restrict_tagging' => "Wenn Tagging aktiviert ist, erlaube das Hinzufügen eines Tags nur dem Besitzer eines Bildes (und Admins)",
 		'tidypics:settings:exif' => "EXIF-Daten anzeigen",
 		'tidypics:settings:view_count' => "Zugriffszähler anzeigen",
 		'tidypics:settings:slideshow' => 'Slideshow erlauben',
@@ -133,6 +133,14 @@ return array(
 		'tidypics:option:none' => 'Kein Eintrag im River',
 		'tidypics:option:cover' => 'Albumcover',
 		'tidypics:option:set' => 'Ein Set von bis zu 7 Bildern',
+
+		'tidypics:settings:resize_thumbnails_label' => "Neuerstellung aller Vorschaubilder",
+		'tidypics:settings:resize_thumbnails_instructions' => "Die Vorschaubilder aller derzeit verfügbaren Bilder werden neu erstellt unter Berücksichtigung der momentan eingestellten Größen für die Vorschaubilder (siehe \"Einstellungen\"-Tab). WARNUNG: abhängig von der Anzahl der Bilder auf Deiner Seite kann dies eine SEHR LANGE ZEIT dauern! <b>Bitte erstelle in jeden Fall ein Backup der Datenbank und des Datenverzeichnisses Deiner Seite bevor Du startest!</b>",
+		'tidypics:settings:resize_thumbnails_start' => "Neuerstellung aller Vorschaubilder starten",
+		'tidypics:resize_thumbnails:results' => "Ergebnisse der Neuerstellung der Vorschaubilder",
+		'tidypics:resize_thumbnails:total_images_processed' => "Gesamtzahl der verarbeiteten Bilder: ",
+		'tidypics:resize_thumbnails:error_invalid_image_info' => "Anzahl der verarbeiteten Bilder mit ungültigen Dateneinträgen: ",
+		'tidypics:resize_thumbnails:error_recreate_failed' => "Anzahl der verarbeiteten Bilder bei denen die Neuerstellung der Vorschaubilder fehlschlug: ",
 
 		// Server analysis
 		'tidypics:server_info' => 'Informationen über den Server',

@@ -66,6 +66,7 @@ Additionally:
 Changes for release 1.8.5 (by iionly):
 - Fixed an error in 2013121301.php upgrade script on handling of ElggBatches that could have resulted in the upgrade getting stuck (script in new version is now 2013121401.php),
 - Do not show "Upgrade" button on a new install of Tidypics,
+- Added script for re-sizing all image thumbnails after changing thumbnail size settings (available on Thumbnail Creation tab on Tidypics plugin settings page). NOTICE: when changing the default thumbnail sized it's very likely that you need to make adjustments in Tidypics' CSS (that's for YOU to do),
 - Corrections in group access check to prevent full view display of group albums and group images in hidden group to non-members of the group,
 - Added "Upload photos" link to "Latest group photos" widget on group profile pages (without and with Widget Manager plugin in use),
 - Display of filter tabs (no tab selected) and owner block when viewing the images of another user (i.e. made the siteimagesowner page to behave like pages of other type of content),
