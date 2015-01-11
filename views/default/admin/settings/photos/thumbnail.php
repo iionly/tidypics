@@ -29,27 +29,57 @@ HTML;
 echo elgg_view_module('inline', $title, $body);
 
 
-echo '<p class="mtm">';
-echo "<label>" . elgg_echo('tidypics:settings:resize_thumbnails_label') . "</label><br>";
-echo elgg_echo('tidypics:settings:resize_thumbnails_instructions');
-echo '</p>';
+$access_status = access_get_show_hidden_status();
+access_show_hidden_entities(true);
+$options = array(
+	'type' => 'object',
+	'subtype' => 'image',
+	'count' => true
+);
+$count = elgg_get_entities($options);
+access_show_hidden_entities($access_status);
 
-echo elgg_view('output/url', array(
+$action = 'action/photos/admin/resize_thumbnails';
+
+$success_count_string = elgg_echo('tidypics:resize_thumbnails:success_processed');
+$error_count_invalid_image_string = elgg_echo('tidypics:resize_thumbnails:error_invalid_image_info');
+$error_count_recreate_failed_string = elgg_echo('tidypics:resize_thumbnails:error_recreate_failed');
+
+echo '<p class="mtm">';
+
+$title2 = elgg_echo('tidypics:settings:resize_thumbnails_title');
+$body2 = '<p>' . elgg_echo('tidypics:settings:resize_thumbnails_instructions') . '</p>';
+
+$status_string = '<p>' . elgg_echo('tidypics:settings:resize_thumbnails_count', array($count)) . '</p>';
+
+$action_link = '<p>' . elgg_view('output/url', array(
 	'text' => elgg_echo('tidypics:settings:resize_thumbnails_start'),
-	'href' => 'action/photos/admin/resize_thumbnails',
+	'href' => $action,
+	'class' => 'elgg-button elgg-button-submit mtl',
 	'is_action' => true,
 	'is_trusted' => true,
-	'class' => 'elgg-button elgg-button-submit',
-	'id' => 'tidypics-resize-thumbnails',
-));
+	'id' => 'tidypics-resizethumbnails-run',
+)) . "</p>";
 
-echo elgg_view('graphics/ajax_loader', array(
-	'id' => 'tidypics-resize-thumbnails-ajax-spinner',
-	'class' => 'elgg-content-thin',
-));
+$body2 .=<<<HTML
+	<p>$status_string</p>
+	<span id="tidypics-resizethumbnails-total" class="hidden">$count</span>
+	<span id="tidypics-resizethumbnails-count" class="hidden">0</span>
+	<span id="tidypics-resizethumbnails-action" class="hidden">$action</span>
+	<div class="elgg-progressbar mvl"><span class="elgg-progressbar-counter" id="tidypics-resizethumbnails-counter">0%</span></div>
+	<ul class="mvl">
+		<li>$success_count_string <span id="tidypics-resizethumbnails-success-count">0</span></li>
+		<li>$error_count_invalid_image_string <span id="tidypics-resizethumbnails-error-invalid-image-count">0</span></li>
+		<li>$error_count_recreate_failed_string <span id="tidypics-resizethumbnails-error-recreate-failed-count">0</span></li>
+	</ul>
+	<div id="tidypics-resizethumbnails-spinner" class="elgg-ajax-loader hidden"></div>
+	<ul class="mvl" id="tidypics-resizethumbnails-messages"></ul>
+	$action_link
+HTML;
+
+echo elgg_view_module('inline', $title2, $body2);
+
 ?>
-
-<div id="tidypics-resize-thumbnails-results" class="mtm"></div>
 
 <script type="text/javascript">
 	$(function() {

@@ -134,13 +134,15 @@ return array(
 		'tidypics:option:cover' => 'Album cover photo',
 		'tidypics:option:set' => 'A set of up to 7 photos',
 
-		'tidypics:settings:resize_thumbnails_label' => "Re-creation of all thumbnails",
-		'tidypics:settings:resize_thumbnails_instructions' => "The thumbnails for all currently available images are re-created using the currently defined thumbnail sizes (see \"Settings\" tab). WARNING: depending on the number of images on your site this may take a VERY LONG TIME! <b>Please make a backup of the site's database and data directory in any case before starting!</b>",
+		'tidypics:settings:resize_thumbnails_title' => "Re-creation of all thumbnails",
+		'tidypics:settings:resize_thumbnails_instructions' => "The thumbnails for all currently available photos are re-created using the currently defined thumbnail sizes (see \"Settings\" tab). WARNING: depending on the number of photos on your site this may take a VERY LONG TIME! <b>Please make a backup of the site's database and data directory in any case before starting!</b>",
+		'tidypics:settings:resize_thumbnails_count' => "The thumbnails of %s photos in total will get re-created.",
 		'tidypics:settings:resize_thumbnails_start' => "Start re-creation of all thumbnails",
-		'tidypics:resize_thumbnails:results' => "Results of re-creation of thumbnails",
-		'tidypics:resize_thumbnails:total_images_processed' => "Total number of processed images: ",
-		'tidypics:resize_thumbnails:error_invalid_image_info' => "Number of processed images with invalid image data: ",
-		'tidypics:resize_thumbnails:error_recreate_failed' => "Number of processed images where re-creation of thumbnails failed: ",
+		'tidypics:resize_thumbnails:success_processed' => "Number of successfully processed photos: ",
+		'tidypics:resize_thumbnails:error_invalid_image_info' => "Number of processed photos with invalid image data: ",
+		'tidypics:resize_thumbnails:error_recreate_failed' => "Number of processed photos where re-creation of thumbnails failed: ",
+		'tidypics:resize_thumbnails:finished' => "The re-recreation of thumbnails of all %s photos has been finished successfully.",
+		'tidypics:resize_thumbnails:finished_with_errors' => "The re-recreation of thumbnails has been finished. There were some errors though: %s photos with invalid data (no re-creation of thumbnails done here) and on %s photos occured an error during creation of thumbnails.",
 
 		// Server analysis
 		'tidypics:server_info' => 'Server Information',

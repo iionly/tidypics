@@ -134,13 +134,15 @@ return array(
 		'tidypics:option:cover' => 'Albumcover',
 		'tidypics:option:set' => 'Ein Set von bis zu 7 Bildern',
 
-		'tidypics:settings:resize_thumbnails_label' => "Neuerstellung aller Vorschaubilder",
+		'tidypics:settings:resize_thumbnails_title' => "Neuerstellung aller Vorschaubilder",
 		'tidypics:settings:resize_thumbnails_instructions' => "Die Vorschaubilder aller derzeit verfügbaren Bilder werden neu erstellt unter Berücksichtigung der momentan eingestellten Größen für die Vorschaubilder (siehe \"Einstellungen\"-Tab). WARNUNG: abhängig von der Anzahl der Bilder auf Deiner Seite kann dies eine SEHR LANGE ZEIT dauern! <b>Bitte erstelle in jeden Fall ein Backup der Datenbank und des Datenverzeichnisses Deiner Seite bevor Du startest!</b>",
+		'tidypics:settings:resize_thumbnails_count' => "Die Vorschaubilder von insgesamt %s Bildern werden neu erstellt.",
 		'tidypics:settings:resize_thumbnails_start' => "Neuerstellung aller Vorschaubilder starten",
-		'tidypics:resize_thumbnails:results' => "Ergebnisse der Neuerstellung der Vorschaubilder",
-		'tidypics:resize_thumbnails:total_images_processed' => "Gesamtzahl der verarbeiteten Bilder: ",
+		'tidypics:resize_thumbnails:success_processed' => "Anzahl der fehlerfrei verarbeiteten Bilder: ",
 		'tidypics:resize_thumbnails:error_invalid_image_info' => "Anzahl der verarbeiteten Bilder mit ungültigen Dateneinträgen: ",
 		'tidypics:resize_thumbnails:error_recreate_failed' => "Anzahl der verarbeiteten Bilder bei denen die Neuerstellung der Vorschaubilder fehlschlug: ",
+		'tidypics:resize_thumbnails:finished' => "Die Neuerstellung der Vorschaubilder aller %s Bilder wurde erfolgreich durchgeführt.",
+		'tidypics:resize_thumbnails:finished_with_errors' => "Die Neuerstellung der Vorschaubilder ist beendet. Es sind dabei allerdings Fehler aufgetreten: bei %s Bildern sind Dateneinträge fehlerhaft (keine Neuerstellung der Vorschaubilder durchgeführt) und bei %s Bildern ist während des Erstellens der Vorschaubilder ein Fehler aufgetreten.",
 
 		// Server analysis
 		'tidypics:server_info' => 'Informationen über den Server',

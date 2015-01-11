@@ -55,6 +55,15 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed, firs
 
 Changelog:
 
+Changes for release 1.9.6 (by iionly):
+- Same code base as 1.8.6 with necessary modifications to work on Elgg 1.9.
+
+
+Changes for release 1.8.6 (by iionly):
+
+- UI-improvements on thumbnails re-creation page (progress bar).
+
+
 Changes for release 1.9.5 (by iionly):
 - Same code base as 1.8.5 with necessary modifications to work on Elgg 1.9.
 Additionally:
