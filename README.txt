@@ -1,17 +1,12 @@
-Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.6
+Tidypics plugin for Elgg 1.10
+Latest Version: 1.10.6
 Released: 2015-01-31
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013-2015, (C) Cash Costello 2011-2015
 
 
-The photo gallery plugin for Elgg 1.9.
-
-
-Requirements:
-
-As of version 1.9.4.1 of Tidypics the minimum Elgg version required is Elgg 1.9.5 (if you haven't upgraded your site from Elgg 1.8 to 1.9 it's not of much relevance but otherwise the comments migration done by Elgg core might have not been correctly completed and Tidypics has to touch the comments entries also again AFTER upgrading to Elgg 1.9.5 and finishing of any pending core upgrades).
+The photo gallery plugin for Elgg 1.10.
 
 
 
@@ -54,6 +49,11 @@ IMPORTANT: If you have a previous version of the tidypics plugin installed, firs
 
 
 Changelog:
+
+Changes for release 1.10.6 (by iionly):
+- Same code base as 1.9.6,
+- Fix of deprecation issues occuring on Elgg 1.10 (namely changing output/confirmlink view to output/url view).
+
 
 Changes for release 1.9.6 (by iionly):
 - Same code base as 1.8.6 with necessary modifications to work on Elgg 1.9.
