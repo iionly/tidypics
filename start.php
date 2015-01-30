@@ -445,7 +445,7 @@ function tidypics_entity_menu_setup($hook, $type, $return, $params) {
 				'is_trusted' => true,
 				'confirm' => elgg_echo('album:cover')
 			);
-			$text = elgg_view('output/confirmlink', $params);
+			$text = elgg_view('output/url', $params);
 
 			$options = array(
 				'name' => 'set_cover',
