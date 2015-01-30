@@ -1,6 +1,6 @@
 Tidypics plugin for Elgg 1.9
-Latest Version: 1.9.5
-Released: 2015-01-10
+Latest Version: 1.9.6
+Released: 2015-01-31
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (c) iionly 2013-2015, (C) Cash Costello 2011-2015
@@ -60,8 +60,8 @@ Changes for release 1.9.6 (by iionly):
 
 
 Changes for release 1.8.6 (by iionly):
-
-- UI-improvements on thumbnails re-creation page (progress bar).
+- UI-improvements on thumbnails re-creation page (progress bar),
+- Fine-tuning of sidebar entries with addition of "Latest comments" and "Tagcloud" blocks where appropriate.
 
 
 Changes for release 1.9.5 (by iionly):
@@ -91,7 +91,6 @@ Changes for release 1.8.5 (by iionly):
 
 
 Changes for release 1.9.4.1 (by iionly):
-
 - Added Tidypics upgrade script to be executed after upgrading a site to Elgg 1.9.5 to catch any comments made on images and albums possibly not yet upgraded by Tidypics previously due to a bug in Elgg core resulting in the comments migration when upgrading from Elgg 1.8 left incomplete (fixed in Elgg 1.9.5).
 
 BEFORE running the Tidypics upgrade (from Tidypics' settings page) check for any pending Elgg core upgrades and if there are any (especially comments migration!) FIRST run the core upgrades. Depending on the number of comments on your site the Tidypics upgrade might take a while to finish. In any case, make a database backup before running the Tidypics upgrade!
