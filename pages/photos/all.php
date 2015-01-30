@@ -44,7 +44,7 @@ $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'all')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'all')),
 ));
 
 echo elgg_view_page($title, $body);

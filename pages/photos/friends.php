@@ -61,7 +61,7 @@ $body = elgg_view_layout('content', array(
 	'filter_context' => 'friends',
 	'content' => $area2,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'friends')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'friends')),
 ));
 
 echo elgg_view_page($title, $body);

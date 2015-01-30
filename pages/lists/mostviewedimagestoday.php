@@ -68,7 +68,7 @@ $body = elgg_view_layout('content', array(
 	'filter_override' => '',
 	'content' => $area2,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'all')),
+	'sidebar' => elgg_view('photos/sidebar_im', array('page' => 'all')),
 ));
 
 // Draw it

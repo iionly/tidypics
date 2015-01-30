@@ -65,7 +65,7 @@ $params = array(
 	'filter_context' => 'mine',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'owner')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'owner')),
 );
 
 // don't show filter if out of filter context

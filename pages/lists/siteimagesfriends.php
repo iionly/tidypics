@@ -73,7 +73,7 @@ $body = elgg_view_layout('content', array(
 	'filter_override' => elgg_view('filter_override/siteimages', array('selected' => 'friends')),
 	'content' => $area2,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'all')),
+	'sidebar' => elgg_view('photos/sidebar_im', array('page' => 'friends')),
 ));
 
 // Draw it

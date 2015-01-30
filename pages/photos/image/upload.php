@@ -57,7 +57,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'upload')),
+	'sidebar' => elgg_view('photos/sidebar_im', array('page' => 'upload')),
 ));
 
 echo elgg_view_page($title, $body);

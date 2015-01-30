@@ -100,7 +100,7 @@ $body = elgg_view_layout('content', array(
 	'filter' => false,
 	'content' => $content,
 	'title' => $album->getTitle(),
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'album')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'album')),
 ));
 
 echo elgg_view_page($title, $body);
