@@ -32,8 +32,8 @@ elgg_group_gatekeeper();
 $photo->addView();
 
 if (elgg_get_plugin_setting('tagging', 'tidypics')) {
-	elgg_load_js('tidypics:tagging');
 	elgg_load_js('jquery.imgareaselect');
+	elgg_require_js('tidypics/tagging');
 }
 
 // set up breadcrumbs

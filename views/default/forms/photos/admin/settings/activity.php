@@ -7,7 +7,7 @@ $plugin = $vars['plugin'];
 
 echo '<div>';
 echo elgg_echo('tidypics:settings:album_river_view') . ': ';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'params[album_river_view]',
 	'options_values' => array(
 		'cover' => elgg_echo('tidypics:option:cover'),
@@ -19,7 +19,7 @@ echo elgg_view('input/dropdown', array(
 echo '</div>';
 echo '<div>';
 echo elgg_echo('tidypics:settings:img_river_view') . ': ';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'params[img_river_view]',
 	'options_values' => array(
 		'all' => elgg_echo('tidypics:option:all'),
@@ -32,7 +32,7 @@ echo elgg_view('input/dropdown', array(
 echo '</div>';
 echo '<div>';
 echo elgg_echo('tidypics:settings:river_comments_thumbnails') . ': ';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'params[river_comments_thumbnails]',
 	'options_values' => array(
 		'show' => elgg_echo('tidypics:option:river_comments_include_preview'),
@@ -43,7 +43,7 @@ echo elgg_view('input/dropdown', array(
 echo '</div>';
 echo '<div>';
 echo elgg_echo('tidypics:settings:river_thumbnails_size') . ': ';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'params[river_thumbnails_size]',
 	'options_values' => array(
 		'small' => elgg_echo('tidypics:option:river_comments_thumbnails_small'),

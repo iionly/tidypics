@@ -37,26 +37,13 @@ function tidypics_init() {
 	elgg_extend_view('css/elgg', 'photos/css');
 	elgg_extend_view('css/admin', 'photos/css');
 
-	// Register the JavaScript lib
-	$js = elgg_get_simplecache_url('js', 'photos/tidypics');
-	elgg_register_simplecache_view('js/photos/tidypics');
-	elgg_register_js('tidypics', $js, 'footer');
-	$js = elgg_get_simplecache_url('js', 'photos/tagging');
-	elgg_register_simplecache_view('js/photos/tagging');
-	elgg_register_js('tidypics:tagging', $js, 'footer');
-	$js = elgg_get_simplecache_url('js', 'photos/uploading');
-	elgg_register_simplecache_view('js/photos/uploading');
-	elgg_register_js('tidypics:uploading', $js, 'footer');
-	$js = elgg_get_simplecache_url('js', 'photos/resize_thumbnails');
-	elgg_register_simplecache_view('js/photos/resize_thumbnails');
-	elgg_register_js('tidypics:resize_thumbnails', $js, 'footer');
-
-	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens_optimized.js');
+	// Register the JavaScript libs
+	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens.js');
 	elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
 	elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js', 'footer');
 	$plupload_language = get_plugload_language();
 	elgg_register_js('jquery.plupload.ui.lang-tp', 'mod/tidypics/vendors/plupload/js/i18n/' . $plupload_language . '.js', 'footer');
-	elgg_register_css('jquery.plupload.jqueryui-theme', 'mod/tidypics/vendors/jqueryui/css/smoothness/jquery-ui-1.10.4.custom.min.css');
+	elgg_register_css('jquery.plupload.jqueryui-theme', 'mod/tidypics/vendors/jqueryui/css/smoothness/jquery-ui.min.css');
 	elgg_register_css('jquery.plupload.ui', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css');
 
 	// Add photos link to owner block/hover menus
@@ -154,7 +141,7 @@ function tidypics_page_handler($page) {
 		return false;
 	}
 
-	elgg_load_js('tidypics');
+	elgg_require_js('tidypics/tidypics');
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
 	if (elgg_get_plugin_setting('slideshow', 'tidypics')) {

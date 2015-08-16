@@ -7,7 +7,7 @@ $plugin = $vars['plugin'];
 
 echo'<div>';
 echo elgg_echo('tidypics:settings:image_lib') . ': ';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/select', array(
 	'name' => 'params[image_lib]',
 	'options_values' => tidypics_get_image_libraries(),
 	'value' => $plugin->image_lib,

@@ -3,10 +3,11 @@
 	<name>Tidypics Photo Gallery</name>
 	<id>tidypics</id>
 	<author>iionly, Cash Costello</author>
-	<version>1.10.6</version>
+	<version>1.10.7</version>
 	<description>A photo gallery with albums, tagging, and a slideshow.</description>
 	<category>content</category>
 	<category>multimedia</category>
+	<category>iionly</category>
 	<website>https://github.com/iionly</website>
 	<copyright>iionly 2013-2015, Cash Costello 2011-2015</copyright>
 	<license>GNU General Public License Version 2</license>

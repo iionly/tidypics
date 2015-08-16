@@ -17,8 +17,6 @@ include dirname(__FILE__) . "/watermark.php";
  * @return bool    TRUE on success
  */
 function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
-	global $CONFIG;
-
 	$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
 	if (!$image_sizes) {
 		// move this out of library
@@ -51,8 +49,6 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	$file->thumbnail = $prefix."thumb".$filestorename;
 
 	// album thumbnail
-	global $CONFIG;
-	$CONFIG->debug = 'WARNING';
 	$thumb->setFilename($prefix."smallthumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_gd_resize(	$file->getFilenameOnFilestore(),
@@ -65,7 +61,6 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 		return FALSE;
 	}
 	$file->smallthumb = $prefix."smallthumb".$filestorename;
-	unset($CONFIG->debug);
 
 	// main image
 	$thumb->setFilename($prefix."largethumb".$filestorename);

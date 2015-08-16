@@ -17,6 +17,8 @@ if (!$maxfilesize) {
 	$maxfilesize = 5;
 }
 
+$maxfilesize_int = (int) $maxfilesize;
+
 ?>
 
 <p>
@@ -25,7 +27,7 @@ if (!$maxfilesize) {
 	?>
 </p>
 
-<div id="uploader">
+<div id="uploader" data-maxfilesize="<?php echo $maxfilesize_int; ?>">
 	<input type="hidden" name="album_guid" value="<?php echo $album->getGUID(); ?>" />
 	<input type="hidden" name="batch" value="<?php echo $batch; ?>" />
 	<input type="hidden" name="tidypics_token" value="<?php echo $tidypics_token; ?>" />
