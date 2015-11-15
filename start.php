@@ -115,6 +115,10 @@ function tidypics_init() {
 	// custom layout for comments on tidypics river entries
 	elgg_register_plugin_hook_handler('creating', 'river', 'tidypics_comments_handler');
 
+	// allow for liking of albums and images
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:album', 'Elgg\Values::getTrue');
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:image', 'Elgg\Values::getTrue');
+
 	// Register actions
 	$base_dir = elgg_get_plugins_path() . 'tidypics/actions/photos';
 	elgg_register_action("photos/delete", "$base_dir/delete.php");
@@ -161,72 +165,71 @@ function tidypics_page_handler($page) {
 		elgg_load_js('tidypics:slideshow');
 	}
 
-	$base = elgg_get_plugins_path() . 'tidypics/pages/photos';
-	$base_lists = elgg_get_plugins_path() . 'tidypics/pages/lists';
+	$resource_vars = array();
 	switch ($page[0]) {
 		case "siteimagesall":
-			require "$base_lists/siteimagesall.php";
+			echo elgg_view_resource('tidypics/lists/siteimagesall');
 			break;
 
 		case "siteimagesowner":
 			if (isset($page[1])) {
-				set_input('guid', $page[1]);
+				$resource_vars['guid'] = (int)$page[1];
 			}
-			require "$base_lists/siteimagesowner.php";
+			echo elgg_view_resource('tidypics/lists/siteimagesowner', $resource_vars);
 			break;
 
 		case "siteimagesfriends":
-			require "$base_lists/siteimagesfriends.php";
+			echo elgg_view_resource('tidypics/lists/siteimagesfriends');
 			break;
 
 		case "siteimagesgroup":
 			if (isset($page[1])) {
-				set_input('guid', $page[1]);
+				$resource_vars['guid'] = (int)$page[1];
 			}
-			require "$base_lists/siteimagesgroup.php";
+			echo elgg_view_resource('tidypics/lists/siteimagesgroup', $resource_vars);
 			break;
 
 		case "all": // all site albums
 		case "world":
-			require "$base/all.php";
+			echo elgg_view_resource('tidypics/photos/all');
 			break;
 
 		case "owned":  // albums owned by container entity
 		case "owner":
-			require "$base/owner.php";
+			echo elgg_view_resource('tidypics/photos/owner');
 			break;
 
 		case "friends": // albums of friends
-			require "$base/friends.php";
+			echo elgg_view_resource('tidypics/photos/friends');
 			break;
 
 		case "group": // albums of a group
-			require "$base/owner.php";
+			echo elgg_view_resource('tidypics/photos/owner');
 			break;
 
 		case "album": // view an album individually
-			set_input('guid', $page[1]);
-			require "$base/album/view.php";
+			$resource_vars['guid'] = (int)$page[1];
+			echo elgg_view_resource('tidypics/photos/album/view', $resource_vars);
 			break;
 
 		case "new":  // create new album
 		case "add":
-			set_input('guid', $page[1]);
-			require "$base/album/add.php";
+			$resource_vars['guid'] = (int)$page[1];
+			echo elgg_view_resource('tidypics/photos/album/add', $resource_vars);
 			break;
 			
 		case "edit": //edit image or album
-			set_input('guid', $page[1]);
-			$entity = get_entity($page[1]);
+			$resource_vars['guid'] = (int)$page[1];
+			$entity = get_entity((int)$page[1]);
 			switch ($entity->getSubtype()) {
 				case 'album':
-					require "$base/album/edit.php";
+					echo elgg_view_resource('tidypics/photos/album/edit', $resource_vars);
 					break;
 				case 'image':
-					require "$base/image/edit.php";
+					echo elgg_view_resource('tidypics/photos/image/edit', $resource_vars);
 					break;
 				case 'tidypics_batch':
-					require "$base/batch/edit.php";
+					echo elgg_view_resource('tidypics/photos/batch/edit', $resource_vars);
 					break;
 				default:
 					return false;
@@ -234,129 +237,136 @@ function tidypics_page_handler($page) {
 			break;
 
 		case "sort": // sort a photo album
-			set_input('guid', $page[1]);
-			require "$base/album/sort.php";
+			$resource_vars['guid'] = (int)$page[1];
+			echo elgg_view_resource('tidypics/photos/album/sort', $resource_vars);
 			break;
 
 		case "image": //view an image
 		case "view":
-			set_input('guid', $page[1]);
-			require "$base/image/view.php";
+			$resource_vars['guid'] = (int)$page[1];
+			echo elgg_view_resource('tidypics/photos/image/view', $resource_vars);
 			break;
 
 		case "thumbnail": // tidypics thumbnail
-			set_input('guid', $page[1]);
-			set_input('size', elgg_extract(2, $page, 'small'));
-			require "$base/image/thumbnail.php";
+			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['size'] = elgg_extract(2, $page, 'small');
+			echo elgg_view_resource('tidypics/photos/image/thumbnail', $resource_vars);
 			break;
 
 		case "upload": // upload images to album
-			set_input('guid', $page[1]);
-
 			if (elgg_get_plugin_setting('uploader', 'tidypics')) {
 				$default_uploader = 'ajax';
 			} else {
 				$default_uploader = 'basic';
 			}
-
-			set_input('uploader', elgg_extract(2, $page, $default_uploader));
-			require "$base/image/upload.php";
+			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['uploader'] = elgg_extract(2, $page, $default_uploader);
+			echo elgg_view_resource('tidypics/photos/image/upload', $resource_vars);
 			break;
 
 		case "download": // download an image
-			set_input('guid', $page[1]);
-			set_input('disposition', elgg_extract(2, $page, 'attachment'));
-			include "$base/image/download.php";
+			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['disposition'] = elgg_extract(2, $page, 'attachment');
+			echo elgg_view_resource('tidypics/photos/image/download', $resource_vars);
 			break;
 
 		case "tagged": // all photos tagged with user
 			if (isset($page[1])) {
-				set_input('guid', $page[1]);
+				$resource_vars['guid'] = (int)$page[1];
 			}
-			require "$base/tagged.php";
+			echo elgg_view_resource('tidypics/photos/tagged', $resource_vars);
 			break;
 
 		case "mostviewed": // images with the most views
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostviewedimages.php";
+			echo elgg_view_resource('tidypics/lists/mostviewedimages', $resource_vars);
 			break;
 
 		case "mostviewedtoday":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostviewedimagestoday.php";
+			echo elgg_view_resource('tidypics/lists/mostviewedimagestoday', $resource_vars);
 			break;
 
 		case "mostviewedthismonth":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostviewedimagesthismonth.php";
+			echo elgg_view_resource('tidypics/lists/mostviewedimagesthismonth', $resource_vars);
 			break;
 
 		case "mostviewedlastmonth":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostviewedimageslastmonth.php";
+			echo elgg_view_resource('tidypics/lists/mostviewedimageslastmonth', $resource_vars);
 			break;
 
 		case "mostviewedthisyear":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostviewedimagesthisyear.php";
+			echo elgg_view_resource('tidypics/lists/mostviewedimagesthisyear', $resource_vars);
 			break;
 
 		case "mostcommented":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostcommentedimages.php";
+			echo elgg_view_resource('tidypics/lists/mostcommentedimages', $resource_vars);
 			break;
 
 		case "mostcommentedtoday":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostcommentedimagestoday.php";
+			echo elgg_view_resource('tidypics/lists/mostcommentedimagestoday', $resource_vars);
 			break;
 
 		case "mostcommentedthismonth":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostcommentedimagesthismonth.php";
+			echo elgg_view_resource('tidypics/lists/mostcommentedimagesthismonth', $resource_vars);
 			break;
 
 		case "mostcommentedlastmonth":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostcommentedimageslastmonth.php";
+			echo elgg_view_resource('tidypics/lists/mostcommentedimageslastmonth', $resource_vars);
 			break;
 
 		case "mostcommentedthisyear":
 			if (isset($page[1])) {
-				set_input('username', $page[1]);
+				$resource_vars['username'] = $page[1];
 			}
-			require "$base_lists/mostcommentedimagesthisyear.php";
+			echo elgg_view_resource('tidypics/lists/mostcommentedimagesthisyear', $resource_vars);
 			break;
 
 		case "recentlyviewed":
-			require "$base_lists/recentlyviewed.php";
+			if (isset($page[1])) {
+				$resource_vars['username'] = $page[1];
+			}
+			echo elgg_view_resource('tidypics/lists/recentlyviewed', $resource_vars);
 			break;
 
 		case "recentlycommented":
-			require "$base_lists/recentlycommented.php";
+			if (isset($page[1])) {
+				$resource_vars['username'] = $page[1];
+			}
+			echo elgg_view_resource('tidypics/lists/recentlycommented', $resource_vars);
 			break;
 
 		case "recentvotes":
 			if(elgg_is_active_plugin('elggx_fivestar')) {
-				require "$base_lists/recentvotes.php";
+				if (isset($page[1])) {
+					$resource_vars['username'] = $page[1];
+				}
+				echo elgg_view_resource('tidypics/lists/recentvotes', $resource_vars);
 				break;
 			} else {
 				return false;
@@ -364,7 +374,10 @@ function tidypics_page_handler($page) {
 
 		case "highestrated":
 			if(elgg_is_active_plugin('elggx_fivestar')) {
-				require "$base_lists/highestrated.php";
+				if (isset($page[1])) {
+					$resource_vars['username'] = $page[1];
+				}
+				echo elgg_view_resource('tidypics/lists/highestrated', $resource_vars);
 				break;
 			} else {
 				return false;
@@ -372,7 +385,10 @@ function tidypics_page_handler($page) {
 
 		case "highestvotecount":
 			if(elgg_is_active_plugin('elggx_fivestar')) {
-				require "$base_lists/highestvotecount.php";
+				if (isset($page[1])) {
+					$resource_vars['username'] = $page[1];
+				}
+				echo elgg_view_resource('tidypics/lists/highestvotecount', $resource_vars);
 				break;
 			} else {
 				return false;
