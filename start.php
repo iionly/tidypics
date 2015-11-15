@@ -23,12 +23,24 @@ function tidypics_init() {
 	// Register an ajax view that allows selection of album to upload images to
 	elgg_register_ajax_view('photos/selectalbum');
 
+	// Register an ajax view for the broken images cleanup routine
+	elgg_register_ajax_view('photos/broken_images_delete_log');
+
 	// Set up site menu
-	elgg_register_menu_item('site', array(
-		'name' => 'photos',
-		'href' => 'photos/siteimagesall',
-		'text' => elgg_echo('photos'),
-	));
+	$site_menu_links_to = elgg_get_plugin_setting('site_menu_link', 'tidypics');
+	if ($site_menu_links_to == 'albums') {
+		elgg_register_menu_item('site', array(
+			'name' => 'photos',
+			'href' => 'photos/all',
+			'text' => elgg_echo('photos'),
+		));
+	} else {
+		elgg_register_menu_item('site', array(
+			'name' => 'photos',
+			'href' => 'photos/siteimagesall',
+			'text' => elgg_echo('photos'),
+		));
+	}
 
 	// Register a page handler so we can have nice URLs
 	elgg_register_page_handler('photos', 'tidypics_page_handler');
@@ -125,6 +137,7 @@ function tidypics_init() {
 	elgg_register_action("photos/admin/resize_thumbnails", "$base_dir/admin/resize_thumbnails.php", 'admin');
 	elgg_register_action("photos/admin/delete_image", "$base_dir/admin/delete_image.php", 'admin');
 	elgg_register_action("photos/admin/upgrade", "$base_dir/admin/upgrade.php", 'admin');
+	elgg_register_action("photos/admin/broken_images", "$base_dir/admin/broken_images.php", 'admin');
 
 	elgg_register_action('photos/image/selectalbum', "$base_dir/image/selectalbum.php");
 }
@@ -651,4 +664,47 @@ function get_plugload_language() {
 	}
 
 	return 'en';
+}
+
+function tidypics_get_last_log_line($filename) {
+	$line = false;
+	$f = false;
+	if (file_exists($filename)) {
+		$f = @fopen($filename, 'r');
+	}
+
+	if ($f === false) {
+		return false;
+	} else {
+		$cursor = -1;
+
+		fseek($f, $cursor, SEEK_END);
+		$char = fgetc($f);
+
+		/**
+		 * Trim trailing newline chars of the file
+		 */
+		while ($char === "\n" || $char === "\r") {
+			fseek($f, $cursor--, SEEK_END);
+			$char = fgetc($f);
+		}
+
+		/**
+		 * Read until the start of file or first newline char
+		 */
+		while ($char !== false && $char !== "\n" && $char !== "\r") {
+			/**
+			 * Prepend the new char
+			 */
+			$line = $char . $line;
+			fseek($f, $cursor--, SEEK_END);
+			$char = fgetc($f);
+		}
+	}
+
+	return $line;
+}
+
+function tidypics_get_log_location($time) {
+	return elgg_get_config('dataroot') . 'tidypics_log' . '/' . $time . '.txt';
 }

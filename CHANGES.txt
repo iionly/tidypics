@@ -1,11 +1,29 @@
 Changelog and contributors list
 ===============================
 
+Version 1.10.8 (Release Date: 15/11/2015)
+-----------------------------------------
+
+* Updated Plupload HTML5/HTML4 uploader to version 2.1.8,
+* New plugin setting to define maximum number of images allowed to be uploaded in one batch,
+* New plugin setting to set the forward of the site menu entry ("All photos" or "All photo albums"),
+* New plugin setting for perfoming some optimizations on creation of image thumbnails that should result in smaller filesize. Works only with ImageMagick command line tools used as Image library,
+* "is_trusted" attribute added to navigation arrows (previous/next image) when viewing an image,
+* extract GPS location data from images on upload if available (location data is not yet used by Tidypics itself but it is of use in case you use the jssor slideshow plugin available at https://elgg.org/plugins/2272330),
+* New tool on "Delete image" tab of Tidypics plugin settings to allow searching for and deletion of image entries that have no longer their image files in the data directory (e.g. part of data directory got lost). Use with this tool with care!!!
+
+Contributors:
+
+* iionly
+* Matt Beckett
+* sh3llc0de
+
+
 Version 1.10.7 (Release Date: 15/08/2015)
 -----------------------------------------
 
 * Moved all JS code into AMD modules,
-* Updated Plupload HTML5/HTML4 uploader to version 4.1.7,
+* Updated Plupload HTML5/HTML4 uploader to version 2.1.7,
 * Updated jquery-ui-smoothness theme used by Plupload to 1.11.4,
 * Increase of z-index of slideshow popup to to be on top of other page content (including topbar),
 * Changed usage of input/dropdown to input/select,

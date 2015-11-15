@@ -59,9 +59,7 @@ Vous pouvez rencontrer des problèmes avec la création de miniatures si votre b
 	'tidypics:uploader:upload' => 'Charger des photos',
 	'tidypics:uploader:describe' => 'Décrire les photos',
 	'tidypics:uploader:filedesc' => 'Fichiers image (jpeg, png, gif)',
-	'tidypics:uploader:instructs' => 'Il y a 3 étapes simples pour ajouter des photos à votre album en utilisant cet outil d\'envoi : les choisir, les envoyer, et les décrire.
-Il y a une limite de %s Mo maximum par photo. Si vous n\'utilisez pas Flash, un <a href="%s">autre outil d\'envoi simple</a> est également disponible.',
-	'tidypics:uploader:basic' => 'Vous pouvez charger jusqu\'à 10 photos à la fois (%s Mo maximum par photo)',
+	'tidypics:uploader:basic' => 'Vous pouvez charger jusqu\'à %s photos à la fois (%s Mo maximum par photo)',
 	'tidypics:sort:instruct' => 'Triez l\'album photo en cliquant et en déplaçant les images. Puis cliquez sur le bouton Enregistrer.',
 	'tidypics:sort:no_images' => 'Aucune image à trier. Chargez d\'abord des images en cliquant sur le lien ci-dessus.',
 	'album:num' => 'Photos de %s',

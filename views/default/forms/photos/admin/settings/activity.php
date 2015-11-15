@@ -5,7 +5,7 @@
 
 $plugin = $vars['plugin'];
 
-echo '<div>';
+echo '<div class="mbs">';
 echo elgg_echo('tidypics:settings:album_river_view') . ': ';
 echo elgg_view('input/select', array(
 	'name' => 'params[album_river_view]',
@@ -17,7 +17,7 @@ echo elgg_view('input/select', array(
 	'value' => $plugin->album_river_view,
 ));
 echo '</div>';
-echo '<div>';
+echo '<div class="mbs">';
 echo elgg_echo('tidypics:settings:img_river_view') . ': ';
 echo elgg_view('input/select', array(
 	'name' => 'params[img_river_view]',
@@ -30,7 +30,7 @@ echo elgg_view('input/select', array(
 	'value' => $plugin->img_river_view,
 ));
 echo '</div>';
-echo '<div>';
+echo '<div class="mbs">';
 echo elgg_echo('tidypics:settings:river_comments_thumbnails') . ': ';
 echo elgg_view('input/select', array(
 	'name' => 'params[river_comments_thumbnails]',

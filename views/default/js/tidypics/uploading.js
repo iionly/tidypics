@@ -14,6 +14,7 @@ define(function(require) {
 		});
 		
 		var maxfilesize = $("#uploader").data('maxfilesize');
+		var maxfiles = $("#uploader").data('maxnumber');
 
 		$("#uploader").plupload({
 			// General settings
@@ -53,7 +54,6 @@ define(function(require) {
 				},
 
 				FilesAdded: function(up, files) {
-					var maxfiles = 10;
 					if(up.files.length > maxfiles ) {
 						alert(elgg.echo('tidypics:exceedmax_number', [maxfiles]));
 					}
@@ -66,7 +66,6 @@ define(function(require) {
 				},
 
 				FilesRemoved: function(up, files) {
-					var maxfiles = 10;
 					if (up.files.length < maxfiles) {
 						up.disableBrowse(false);
 					}

@@ -105,10 +105,20 @@ return array(
 		'tidypics:settings:slideshow' => 'Enable slideshow',
 		'tidypics:settings:uploader' => "Use Plupload HTML5/HTML4 uploader",
 		'tidypics:settings:grp_perm_override' => "Allow group members full access to group albums",
+		'tidypics:settings:site_menu_link' => "Site menu entry forwards to",
+		'tidypics:settings:site_menu_photos' => "All photos page",
+		'tidypics:settings:site_menu_albums' => "All photo albums page",
+		'tidypics:settings:max_uploads' => "Maximum number of images allowed to be uploaded in one batch:",
+		'tidypics:settings:max_uploads_explanation' => "(Be careful with increasing the number! First, when using the basic uploader you will get a separate input field for each image up to the maximum number on the input form. Secondly, you might need to increase the values of post_max_size and other php variables accordingly for the processing of a large number of images in one batch to work. And lastly, depending on what option you have selected for creation of river entries on image uploads you might get a high number of separate river entries for each uploaded image or a single entry with all the thumbnails of the images uploaded in the batch)",
 		'tidypics:settings:maxfilesize' => "Maximum image size in megabytes (MB):",
 		'tidypics:settings:quota' => "User Quota (MB) - 0 equals no quota (Note: file sizes of thumbnails are not considered for quota calculation. Therefore, a user can allocate a bit more disc space than the quota.)",
 		'tidypics:settings:watermark' => "Enter text to appear in the watermark",
 		'tidypics:settings:im_path' => "Enter the path to your ImageMagick commands",
+		'tidypics:settings:thumbnail_optimization' => "Optimization of thumbnail filesize",
+		'tidypics:settings:optimization:none' => "None",
+		'tidypics:settings:optimization:simple' => "Simple",
+		'tidypics:settings:optimization:complex' => "Complex",
+		'tidypics:settings:thumbnail_optimization_explanation' => "(Currently only used with 'ImageMagick executable' as image library. Please test before using on a production server! 'None' uses the same parameters as previous versions of Tidypics for creating the thumbnails, 'Simple' uses some additional parameters to reduce filesize and 'Complex' uses even more extensive methods. The filesize optimization parameters hopefully decrease the thumbnails filesizes but might also come with a slight reduction of image quality. The 'Complex' optimization parameters will also result in some increased server load necessary for creating the thumbnails. The exact outcome - filesize reduction and image quality - depend on the uploaded images and therefore the results may differ. So, please evaluate the different options before deciding on what to use on your production site)",
 		'tidypics:settings:img_river_view' => "How many entries in activity river for each batch of uploaded photos",
 		'tidypics:settings:album_river_view' => "Show the album cover or a set of photos for new album",
 		'tidypics:settings:river_comments_thumbnails' => "Include a preview image in activity river entries when albums and images are commented on",
@@ -209,8 +219,8 @@ return array(
 		'tidypics:uploader:choose' => "Choose photos",
 		'tidypics:uploader:upload' => "Upload photos",
 		'tidypics:uploader:describe' => "Describe photos",
-		'tidypics:uploader:instructs' => 'There are three easy steps for adding photos to your album using this uploader: on this page you need to choose the photos to be uploaded first and then upload them in a second step. After the upload has finished you will be automatically redirected to a new page where you can enter titles and descriptions for the uploaded photos as the last step.<br><br> You can upload up to 10 photos at a time (%s MB maximum per photo).',
-		'tidypics:uploader:basic' => 'You can upload up to 10 photos at a time (%s MB maximum per photo). After the upload of the selected photos is finished you will be redirected to a new page where you can enter titles and descriptions for the uploaded photos.',
+		'tidypics:uploader:instructs' => 'There are three easy steps for adding photos to your album using this uploader: on this page you need to choose the photos to be uploaded first and then upload them in a second step. After the upload has finished you will be automatically redirected to a new page where you can enter titles and descriptions for the uploaded photos as the last step.<br><br> You can upload up to %s photos at a time (%s MB maximum per photo).',
+		'tidypics:uploader:basic' => 'You can upload up to %s photos at a time (%s MB maximum per photo). After the upload of the selected photos is finished you will be redirected to a new page where you can enter titles and descriptions for the uploaded photos.',
 		'tidypics:sort:instruct' => 'Sort the album photos by dragging and dropping the photos. Then click the save button.',
 		'tidypics:sort:no_images' => 'No photos found to sort. Upload photos using the link above.',
 		'tidypics:album_select' => 'Before you can start with uploading your photos you need to select one of your albums you want to add the photos to or you can select to create a new album: ',
@@ -359,5 +369,17 @@ View and comment on the album:
 		'image:blank' => 'Please give this photo a title.',
 		'image:error' => 'Could not save photo.',
 
-		'tidypics:upgrade:failed' => "The upgrade of Tidypics failed"
+		'tidypics:upgrade:failed' => "The upgrade of Tidypics failed",
+
+		// Broken images removal tool
+		'tidypics:utilities:broken_images' => 'Find Broken Images',
+		'tidypics:utilities:broken_images:blurb' => 'This tool finds and allows you to delete image entries that do not have associated image files in the data directory. If you have many images, this will take a long time.
+
+Warning: If your images are not showing up after an update of Elgg, migration of the site to another server, making changes in the site settings or the data path, running this tool will likely delete ALL images from the database. If in doubt, visit the Elgg community site for troubleshooting tips.
+
+In ANY case, before using this tool make a backup of your database and data directory!',
+
+		'tidypics:utilities:broken_images:found_images' => 'Broken images found: %s',
+		'tidypics:utilities:broken_images:delete' => 'Delete all broken images.',
+		'tidypics:utilities:broken_images:deleted_images' => 'Broken images removed: %s',
 );
