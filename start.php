@@ -270,11 +270,8 @@ function tidypics_page_handler($page) {
 			echo elgg_view_resource('tidypics/photos/image/download', $resource_vars);
 			break;
 
-		case "tagged": // all photos tagged with user
-			if (isset($page[1])) {
-				$resource_vars['guid'] = (int)$page[1];
-			}
-			echo elgg_view_resource('tidypics/photos/tagged', $resource_vars);
+		case "tagged": // all photos tagged with logged in user
+			echo elgg_view_resource('tidypics/photos/tagged');
 			break;
 
 		case "mostviewed": // images with the most views

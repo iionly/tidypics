@@ -7,8 +7,8 @@
 
 elgg_gatekeeper();
 
-// Get user guid
-$guid = elgg_extract('guid', $vars);
+// Get user guid (of logged in user, so everyone only gets the images their tagged in)
+$guid = elgg_get_logged_in_user_guid();
 
 $user = get_entity($guid);
 

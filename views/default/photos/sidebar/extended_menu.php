@@ -105,7 +105,7 @@ if (elgg_is_logged_in()) {
 	elgg_register_menu_item('page', array(
 		'name' => 'E10_tidypics_usertagged',
 		'text' => elgg_echo('tidypics:usertagged'),
-		'href' => $base . "tagged?guid=" . elgg_get_logged_in_user_guid(),
+		'href' => $base . "tagged",
 		'section' => 'E'
 	));
 }
