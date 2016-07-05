@@ -1,6 +1,21 @@
 Changelog and contributors list
 ===============================
 
+Version 1.10.9 (Release Date: 05/07/2016)
+-----------------------------------------
+
+* Adding coalense parameter to resizing command of ImageMagick convert command to get animated gifs correctly resized,
+* Replacing usage of eregi_replace() function (deprecated in php 5.3 and removed in php 7.0) with preg_replace(),
+* Only process image orientation correction for images of formats jpeg and pjpeg to avoid error due to missing exif information for other formats that don't support exif,
+* Register tidypics_batch entity subtype for search (but do not return any tidypics_batch content in a search) because only registered subtypes can be selected in activity page content filter menu,
+* Finnish translations for the basic features added.
+
+Contributors:
+
+* iionly
+* Juho Jaakkola
+
+
 Version 1.10.8 (Release Date: 15/11/2015)
 -----------------------------------------
 

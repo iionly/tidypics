@@ -67,6 +67,10 @@ function tidypics_init() {
 	// Register for search
 	elgg_register_entity_type('object', 'image');
 	elgg_register_entity_type('object', 'album');
+	elgg_register_entity_type('object', 'tidypics_batch');
+
+	// Override search for tidypics_batch subtype to not return any results
+	elgg_register_plugin_hook_handler('search', 'object:tidypics_batch', 'tidypics_batch_no_search_results');
 
 	// Register for the entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'tidypics_entity_menu_setup');
@@ -707,4 +711,10 @@ function tidypics_get_last_log_line($filename) {
 
 function tidypics_get_log_location($time) {
 	return elgg_get_config('dataroot') . 'tidypics_log' . '/' . $time . '.txt';
+}
+
+// subtype tidypics_batch is registered only to be included in activity page filter
+// but we don't want any results for this subtype returned in a search
+function tidypics_batch_no_search_results($hook, $handler, $return, $params) {
+	return false;
 }
