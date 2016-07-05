@@ -29,7 +29,6 @@ return array(
 		'photos:group_albums' => "Álbumes del grupo",
 		'item:object:image' => "Fotos",
 		'item:object:album' => "Álbumes",
-		'item:object:tidypics_batch' => "Tidypics Batches",
 		'tidypics:uploading:images' => "Por favor espere, Cargando fotos.",
 		'tidypics:enablephotos' => 'Activar módulo de álbumes de fotos en el grupo',
 		'tidypics:enable_group_images' => 'Activar módulo de fotos en el grupo',

@@ -29,7 +29,7 @@ return array(
 		'photos:group_albums' => "Gruppen-Bilderalben",
 		'item:object:image' => "Bilder",
 		'item:object:album' => "Alben",
-		'item:object:tidypics_batch' => "Tidypics Batches",
+		'item:object:tidypics_batch' => "Bilder-Uploads",
 		'tidypics:uploading:images' => "Die Bilder werden hochgeladen.",
 		'tidypics:enablephotos' => 'Gruppen-Alben-Modul aktivieren',
 		'tidypics:enable_group_images' => 'Gruppen-Bilder-Modul aktivieren',

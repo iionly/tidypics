@@ -29,7 +29,7 @@ return array(
 		'photos:group_albums' => "Group photo albums",
 		'item:object:image' => "Photos",
 		'item:object:album' => "Albums",
-		'item:object:tidypics_batch' => "Tidypics Batches",
+		'item:object:tidypics_batch' => "Photo uploads",
 		'tidypics:uploading:images' => "Please wait. Uploading photos.",
 		'tidypics:enablephotos' => 'Enable group photo albums module',
 		'tidypics:enable_group_images' => 'Enable group photos module',

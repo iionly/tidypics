@@ -29,7 +29,6 @@ return array(
 		'photos:group_albums' => "Ryhmän kuva-albumit",
 		'item:object:image' => "Kuvat",
 		'item:object:album' => "Kuva-albumit",
-		'item:object:tidypics_batch' => "Tidypics Batches",
 		'tidypics:uploading:images' => "Please wait. Uploading photos.",
 		'tidypics:enablephotos' => 'Ota käyttöön ryhmän albumit',
 		'tidypics:enable_group_images' => 'Ota käyttöön ryhmän kuvagalleria',
