@@ -182,7 +182,7 @@ return array(
 
 		// Thumbnail tool
 		'tidypics:thumbnail_tool' => 'Thumbnail Creation',
-		'tidypics:thumbnail_tool_blurb' => 'This page allows you to create thumbnails for photos when the thumbnail creation failed during upload.	You may experience problems with thumbnail creation if your image library is not configured properly or if there is not enough memory for the GD library to load and resize a photo. If your users have experienced problems with thumbnail creation and you have corrected your configuration, you can try to redo the thumbnails. Find the unique identifier of the photo (the so called GUID which is the number near the end of the url when viewing a photo) and enter it below.',
+		'tidypics:thumbnail_tool_blurb' => 'This page allows you to create thumbnails for photos when the thumbnail creation failed during upload. You may experience problems with thumbnail creation if your image library is not configured properly or if there is not enough memory for the GD library to load and resize a photo. If your users have experienced problems with thumbnail creation and you have corrected your configuration, you can try to redo the thumbnails. Find the unique identifier of the photo (the so called GUID which is the number near the end of the url when viewing a photo) and enter it below. In addition to thumbnail creation it\'s also checked if the photo GUID is included in the album\'s image order list and in case it isn\'t the photo is added as new first entry in the list.',
 		'tidypics:thumbnail_tool:unknown_image' => 'Unable to get original photo.',
 		'tidypics:thumbnail_tool:invalid_image_info' => 'Error retrieving information about the photo.',
 		'tidypics:thumbnail_tool:create_failed' => 'Failed to create thumbnails.',
