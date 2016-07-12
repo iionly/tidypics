@@ -9,7 +9,7 @@
 // get the photo entity
 $photo_guid = elgg_extract('guid', $vars);
 $photo = get_entity($photo_guid);
-if (!$photo) {
+if (!$photo || !elgg_instanceof($photo, 'object', 'image')) {
 	register_error(elgg_echo('noaccess'));
 	$_SESSION['last_forward_from'] = current_page_url();
 	forward('');

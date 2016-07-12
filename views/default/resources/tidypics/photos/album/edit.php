@@ -7,8 +7,8 @@
  */
 
 $guid = elgg_extract('guid', $vars);
-
-if (!$entity = get_entity($guid)) {
+$entity = get_entity($guid);
+if (!$entity || !elgg_instanceof($entity, 'object', 'album')) {
 	// @todo either deleted or do not have access
 	forward('photos/all');
 }

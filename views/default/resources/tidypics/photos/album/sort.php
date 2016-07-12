@@ -13,7 +13,7 @@ $album_guid = elgg_extract('guid', $vars);
 $album = get_entity($album_guid);
 
 // panic if we can't get it
-if (!$album) {
+if (!$album || !elgg_instanceof($album, 'object', 'album')) {
 	forward();
 }
 

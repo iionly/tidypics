@@ -9,8 +9,8 @@
 elgg_gatekeeper();
 
 $guid = elgg_extract('guid', $vars);
-
-if (!$batch = get_entity($guid)) {
+$batch = get_entity($guid);
+if (!$batch || !elgg_instanceof($batch, 'object', 'tidypics_batch')) {
 	// @todo either deleted or do not have access
 	forward('photos/all');
 }

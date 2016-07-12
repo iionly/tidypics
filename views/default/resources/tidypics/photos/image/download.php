@@ -11,7 +11,7 @@ $image = get_entity($guid);
 
 $disposition = elgg_extract('disposition', $vars, 'attachment');
 
-if ($image) {
+if ($image && elgg_instanceof($image, 'object', 'image')) {
 	$filename = $image->originalfilename;
 	$mime = $image->mimetype;
 

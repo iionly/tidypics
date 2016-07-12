@@ -15,7 +15,7 @@ if (!$album_guid) {
 }
 
 $album = get_entity($album_guid);
-if (!$album) {
+if (!$album || !elgg_instanceof($album, 'object', 'album')) {
 	// @todo
 	// throw warning and forward to previous page
 	forward(REFERER);
