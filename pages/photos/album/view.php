@@ -9,7 +9,7 @@
 // get the album entity
 $album_guid = (int) get_input('guid');
 $album = get_entity($album_guid);
-if (!$album) {
+if (!$album || !elgg_instanceof($album, 'object', 'album')) {
 	register_error(elgg_echo('noaccess'));
 	$_SESSION['last_forward_from'] = current_page_url();
 	forward('');
