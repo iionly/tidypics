@@ -46,8 +46,6 @@ return array(
 	'tidypics:server_configuration_doc' => 'Documentation de la configuration du serveur',
 	'tidypics:lib_tools:testing' => 'Tidypics a besoin de connaître l\'emplacement des exécutables de ImageMagick si vous l\'avez choisie comme bibliothèque graphique. Votre hébergeur devrait pouvoir vous renseigner à ce sujet. Vous pouvez tester si l\'emplacement est correct ci-dessous. S\'il est bon, cela devrait afficher la version d\'ImageMagick installée sur votre serveur.',
 	'tidypics:thumbnail_tool' => 'Création des miniatures',
-	'tidypics:thumbnail_tool_blurb' => 'Cette page vous permet de créer des miniatures pour les images quand la création de miniatures a échoué durant l\'envoi des fichiers.
-Vous pouvez rencontrer des problèmes avec la création de miniatures si votre bibliothèque graphique n\'est pas configurée correctement ou s\'il n\'y a pas suffisamment de mémoire disponible pour la bibliothèque GD pour charger et redimensionner une image. Si les membres du site rencontrent des problèmes avec la création de miniatures et que vous avez modifié votre configuration, vous pouvez essayer de recréer les miniatures. Cherchez l\'identifiant unique de la photo (c\'est le nombre affiché près de la dernière partie de l\'URL quand vous êtes sur la page de la photo) et saisissez-le ci-dessous.',
 	'tidypics:thumbnail_tool:unknown_image' => 'Impossible de récupérer l\'image d\'origine',
 	'tidypics:thumbnail_tool:invalid_image_info' => 'Erreur lors de la récupération des informations de l\'image.',
 	'tidypics:thumbnail_tool:create_failed' => 'Echec de la création des miniatures.',

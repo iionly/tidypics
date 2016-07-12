@@ -160,7 +160,6 @@ return array(
 
 		// Thumbnail tool
 		'tidypics:thumbnail_tool' => 'Creador de miniaturas',
-		'tidypics:thumbnail_tool_blurb' => 'Esta página le permite crear miniaturas de fotos cuando la creación de miniaturas falla durante la carga. Puede experimentar problemas con la creación de miniaturas, si su biblioteca de imágenes no está configurada correctamente o si no hay suficiente memoria para la librería GD para cargar y cambiar el tamaño de una foto. Si los usuarios vienen experimentado problemas con la creación de miniaturas y ha corregido su configuración, puede intentar volver a hacer las miniaturas. Encuentre el identificador único de la foto (que es el número casi al final de la url al visualizar una foto) y lo inserta a continuación.',
 		'tidypics:thumbnail_tool:unknown_image' => 'No se puede obtener la foto original,.',
 		'tidypics:thumbnail_tool:invalid_image_info' => 'Error al recuperar la información sobre la foto.',
 		'tidypics:thumbnail_tool:create_failed' => 'Error al crear miniaturas.',
