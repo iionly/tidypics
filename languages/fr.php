@@ -14,7 +14,6 @@ return array(
 	'tidypics:settings:help' => 'Aide',
 	'tidypics:settings:uploader' => 'Utiliser l\'outil de chargement Flash',
 	'tidypics:settings:tinysize' => 'Taille des miniatures',
-	'tidypics:settings:sizes:instructs' => 'Il est possible que vous ayez à modifier les CSS si vous modifiez les dimensions par défaut',
 	'tidypics:settings:heading:img_lib' => 'Paramètres de la bibliothèque d\'image',
 	'tidypics:settings:heading:main' => 'Paramètres principaux',
 	'tidypics:settings:heading:river' => 'Options d\'intégration dans la rivière d\'activité',

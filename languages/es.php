@@ -118,7 +118,6 @@ return array(
 		'tidypics:settings:largesize' => "Tamaño de fotos primario",
 		'tidypics:settings:smallsize' => "Ver tamaño del álbum de fotos",
 		'tidypics:settings:tinysize' => "Ver tamaño de las miniaturas",
-		'tidypics:settings:sizes:instructs' => 'Puede que tenga que cambiar el CSS si cambia los tamaños predeterminados.',
 		'tidypics:settings:im_id' => "ID de la foto",
 		'tidypics:settings:heading:img_lib' => "Configuración de la biblioteca de imagenes",
 		'tidypics:settings:heading:main' => "Principales ajustes",

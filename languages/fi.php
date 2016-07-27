@@ -129,7 +129,6 @@ return array(
 		'tidypics:settings:largesize' => "Primary photos size",
 		'tidypics:settings:smallsize' => "Album view photos size",
 		'tidypics:settings:tinysize' => "Thumbnail photos size",
-		'tidypics:settings:sizes:instructs' => 'You may need to change the CSS if you change the default sizes.',
 		'tidypics:settings:im_id' => "Photo ID",
 		'tidypics:settings:heading:img_lib' => "Image Library Settings",
 		'tidypics:settings:heading:main' => "Major Settings",
