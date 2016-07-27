@@ -302,15 +302,35 @@ function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $sq
 		return FALSE;
 	}
 
-	$img->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
+	$format = $img->getImageFormat();
+	if ($format == 'GIF') {
+		$img = $img->coalesceImages();
 
-	// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
-	$img->resizeImage($new_width, $new_height, imagick::FILTER_LANCZOS, 1);
-	$img->setImagePage($new_width, $new_height, 0, 0);
+		foreach($img as $frame) {
+			$frame->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
 
-	if ($img->writeImage($output_name) != TRUE) {
-		$img->destroy();
-		return FALSE;
+			// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
+			$frame->resizeImage($new_width, $new_height, imagick::FILTER_LANCZOS, 1);
+			$frame->setImagePage($new_width, $new_height, 0, 0);
+		}
+
+		$img = $img->deconstructImages();
+
+		if (!$img->writeImages($output_name, true)) {
+			$img->destroy();
+			return false;
+		}
+	} else {
+		$img->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
+
+		// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
+		$img->resizeImage($new_width, $new_height, imagick::FILTER_LANCZOS, 1);
+		$img->setImagePage($new_width, $new_height, 0, 0);
+
+		if (!$img->writeImage($output_name)) {
+			$img->destroy();
+			return false;
+		}
 	}
 
 	$img->destroy();
