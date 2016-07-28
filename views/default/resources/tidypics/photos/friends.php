@@ -47,13 +47,15 @@ if ($friends = $owner->getFriends(array('limit' => false))) {
 	$area2 = elgg_echo("friends:none:you");
 }
 
-$logged_in_guid = elgg_get_logged_in_user_guid();
-elgg_register_menu_item('title', array(
-	'name' => 'addphotos',
-	'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
-	'text' => elgg_echo("photos:addphotos"),
-	'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
-));
+$logged_in_user = elgg_get_logged_in_user_entity();
+if (tidypics_can_add_new_photos(null, $logged_in_user)) {
+	elgg_register_menu_item('title', array(
+		'name' => 'addphotos',
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->guid,
+		'text' => elgg_echo("photos:addphotos"),
+		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+	));
+}
 
 elgg_register_title_button();
 
