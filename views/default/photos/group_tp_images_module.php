@@ -19,16 +19,14 @@ $all_link = elgg_view('output/url', array(
 ));
 
 $new_link = '';
-if (elgg_is_logged_in()) {
-	if ($group->isMember(elgg_get_logged_in_user_entity())) {
-		$new_link = elgg_view('output/url', array(
-			'href' => "ajax/view/photos/selectalbum/?owner_guid=" .$group->guid,
-			'text' => elgg_echo("photos:addphotos"),
-			'class' => 'elgg-lightbox',
-			'link_class' => 'elgg-lightbox',
-			'is_trusted' => true,
-		));
-	}
+if ($group->canWriteToContainer()) {
+	$new_link = elgg_view('output/url', array(
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" .$group->guid,
+		'text' => elgg_echo("photos:addphotos"),
+		'class' => 'elgg-lightbox',
+		'link_class' => 'elgg-lightbox',
+		'is_trusted' => true,
+	));
 }
 
 $container_guid =  elgg_get_page_owner_guid();
