@@ -260,7 +260,7 @@ function tp_is_person() {
 /**
  * Check if there are any albums a user can add photos to
  * or if the user can create a new album
- * 
+ *
  * @param \ElggUser   $user      User (defaults to logged in user)
  * @param \ElggEntity $container Album container (defaults to page owner)
  * @return bool
@@ -288,7 +288,7 @@ function tidypics_can_add_new_photos(\ElggUser $user = null, \ElggEntity $contai
 		'type' => 'object',
 		'subtype' => 'album',
 		'container_guid' => $container->guid,
-		'limit' => 0,
+		'limit' => false,
 	]);
 	foreach ($albums as $album) {
 		if ($album->canWriteToContainer(0, 'object', 'image')) {

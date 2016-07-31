@@ -230,7 +230,7 @@ return array(
 		'tidypics:sort:instruct' => 'Sort the album photos by dragging and dropping the photos. Then click the save button.',
 		'tidypics:sort:no_images' => 'No photos found to sort. Upload photos using the link above.',
 		'tidypics:album_select' => 'Before you can start with uploading your photos you need to select one of your albums you want to add the photos to or you can select to create a new album: ',
-		'tidypics:album_select:no_results' => 'Unfortunately, there are no albums that you can upload photos to',
+		'tidypics:album_select:no_results' => 'Sorry, but there are no albums that you can upload photos to and you have no permission to create a new album.',
 		'tidypics:continue' => 'Continue',
 		'tidypics:uploader:filetype' => 'Allowed image file types',
 

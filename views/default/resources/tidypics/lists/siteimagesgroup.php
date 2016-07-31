@@ -43,7 +43,7 @@ $title = elgg_echo('tidypics:siteimagesgroup', array($container->name));
 if (tidypics_can_add_new_photos(null, $container)) {
 	elgg_register_menu_item('title', array(
 		'name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $container->guid,
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $container_guid,
 		'text' => elgg_echo("photos:addphotos"),
 		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
 	));

@@ -230,6 +230,7 @@ return array(
 		'tidypics:sort:instruct' => 'Sortiere die Bilder im Album durch Drag-and-Drop um. Dann speichere Deine Änderungen.',
 		'tidypics:sort:no_images' => 'Es wurden keine Bilder gefunden, die umsortiert werden könnten. Lade Bilder hoch, indem Du dem obigen Link folgst.',
 		'tidypics:album_select' => 'Bevor Du mit dem Hochladen Deiner Bilder beginnen kannst, mußt Du zuerst ein Bilderalbum auswählen, zu dem Du die Bilder hinzufügen willst, oder Du kannst ein neues Bilderalbum hinzufügen: ',
+		'tidypics:album_select:no_results' => 'Entschuldigung. Es gibt kein Photoalbum, in das Du Bilder hochladen kannst, und Du hast keine Berechtigung, ein neues Album anzulegen.',
 		'tidypics:continue' => 'Fortsetzen',
 		'tidypics:uploader:filetype' => 'Zulässige Dateiformate für Bilder',
 

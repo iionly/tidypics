@@ -47,7 +47,7 @@ $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
 	elgg_register_menu_item('title', array(
 		'name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->guid,
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->getGUID(),
 		'text' => elgg_echo("photos:addphotos"),
 		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
 	));

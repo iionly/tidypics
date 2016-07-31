@@ -46,7 +46,7 @@ if (!$owner instanceof ElggGroup) {
 if (tidypics_can_add_new_photos(null, $owner)) {
 	elgg_register_menu_item('title', array(
 		'name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->guid,
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
 		'text' => elgg_echo("photos:addphotos"),
 		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
 	));

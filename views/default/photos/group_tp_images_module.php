@@ -7,13 +7,14 @@ elgg_load_js('lightbox');
 elgg_load_css('lightbox');
 
 $group = $vars['entity'];
+$group_guid = $group->getGUID();
 
 if ($group->tp_images_enable == "no") {
 	return true;
 }
 
 $all_link = elgg_view('output/url', array(
-	'href' => "photos/siteimagesgroup/$group->guid",
+	'href' => "photos/siteimagesgroup/$group_guid",
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
@@ -21,7 +22,7 @@ $all_link = elgg_view('output/url', array(
 $new_link = '';
 if (tidypics_can_add_new_photos(null, $group)) {
 	$new_link = elgg_view('output/url', array(
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" .$group->guid,
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid,
 		'text' => elgg_echo("photos:addphotos"),
 		'class' => 'elgg-lightbox',
 		'link_class' => 'elgg-lightbox',
@@ -29,14 +30,13 @@ if (tidypics_can_add_new_photos(null, $group)) {
 	));
 }
 
-$container_guid =  elgg_get_page_owner_guid();
 $db_prefix = elgg_get_config('dbprefix');
 elgg_push_context('groups');
 $options = array(
 	'type' => 'object',
 	'subtype' => 'image',
 	'joins' => array("join {$db_prefix}entities u on e.container_guid = u.guid"),
-	'wheres' => array("u.container_guid = {$container_guid}"),
+	'wheres' => array("u.container_guid = {$group_guid}"),
 	'order_by' => "e.time_created desc",
 	'limit' => 6,
 	'full_view' => false,
