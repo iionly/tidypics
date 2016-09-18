@@ -96,6 +96,8 @@ function tidypics_init() {
 
 		//register title urls for widgets
 		elgg_register_plugin_hook_handler("entity:url", "object", "tidypics_widget_urls");
+		// handle the availability of the Tidypics group widgets
+		elgg_register_plugin_hook_handler("group_tool_widgets", "widget_manager", "tidypics_tool_widgets_handler");
 	}
 
 	// RSS extensions for embedded media
@@ -730,4 +732,37 @@ function tidypics_get_log_location($time) {
 // but we don't want any results for this subtype returned in a search
 function tidypics_batch_no_search_results($hook, $handler, $return, $params) {
 	return false;
+}
+
+// Add or remove a group's Tidypics widgets based on the corresponding group tools option
+function tidypics_tool_widgets_handler($hook, $type, $return_value, $params) {
+	if (!empty($params) && is_array($params)) {
+		$entity = elgg_extract("entity", $params);
+
+		if (!empty($entity) && elgg_instanceof($entity, "group")) {
+			if (!is_array($return_value)) {
+				$return_value = array();
+			}
+
+			if (!isset($return_value["enable"])) {
+				$return_value["enable"] = array();
+			}
+			if (!isset($return_value["disable"])) {
+				$return_value["disable"] = array();
+			}
+
+			if ($entity->tp_images_enable == "yes") {
+				$return_value["enable"][] = "groups_latest_photos";
+			} else {
+				$return_value["disable"][] = "groups_latest_photos";
+			}
+			if ($entity->photos_enable == "yes") {
+				$return_value["enable"][] = "groups_latest_albums";
+			} else {
+				$return_value["disable"][] = "groups_latest_albums";
+			}
+		}
+	}
+
+	return $return_value;
 }
