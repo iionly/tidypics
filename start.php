@@ -50,13 +50,13 @@ function tidypics_init() {
 	elgg_extend_view('css/admin', 'photos/css');
 
 	// Register the JavaScript libs
-	elgg_register_js('tidypics:slideshow', 'mod/tidypics/vendors/PicLensLite/piclens.js');
-	elgg_register_js('jquery.plupload-tp', 'mod/tidypics/vendors/plupload/js/plupload.full.min.js', 'footer');
-	elgg_register_js('jquery.plupload.ui-tp', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js', 'footer');
+	elgg_register_js('tidypics:slideshow', elgg_get_simplecache_url('tidypics/js/PicLensLite/piclens.js'), 'head');
+	elgg_register_js('jquery.plupload-tp', elgg_get_simplecache_url('tidypics/js/plupload/plupload.full.min.js'), 'footer');
+	elgg_register_js('jquery.plupload.ui-tp', elgg_get_simplecache_url('tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js'), 'footer');
 	$plupload_language = get_plugload_language();
-	elgg_register_js('jquery.plupload.ui.lang-tp', 'mod/tidypics/vendors/plupload/js/i18n/' . $plupload_language . '.js', 'footer');
-	elgg_register_css('jquery.plupload.jqueryui-theme', 'mod/tidypics/vendors/jqueryui/css/smoothness/jquery-ui.min.css');
-	elgg_register_css('jquery.plupload.ui', 'mod/tidypics/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css');
+	elgg_register_js('jquery.plupload.ui.lang-tp', elgg_get_simplecache_url('tidypics/js/plupload/i18n/' . $plupload_language . '.js'), 'footer');
+	elgg_register_css('jquery.plupload.jqueryui-theme', elgg_get_simplecache_url('tidypics/css/jqueryui-theme.css'));
+	elgg_register_css('jquery.plupload.ui', elgg_get_simplecache_url('tidypics/css/plupload/css/jquery.ui.plupload.css'));
 
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');
