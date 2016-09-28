@@ -16,8 +16,8 @@ $image_sizes['large_image_width'] = isset($image_sizes['large_image_width']) ? $
 $image_sizes['large_image_height'] = isset($image_sizes['large_image_height']) ? $image_sizes['large_image_height']: 600;
 $image_sizes['large_image_square'] = isset($image_sizes['large_image_square']) ? $image_sizes['large_image_square']: false;
 
-echo '<span class="elgg-text-help mbm">' . elgg_echo('tidypics:settings:sizes:instructs') . '</span>';
-echo '<table>';
+echo '<div class="elgg-text-help mbm">' . elgg_echo('tidypics:settings:sizes:instructs') . '</div>';
+echo '<div><table>';
 $sizes = array('large', 'small', 'tiny');
 foreach ($sizes as $size) {
 	echo '<tr>';
@@ -48,4 +48,47 @@ foreach ($sizes as $size) {
 	echo '</td>';
 	echo '</tr>';
 }
+echo '</table></div>';
+
+echo '<div class="mbs">';
+echo elgg_view('input/checkbox', array(
+	'name' => 'params[client_resizing]',
+	'value' => true,
+	'checked' => (bool)$plugin->client_resizing,
+	'label' => elgg_echo("tidypics:settings:client_resizing"),
+	));
+echo elgg_view('output/longtext', array('value' => elgg_echo("tidypics:settings:client_resizing_help"), 'class' => 'elgg-subtext'));
+echo '</div>';
+
+echo '<div><table>';
+	echo '<tr>';
+	echo '<td class="pas">';
+	echo "<label>" . elgg_echo("tidypics:settings:resizing_max") . "</label><br>";
+	echo '</td><td class="pas">';
+	echo elgg_echo("tidypics:settings:imagesize_width");
+	echo elgg_view('input/text', array(
+		'name' => 'params[client_image_width]',
+		'value' => $plugin->client_image_width,
+		'class' => 'tidypics-input-thin',
+	));
+	echo '</td><td class="pas">';
+	echo elgg_echo("tidypics:settings:imagesize_height");
+	echo elgg_view('input/text', array(
+		'name' => 'params[client_image_height]',
+		'value' => $plugin->client_image_height,
+		'class' => 'tidypics-input-thin',
+	));
+	echo '</td>';
+	echo '</tr>';
 echo '</table>';
+echo elgg_view('output/longtext', array('value' => elgg_echo("tidypics:settings:resizing_max_help"), 'class' => 'elgg-subtext'));
+echo '</div>';
+
+echo '<div class="mbs">';
+echo elgg_view('input/checkbox', array(
+	'name' => 'params[remove_exif]',
+	'value' => true,
+	'checked' => (bool)$plugin->remove_exif,
+	'label' => elgg_echo("tidypics:settings:remove_exif"),
+	));
+echo elgg_view('output/longtext', array('value' => elgg_echo("tidypics:settings:remove_exif_help"), 'class' => 'elgg-subtext'));
