@@ -1,6 +1,28 @@
 Changelog and contributors list
 ===============================
 
+Version 2.0.2 (Release Date: 28/09/2016)
+----------------------------------------
+
+* Support for animated gif thumbnail creation when using Imagick php extension as image library,
+* New setting for thumbnail sizes to allow for creation of square-cut / non-square-cut thumbnails images: NOTICE: the CSS of Tidypics is for usage of the default thumbnail size settings, i.e. if you make any changes in the thumbnail settings you will very, very likely need to make also modifications is Tidypics' CSS or the layout will look faulty,
+* New option to allow for client-side image size reduction before upload (EXPERIMENTAL! Only for HTML5 uploader),
+* New option to allow for client-side removal of exif data (EXPERIMENTAL! Only for HTML5 uploader AND with image size reduction option enabled),
+* Check for valid subtype of the entities processed in Tidypics pagehandler views,
+* On re-creation of image thumbnails also check if image is included in album image order array and add guid if not,
+* Check previous and next image links are valid before displaying navigation elements in image full view,
+* Re-work of permission check that evaluates if a user is allowed to upload photos (both in and out of group context) and determines if the "Upload photos" button is shown or not,
+* On retrieval of exif data don't expect all sections exists in an image file: check first to avoid php warnings,
+* Updated Plupload HTML5/HTML4 uploader to version 2.1.9,
+* Improved caching of JS and CSS (and other files) of 3rd party scripts used by Tidypics,
+* When using the Widget Manager plugin display/not display Tidypics group widgets according to each groups' settings.
+
+Contributors:
+
+* iionly
+* Ismayil Khayredinov
+
+
 Version 2.0.1 (Release Date: 05/07/2016)
 ----------------------------------------
 
