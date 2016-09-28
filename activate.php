@@ -44,6 +44,11 @@ $defaults = array(
 	'river_thumbnails_size' => 'tiny',
 
 	'notify_interval' => 60 * 60 * 24,
+
+	'client_resizing' => false,
+	'remove_exif' => false,
+	'client_image_width' => 2000,
+	'client_image_height' => 2000,
 );
 
 foreach ($defaults as $name => $value) {
