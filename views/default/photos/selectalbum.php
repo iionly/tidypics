@@ -44,7 +44,7 @@ if ($owner->canWriteToContainer(0, 'object', 'album')) {
 foreach ($albums as $album) {
 	$album_title = $album->getTitle();
 	if (strlen($album_title) > 50) {
-		$album_title = substr($album_title, 0, 47) . '...';
+		$album_title = mb_substr($album_title, 0, 47, "utf-8") . "...";
 	}
 	$album_options[$album->guid] = $album_title;
 }

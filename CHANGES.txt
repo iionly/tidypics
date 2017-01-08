@@ -1,6 +1,22 @@
 Changelog and contributors list
 ===============================
 
+Version 2.3.3 (Release Date: 08/01/2017)
+----------------------------------------
+
+* Requires Elgg 2.3.0 at minimum,
+* Fixed deprecation issue with $autofeed by using elgg_register_rss_link(),
+* Fixed issue in shortening of image / album names in gallery views and album selection on image upload showing up for UTF-8 characters (e.g. cyrilic),
+* Increased max. length of image /albums names in gallery views from 17 to 29,
+* Fixed error on most commented images page caused by an duplicate $ in a variable name,
+* Delayed display of album selection popup (click will only work after page has fully loaded to avoid "Page not found" error due to lightbox JS code not yet loaded),
+* No longer load lightbox JS and CSS because it's loaded by Elgg core everywhere anyway now.
+
+Contributors:
+
+* iionly
+
+
 Version 2.0.2 (Release Date: 28/09/2016)
 ----------------------------------------
 

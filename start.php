@@ -165,8 +165,6 @@ function tidypics_page_handler($page) {
 	}
 
 	elgg_require_js('tidypics/tidypics');
-	elgg_load_js('lightbox');
-	elgg_load_css('lightbox');
 	if (elgg_get_plugin_setting('slideshow', 'tidypics')) {
 		elgg_load_js('tidypics:slideshow');
 	}

@@ -173,8 +173,7 @@ function tidypics_is_upgrade_available() {
  * @return string
  */
 function tidypics_list_photos(array $options = array()) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'offset' => (int) max(get_input('offset', 0), 0),

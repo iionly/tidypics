@@ -3,9 +3,6 @@
  * Group images module
  */
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
-
 $group = $vars['entity'];
 $group_guid = $group->getGUID();
 
@@ -21,9 +18,14 @@ $all_link = elgg_view('output/url', array(
 
 $new_link = '';
 if (tidypics_can_add_new_photos(null, $group)) {
+	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid;
+	$url = elgg_format_url($url);
 	$new_link = elgg_view('output/url', array(
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid,
+		'href' => 'javascript:',
 		'text' => elgg_echo("photos:addphotos"),
+		'data-colorbox-opts' => json_encode([
+			'href' => $url,
+		]),
 		'class' => 'elgg-lightbox',
 		'link_class' => 'elgg-lightbox',
 		'is_trusted' => true,

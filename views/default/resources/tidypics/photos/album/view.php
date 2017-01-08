@@ -44,11 +44,16 @@ if (!$owner instanceof ElggGroup) {
 }
 
 if (tidypics_can_add_new_photos(null, $owner)) {
+	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID();
+	$url = elgg_format_url($url);
 	elgg_register_menu_item('title', array(
 		'name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
+		'href' => 'javascript:',
+		'data-colorbox-opts' => json_encode([
+			'href' => $url,
+		]),
 		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+		'link_class' => 'elgg-button elgg-button-action elgg-lightbox',
 	));
 }
 

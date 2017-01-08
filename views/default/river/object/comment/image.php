@@ -4,8 +4,6 @@
  */
 
 elgg_require_js('tidypics/tidypics');
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
 
 $item = $vars['item'];
 

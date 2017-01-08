@@ -41,11 +41,16 @@ $result = elgg_list_entities(array(
 $title = elgg_echo('tidypics:siteimagesgroup', array($container->name));
 
 if (tidypics_can_add_new_photos(null, $container)) {
+	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $container_guid;
+	$url = elgg_format_url($url);
 	elgg_register_menu_item('title', array(
 		'name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $container_guid,
+		'href' => 'javascript:',
+		'data-colorbox-opts' => json_encode([
+			'href' => $url,
+		]),
 		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+		'link_class' => 'elgg-button elgg-button-action elgg-lightbox',
 	));
 }
 
