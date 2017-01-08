@@ -34,7 +34,7 @@ class TidypicsAlbum extends ElggObject {
 	public function save() {
 
 		if (!isset($this->new_album)) {
-			$this->new_album = true;
+			$this->new_album = 1;
 		}
 
 		if (!isset($this->last_notified)) {

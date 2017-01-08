@@ -1,6 +1,16 @@
 Changelog and contributors list
 ===============================
 
+Version 1.10.11 (Release Date: 08/01/2017)
+------------------------------------------
+
+* Fixed issue in shortening of image / album names in gallery views and album selection on image upload showing up for UTF-8 characters (e.g. cyrilic),
+
+Contributors:
+
+* iionly
+
+
 Version 1.10.10 (Release Date: 28/09/2016)
 ------------------------------------------
 

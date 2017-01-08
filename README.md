@@ -1,11 +1,11 @@
 Tidypics plugin for Elgg 1.10 - 1.12
 ====================================
 
-Latest Version: 1.10.10  
-Released: 2016-09-28  
+Latest Version: 1.10.11  
+Released: 2017-01-08  
 Contact: iionly@gmx.de  
 License: GNU General Public License version 2  
-Copyright: (c) iionly 2013-2016, (C) Cash Costello 2011-2016
+Copyright: (c) iionly 2013, (C) Cash Costello 2011
 
 
 Description
