@@ -37,7 +37,7 @@ elgg_set_context($prev_context);
 if (tidypics_can_add_new_photos(null, $group)) {
 	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid;
 	$url = elgg_format_url($url);
-	$image_html = elgg_view('output/url', array(
+	$image_html .= elgg_view('output/url', array(
 		'href' => 'javascript:',
 		'text' => elgg_echo("photos:addphotos"),
 		'data-colorbox-opts' => json_encode([
