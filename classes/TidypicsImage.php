@@ -49,7 +49,7 @@ class TidypicsImage extends ElggFile {
 	 *
 	 * @return bool
 	 */
-	public function delete() {
+	public function delete($follow_symlinks = true) {
 
 		// check if batch should be deleted
 		$batch = elgg_get_entities_from_relationship(array(
@@ -82,7 +82,7 @@ class TidypicsImage extends ElggFile {
 		$owner = $this->getOwnerEntity();
 		$owner->image_repo_size = (int)$owner->image_repo_size - $this->getSize();
 
-		return parent::delete();
+		return parent::delete($follow_symlinks);
 	}
 
 	/**

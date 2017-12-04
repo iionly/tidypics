@@ -55,12 +55,12 @@ class TidypicsAlbum extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function delete() {
+	public function delete($recursive = true) {
 
 		$this->deleteImages();
 		$this->deleteAlbumDir();
 
-		return parent::delete();
+		return parent::delete($recursive);
 	}
 
 	/**
