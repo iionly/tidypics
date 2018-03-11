@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg tidypics library of common functions
+ * Elgg Tidypics library of common functions
  *
  * @package TidypicsCommon
  */
@@ -13,22 +13,22 @@
  * @param string (optional) context of view to display
  * @return string of html for display
  */
-function tp_get_latest_photos($num_images, array $owner_guids = NULL, $context = 'front') {
-        $prev_context = elgg_get_context();
-        elgg_set_context($context);
-        $image_html = elgg_list_entities(array(
-        'type' => 'object',
-        'subtype' => 'image',
-        'owner_guids' => $owner_guids,
-        'limit' => $num_images,
-        'full_view' => false,
-        'list_type_toggle' => false,
-        'list_type' => 'gallery',
-        'pagination' => false,
-        'gallery_class' => 'tidypics-gallery-widget',
-        ));
-        elgg_set_context($prev_context);
-        return $image_html;
+function tp_get_latest_photos($num_images, array $owner_guids = null, $context = 'front') {
+	$prev_context = elgg_get_context();
+	elgg_set_context($context);
+	$image_html = elgg_list_entities([
+		'type' => 'object',
+		'subtype' => TidypicsImage::SUBTYPE,
+		'owner_guids' => $owner_guids,
+		'limit' => $num_images,
+		'full_view' => false,
+		'list_type_toggle' => false,
+		'list_type' => 'gallery',
+		'pagination' => false,
+		'gallery_class' => 'tidypics-gallery-widget',
+	]);
+	elgg_set_context($prev_context);
+	return $image_html;
 }
 
 /**
@@ -39,19 +39,19 @@ function tp_get_latest_photos($num_images, array $owner_guids = NULL, $context =
  * @param string (optional) context of view to display
  * @return string of html for display
  */
-function tp_get_latest_albums($num_albums, array $container_guids = NULL, $context = 'front') {
-        $prev_context = elgg_get_context();
-        elgg_set_context($context);
-        $image_html = elgg_list_entities(array(
-        'type' => 'object',
-        'subtype' => 'album',
-        'container_guids' => $container_guids,
-        'limit' => $num_albums,
-        'full_view' => false,
-        'pagination' => false,
-        ));
-        elgg_set_context($prev_context);
-        return $image_html;
+function tp_get_latest_albums($num_albums, array $container_guids = null, $context = 'front') {
+	$prev_context = elgg_get_context();
+	elgg_set_context($context);
+	$image_html = elgg_list_entities([
+		'type' => 'object',
+		'subtype' => TidypicsAlbum::SUBTYPE,
+		'container_guids' => $container_guids,
+		'limit' => $num_albums,
+		'full_view' => false,
+		'pagination' => false,
+	]);
+	elgg_set_context($prev_context);
+	return $image_html;
 }
 
 
@@ -76,7 +76,7 @@ function tp_get_img_dir($album_guid) {
  */
 function tidypics_prepare_form_vars($entity = null) {
 	// input names => defaults
-	$values = array(
+	$values = [
 		'title' => '',
 		'description' => '',
 		'access_id' => ACCESS_DEFAULT,
@@ -84,7 +84,7 @@ function tidypics_prepare_form_vars($entity = null) {
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
 		'entity' => $entity,
-	);
+	];
 
 	if ($entity) {
 		foreach (array_keys($values) as $field) {
@@ -112,7 +112,7 @@ function tidypics_prepare_form_vars($entity = null) {
  * @return string
  */
 function tidypics_get_image_libraries() {
-	$options = array();
+	$options = [];
 	if (extension_loaded('gd')) {
 		$options['GD'] = 'GD';
 	}
@@ -141,7 +141,7 @@ function tidypics_is_upgrade_available() {
 	$local_version = elgg_get_plugin_setting('version', 'tidypics');
 	if ($local_version === null) {
 		// no version set so either new install or really old one
-		if (!get_subtype_class('object', 'image') || !get_subtype_class('object', 'album')) {
+		if (!get_subtype_class('object', TidypicsImage::SUBTYPE) || !get_subtype_class('object', TidypicsAlbum::SUBTYPE)) {
 			$local_version = 0;
 		} else {
 			// set initial version for new install
@@ -172,16 +172,16 @@ function tidypics_is_upgrade_available() {
  * @param array $options
  * @return string
  */
-function tidypics_list_photos(array $options = array()) {
+function tidypics_list_photos(array $options = []) {
 	elgg_register_rss_link();
 
-	$defaults = array(
+	$defaults = [
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
 		'full_view' => true,
 		'list_type_toggle' => false,
 		'pagination' => true,
-	);
+	];
 
 	$options = array_merge($defaults, $options);
 
@@ -200,14 +200,14 @@ function tidypics_list_photos(array $options = array()) {
 	$options['count'] = false;
 	$entities = elgg_get_entities($options);
 
-	$keys = array();
+	$keys = [];
 	foreach ($entities as $entity) {
 		$keys[] = $entity->guid;
 	}
 
 	$entities = array_combine($keys, $entities);
 
-	$sorted_entities = array();
+	$sorted_entities = [];
 	foreach ($guids as $guid) {
 		if (isset($entities[$guid])) {
 			$sorted_entities[] = $entities[$guid];
@@ -243,7 +243,7 @@ function tp_guid_callback($row) {
  * @return true/false
  */
 function tp_is_person() {
-	$known = array('msie', 'mozilla', 'firefox', 'safari', 'webkit', 'opera', 'netscape', 'konqueror', 'gecko');
+	$known = ['mozilla', 'chrome', 'firefox', 'webkit', 'gecko', 'edgehtml', 'msie', 'safari', 'opera', 'netscape', 'konqueror'];
 
 	$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
@@ -268,7 +268,7 @@ function tidypics_can_add_new_photos(\ElggUser $user = null, \ElggEntity $contai
 	if (!isset($user)) {
 		$user = elgg_get_logged_in_user_entity();
 	}
-	if (!elgg_instanceof($user, 'user')) {
+	if (!($user instanceof ElggUser)) {
 		return false;
 	}
 
@@ -279,20 +279,75 @@ function tidypics_can_add_new_photos(\ElggUser $user = null, \ElggEntity $contai
 		return false;
 	}
 
-	if ($container->canWriteToContainer($user->guid, 'object', 'album')) {
+	if ($container->canWriteToContainer($user->guid, 'object', TidypicsAlbum::SUBTYPE)) {
 		return true;
 	}
 
-	$albums = new \ElggBatch('elgg_get_entities', [
+	$albums = elgg_get_entities([
 		'type' => 'object',
-		'subtype' => 'album',
+		'subtype' => TidypicsAlbum::SUBTYPE,
 		'container_guid' => $container->guid,
 		'limit' => false,
+		'batch' => true,
 	]);
 	foreach ($albums as $album) {
-		if ($album->canWriteToContainer(0, 'object', 'image')) {
+		if ($album->canWriteToContainer(0, 'object', TidypicsImage::SUBTYPE)) {
 			return true;
 		}
 	}
 	return false;
+}
+
+function tidypics_get_plugload_language() {
+	if ($current_language = get_current_language()) {
+		$path = elgg_get_plugins_path() . "tidypics/vendors/plupload/js/i18n";
+		if (file_exists("$path/$current_language.js")) {
+			return $current_language;
+		}
+	}
+
+	return 'en';
+}
+
+function tidypics_get_last_log_line($filename) {
+	$line = false;
+	$f = false;
+	if (file_exists($filename)) {
+		$f = @fopen($filename, 'r');
+	}
+
+	if ($f === false) {
+		return false;
+	} else {
+		$cursor = -1;
+
+		fseek($f, $cursor, SEEK_END);
+		$char = fgetc($f);
+
+		/**
+		 * Trim trailing newline chars of the file
+		 */
+		while ($char === "\n" || $char === "\r") {
+			fseek($f, $cursor--, SEEK_END);
+			$char = fgetc($f);
+		}
+
+		/**
+		 * Read until the start of file or first newline char
+		 */
+		while ($char !== false && $char !== "\n" && $char !== "\r") {
+			/**
+			 * Prepend the new char
+			 */
+			$line = $char . $line;
+			fseek($f, $cursor--, SEEK_END);
+			$char = fgetc($f);
+		}
+	}
+
+	return $line;
+}
+
+function tidypics_get_log_location($time) {
+	return elgg_get_config('dataroot') . 'tidypics_log' . '/' . $time . '.txt';
 }

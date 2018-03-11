@@ -6,8 +6,6 @@
  *
  */
 
-elgg_load_library('tidypics:resize');
-
 global $START_MICROTIME;
 $batch_run_time_in_secs = 5;
 
@@ -31,12 +29,12 @@ $error_count_recreate_failed = 0;
 
 while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs) {
 
-	$batch = elgg_get_entities(array(
+	$batch = elgg_get_entities([
 		'type' => 'object',
-		'subtype' => 'image',
+		'subtype' => TidypicsImage::SUBTYPE,
 		'limit' => $limit,
 		'offset' => $offset,
-	));
+	]);
 
 	foreach($batch as $image) {
 		$filename = $image->getFilename();
@@ -80,9 +78,10 @@ access_show_hidden_entities($access_status);
 
 _elgg_services()->db->enableQueryCache();
 
-// Give some feedback for the UI
-echo json_encode(array(
-	"numSuccess" => $success_count,
-	"numErrorsInvalidImage" => $error_count_invalid_image,
-	"numErrorsRecreateFailed" => $error_count_recreate_failed
-));
+$output = json_encode([
+	'numSuccess' => $success_count,
+	'numErrorsInvalidImage' => $error_count_invalid_image,
+	'numErrorsRecreateFailed' => $error_count_recreate_failed,
+]);
+
+return elgg_ok_response($output, '');

@@ -1,6 +1,10 @@
 define(function(require) {
-	var elgg = require("elgg");
-	var $ = require("jquery");
+	var $ = require('jquery');
+	var elgg = require('elgg');
+	var Ajax = require('elgg/Ajax');
+
+	// manage Spinner manually
+	var ajax = new Ajax(false);
 
 	function init() {
 		var fields = ['Elgg', 'user_guid', 'album_guid', 'batch', 'tidypics_token'];
@@ -61,15 +65,23 @@ define(function(require) {
 			init : {
 				UploadComplete: function(up, files) {
 					// Called when all files are either uploaded or failed
-					elgg.action('photos/image/ajax_upload_complete', {
+					ajax.action('photos/image/ajax_upload_complete', {
 						data: {
 							album_guid: data.album_guid,
 							batch: data.batch
-						},
-						success: function(json) {
-							var url = elgg.normalize_url('photos/edit/' + json.batch_guid)
-							window.location.href = url;
 						}
+					}).done(function(json, status, jqXHR) {
+						if (jqXHR.AjaxData.status == -1) {
+							if (!json.error.message.length) {
+								window.location.href = elgg.normalize_url('photos/siteimagesall');
+							} else {
+								location.reload();
+							}
+							return;
+						}
+						var url = elgg.normalize_url('photos/edit/' + json.batch_guid);
+						window.location.href = url;
+						return;
 					});
 				},
 
@@ -88,6 +100,15 @@ define(function(require) {
 				FilesRemoved: function(up, files) {
 					if (up.files.length < maxfiles) {
 						up.disableBrowse(false);
+					}
+				},
+
+				FileUploaded: function(up, file, info) {
+					var response = jQuery.parseJSON(info.response);
+					if (response.error.message.length) {
+						elgg.register_error(response.error.message);
+						up.stop();
+						return;
 					}
 				}
 			}

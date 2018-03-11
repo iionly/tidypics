@@ -1,6 +1,26 @@
 Changelog and contributors list
 ===============================
 
+Version 2.3.4 (Release Date: XX/XX/XXXX)
+----------------------------------------
+
+* General code cleanup and restructuring (bringing it up to date with some new stuff of Elgg 2.3 API),
+* Action error and success handling: updated to new Elgg API functions were appropriate,
+* JS: usage of new elgg/Ajax AMD module methods for action handling,
+* Fixed display of errors occuring during uploads when using Plupload HTML5/HTML4 uploader,
+* Rewritten forms and usage of Elgg API for input fields including making use of HTML5/CSS3 required attribute where appropriate,
+* Rewritten and reordered settings page/tabs,
+* Changed widget edit view number of item input field from a select to a number input field on all widgets,
+* Fixed "Latest Photos" group widget to display photos again also for users who are allowed to add photos (i.e. who get the "Upload Photos" link displayed); thanks to Pasley70 for reporting the issue,
+* Fixed alignment of image thumbnails in river entries (also with thumbnails shown in more than 1 row),
+* PHP 7.2 compatibility: modified TidypicsAlbum and TidypicsImage delete method declaration to be compatible with parent class delete method declaration,
+* French translation updated and completed thanks to BenaeSan.
+
+Contributors:
+
+* iionly
+
+
 Version 2.3.3 (Release Date: 08/01/2017)
 ----------------------------------------
 

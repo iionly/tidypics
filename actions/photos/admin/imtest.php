@@ -2,15 +2,21 @@
 /**
  * Tidypics ImageMagick Location Test
  *
- *  Called through ajax. Not a registered Elgg action.
  */
 
-$location = $_GET['location'];
+$im_location = get_input('im_location');
 
-$command = $location . "/" . "convert -version";
+$command = $im_location . "/" . "convert -version";
 
-$result = system($command, $return_val);
+$result_array = [];
+$result = exec($command, $result_array, $return_val);
 
 if ($return_val == 0) {
-	echo $result;
+	$output = json_encode([
+		'result' => implode(' ', $result_array),
+	]);
+} else {
+	$output = '';
 }
+
+return elgg_ok_response($output, '');

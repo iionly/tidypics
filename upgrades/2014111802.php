@@ -25,12 +25,13 @@ access_show_hidden_entities(true);
 $db_prefix = elgg_get_config('dbprefix');
 
 
-$batch = new ElggBatch('elgg_get_river', array(
+$batch = elgg_get_river([
 	'type' => 'object',
-	'subtype' => 'album',
+	'subtype' => TidypicsAlbum::SUBTYPE,
 	'action_type' => 'create',
-	'limit' => false
-));
+	'limit' => false,
+	'batch' => true,
+]);
 foreach ($batch as $river_entry) {
 	$query = "
 		UPDATE {$db_prefix}river
@@ -40,12 +41,13 @@ foreach ($batch as $river_entry) {
 	update_data($query);
 }
 
-$batch = new ElggBatch('elgg_get_river', array(
+$batch = elgg_get_river([
 	'type' => 'object',
-	'subtype' => 'image',
+	'subtype' => TidypicsImage::SUBTYPE,
 	'action_type' => 'create',
-	'limit' => false
-));
+	'limit' => false,
+	'batch' => true,
+]);
 foreach ($batch as $river_entry) {
 	$image = get_entity($river_entry->object_guid);
 	$query = "
@@ -56,12 +58,13 @@ foreach ($batch as $river_entry) {
 	update_data($query);
 }
 
-$batch = new ElggBatch('elgg_get_river', array(
+$batch = elgg_get_river([
 	'type' => 'object',
-	'subtype' => 'tidypics_batch',
+	'subtype' => TidypicsBatch::SUBTYPE,
 	'action_type' => 'create',
-	'limit' => false
-));
+	'limit' => false,
+	'batch' => true,
+]);
 foreach ($batch as $river_entry) {
 	$tidypics_batch = get_entity($river_entry->object_guid);
 	$query = "
@@ -72,12 +75,13 @@ foreach ($batch as $river_entry) {
 	update_data($query);
 }
 
-$batch = new ElggBatch('elgg_get_river', array(
+$batch = elgg_get_river([
 	'type' => 'object',
-	'subtype' => 'image',
+	'subtype' => TidypicsImage::SUBTYPE,
 	'action_type' => 'tag',
-	'limit' => false
-));
+	'limit' => false,
+	'batch' => true,
+]);
 foreach ($batch as $river_entry) {
 	$tag_annotation = elgg_get_annotation_from_id($river_entry->annotation_id);
 	$image = get_entity($tag_annotation->entity_guid);
@@ -89,12 +93,13 @@ foreach ($batch as $river_entry) {
 	update_data($query);
 }
 
-$batch = new ElggBatch('elgg_get_river', array(
+$batch = elgg_get_river([
 	'type' => 'object',
-	'subtype' => 'image',
+	'subtype' => TidypicsImage::SUBTYPE,
 	'action_type' => 'wordtag',
-	'limit' => false
-));
+	'limit' => false,
+	'batch' => true,
+]);
 foreach ($batch as $river_entry) {
 	$image = get_entity($river_entry->object_guid);
 	$query = "

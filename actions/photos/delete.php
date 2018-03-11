@@ -10,39 +10,35 @@ $guid = (int) get_input('guid');
 $entity = get_entity($guid);
 if (!$entity) {
 	// unable to get Elgg entity
-	register_error(elgg_echo("tidypics:deletefailed"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:deletefailed'), REFERER);
 }
 
 if (!$entity->canEdit()) {
 	// user doesn't have permissions
-	register_error(elgg_echo("tidypics:deletefailed"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:deletefailed'), REFERER);
 }
 
 $container = $entity->getContainerEntity();
 
 $subtype = $entity->getSubtype();
 switch ($subtype) {
-	case 'album':
-		if (elgg_instanceof($container, 'user')) {
+	case TidypicsAlbum::SUBTYPE:
+		if ($container instanceof ElggUser) {
 			$forward_url = "photos/owner/$container->username";
 		} else {
 			$forward_url = "photos/group/$container->guid/all";
 		}
 		break;
-	case 'image':
+	case TidypicsImage::SUBTYPE:
 		$forward_url = $container->getURL();
 		break;
 	default:
-		forward(REFERER);
+		return elgg_ok_response('', '', REFERER);
 		break;
 }
 
-if ($entity->delete()) {
-	system_message(elgg_echo("tidypics:deleted"));
-} else {
-	register_error(elgg_echo("tidypics:deletefailed"));
+if (!$entity->delete()) {
+	return elgg_error_response(elgg_echo('tidypics:deletefailed'), $forward_url);
 }
 
-forward($forward_url);
+return elgg_ok_response('', elgg_echo('tidypics:deleted'), $forward_url);

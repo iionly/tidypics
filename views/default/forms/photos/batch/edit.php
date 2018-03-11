@@ -11,23 +11,24 @@
 $batch = $vars['batch'];
 $album = $batch->getContainerEntity();
 
-$images = elgg_get_entities_from_relationship(array(
+$images = elgg_get_entities_from_relationship([
 	'type' => 'object',
-	'subtype' => 'image',
+	'subtype' => TidypicsImage::SUBTYPE,
 	'relationship' => 'belongs_to_batch',
 	'relationship_guid' => $batch->getGUID(),
 	'inverse_relationship' => true,
-	'limit' => 0
-));
+	'limit' => false,
+]);
 
-echo '<ul>';
+$img_list = '';
 foreach ($images as $image) {
-	echo '<li>';
-	echo elgg_view('forms/photos/batch/edit/image', array('entity' => $image));
-	echo '</li>';
+	$img_list .= elgg_format_element('li', [], elgg_view('forms/photos/batch/edit/image', ['entity' => $image]));
 }
-echo '</ul>';
+echo elgg_format_element('ul', [], $img_list);
 
-echo '<div class="elgg-foot">';
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-echo '</div>';
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+
+elgg_set_form_footer($footer);

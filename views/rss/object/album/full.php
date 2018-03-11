@@ -8,12 +8,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$limit = (int)get_input('limit', 20);
+$limit = (int) get_input('limit', 20);
 
-echo elgg_list_entities(array(
+echo elgg_list_entities([
 	'type' => 'object',
-	'subtype' => 'image',
+	'subtype' => TidypicsImage::SUBTYPE,
 	'container_guid' => $vars['entity']->getGUID(),
 	'limit' => $limit,
 	'full_view' => false,
-));
+]);

@@ -10,5 +10,5 @@
 
 $tags = $vars['entity']->getPhotoTags();
 foreach ($tags as $tag) {
-	echo elgg_view('photos/tagging/tag', array('tag' => $tag));
+	echo elgg_view('photos/tagging/tag', ['tag' => $tag]);
 }

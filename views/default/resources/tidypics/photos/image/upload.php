@@ -10,20 +10,16 @@ elgg_gatekeeper();
 
 $album_guid = elgg_extract('guid', $vars);
 if (!$album_guid) {
-	// @todo
-	forward();
+	forward('', '404');
 }
 
 $album = get_entity($album_guid);
-if (!$album || !elgg_instanceof($album, 'object', 'album')) {
-	// @todo
-	// throw warning and forward to previous page
-	forward(REFERER);
+if (!($album instanceof TidypicsAlbum)) {
+	forward('', '404');
 }
 
 if (!$album->getContainerEntity()->canWriteToContainer()) {
-	// @todo have to be able to edit album to upload photos
-	forward(REFERER);
+	forward('', '404');
 }
 
 // set page owner based on container (user or group)
@@ -42,7 +38,15 @@ elgg_push_breadcrumb(elgg_echo('album:addpix'));
 
 $uploader = elgg_extract('uploader', $vars);
 if ($uploader == 'basic') {
-	$content = elgg_view('forms/photos/basic_upload', array('entity' => $album));
+	$form_vars = [
+		'action' => 'action/photos/image/upload',
+		'enctype' => 'multipart/form-data',
+		'class' => 'elgg-form-settings',
+	];
+	$body_vars = [
+		'entity' => $album,
+	];
+	$content = elgg_view_form('photos/basic_upload', $form_vars, $body_vars);
 } else {
 	elgg_load_js('jquery.plupload-tp');
 	elgg_load_js('jquery.plupload.ui-tp');
@@ -50,14 +54,14 @@ if ($uploader == 'basic') {
 	elgg_load_css('jquery.plupload.jqueryui-theme');
 	elgg_load_css('jquery.plupload.ui');
 	elgg_require_js('tidypics/uploading');
-	$content = elgg_view('forms/photos/ajax_upload', array('entity' => $album));
+	$content = elgg_view('forms/photos/ajax_upload', ['entity' => $album]);
 }
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => elgg_view('photos/sidebar_im', array('page' => 'upload')),
-));
+	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'upload']),
+]);
 
 echo elgg_view_page($title, $body);

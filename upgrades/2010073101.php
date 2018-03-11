@@ -16,20 +16,22 @@ elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_ov
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
 
-$batch = new ElggBatch('elgg_get_entities', array(
+$batch = elgg_get_entities([
 	'type' => 'object',
-	'subtype' => 'album',
-	'limit' => false
-));
+	'subtype' => TidypicsAlbum::SUBTYPE,
+	'limit' => false,
+	'batch' => true,
+]);
 
 foreach ($batch as $album) {
-	$batch_images = new ElggBatch('elgg_get_entities', array(
-		"type" => "object",
-		"subtype" => "image",
-		"container_guid" => $album->guid,
-		'limit' => false
-	));
-	$image_list = array();
+	$batch_images = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => TidypicsImage::SUBTYPE,
+		'container_guid' => $album->guid,
+		'limit' => false,
+		'batch' => true,
+	]);
+	$image_list = [];
 	foreach ($batch_images as $image) {
 		$image_list[] = $image->guid;
 	}

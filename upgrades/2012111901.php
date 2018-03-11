@@ -12,30 +12,36 @@ if ( $upgrade_version and $file_version <= $upgrade_version) {
 }
 
 $db_prefix = elgg_get_config('dbprefix');
-$ignore_access = elgg_set_ignore_access(TRUE);
+$ignore_access = elgg_set_ignore_access(true);
 
 // Count tidypics_batch entities that need to correct the access_id
-$options = array(
+$options = [
 	'type' => 'object',
-	'subtype' => 'tidypics_batch',
-	'limit' => 0,
-	'count' => TRUE,
-	'joins' => array("JOIN {$db_prefix}entities e2 ON e2.guid = e.container_guid"),
-	'wheres' => array("e.access_id <> e2.access_id"),
-);
+	'subtype' => TidypicsBatch::SUBTYPE,
+	'limit' => false,
+	'count' => true,
+	'joins' => ["JOIN {$db_prefix}entities e2 ON e2.guid = e.container_guid"],
+	'wheres' => ["e.access_id <> e2.access_id"],
+];
 $tidypics_batch = elgg_get_entities($options);
 
 // If no entities found set upgrade as runned
-if ( !$tidypics_batch ) {
+if (!$tidypics_batch) {
 	return elgg_set_plugin_setting('upgrade_version', $file_version, 'tidypics');
 }
 
 // Correct the access_id of the tidypics_batch entities
-if ( $tidypics_batch ) {
-	$options['count'] = FALSE;
+if ($tidypics_batch) {
+	$options['count'] = false;
 	$batch = new ElggBatch('elgg_get_entities', $options, 'tidypics_2012111901');
-	// Correct the acces_id from river itens
-	$tidypics_batch_river = elgg_get_river(array('object_guids' => $batch->callbackResult, 'action_types' => 'create', 'types' => 'object', 'subtypes' => 'tidypics_batch', 'limit' => 0));
+	// Correct the access_id from river itens
+	$tidypics_batch_river = elgg_get_river([
+		'object_guid' => $batch->callbackResult,
+		'action_type' => 'create',
+		'type' => 'object',
+		'subtype' => TidypicsBatch::SUBTYPE,
+		'limit' => false.
+	]);
 	tidypics_adjust_river_access_id($tidypics_batch_river);
 	error_log("Tidypics batches upgrade (2012111901) succeeded");
 }
@@ -53,7 +59,7 @@ return elgg_set_plugin_setting('upgrade_version', $file_version, 'tidypics');
  */
 function tidypics_2012111901($entity, $getter, $options) {
 	$album = $entity->getContainerEntity();
-	if ( $guid = tidypics_adjust_batch_access_id($entity, $album) ) {
+	if ($guid = tidypics_adjust_batch_access_id($entity, $album) ) {
 		return $guid;
 	}
 }
@@ -65,9 +71,9 @@ function tidypics_2012111901($entity, $getter, $options) {
  * @param ElggObject $album
  * @return void
  */
-function tidypics_adjust_batch_access_id(ElggObject $entity = NULL, ElggObject $album = NULL) {
-	if ( !elgg_instanceof($entity, 'object', 'tidypics_batch') or !elgg_instanceof($album, 'object', 'album') ) {
-		return FALSE;
+function tidypics_adjust_batch_access_id(ElggObject $entity = null, ElggObject $album = null) {
+	if (!($entity instanceof TidypicsBatch) or !($album instanceof TidypicsAlbum)) {
+		return false;
 	}
 
 	if ( $entity->access_id != $album->access_id ) {
@@ -77,12 +83,12 @@ function tidypics_adjust_batch_access_id(ElggObject $entity = NULL, ElggObject $
 }
 
 /**
- * Change the river iten's acces_id to album acces_id
+ * Change the river iten's access_id to album access_id
  *
  * @param Array $river_itens
  * @return void
  */
-function tidypics_adjust_river_access_id(array $river_itens = NULL) {
+function tidypics_adjust_river_access_id(array $river_itens = null) {
 	if ( !$river_itens or !count($river_itens) ) {
 		return;
 	}

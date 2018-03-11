@@ -7,29 +7,25 @@
  */
 
 $coordinates_str = get_input('coordinates');
-$username = get_input('username');
-$image_guid = get_input('guid');
+$username = htmlspecialchars(get_input('username', '', false), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$image_guid = (int) get_input('guid');
 
 if ($image_guid == 0) {
-	register_error(elgg_echo("tidypics:phototagging:error"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
 }
 
 $image = get_entity($image_guid);
 if (!$image) {
-	register_error(elgg_echo("tidypics:phototagging:error"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
 }
 
 if (empty($username)) {
-	register_error(elgg_echo("tidypics:phototagging:error"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
 }
 
 $album = get_entity($image->getContainerGUID());
 if (!$album) {
-	register_error(elgg_echo("tidypics:phototagging:error"));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
 }
 
 $user = get_user_by_username($username);
@@ -93,58 +89,57 @@ if ($tag->type === 'word') {
 	}
 }
 
-if (strlen($value) > 0) {
-	$tag->value = $value;
+if (strlen($value) < 1) {
+	return elgg_error_response(elgg_echo('tidypics:phototagging:nosuccess'), REFERER);
+}
 
-	$annotation_id = $image->annotate('phototag', serialize($tag), $access_id);
-	if ($annotation_id) {
-		// if tag is a user id, add relationship for searching (find all images with user x)
-		if ($tag->type === 'user') {
-			if (!check_entity_relationship($tag->value, 'phototag', $image_guid)) {
-				add_entity_relationship($tag->value, 'phototag', $image_guid);
+$tag->value = $value;
 
-				// also add this to the river - subject is tagger, object is the tagged user
-				$tagger = elgg_get_logged_in_user_entity();
-				elgg_create_river_item(array(
-					'view' => 'river/object/image/tag',
-					'action_type' => 'tag',
-					'subject_guid' => $tagger->guid,
-					'object_guid' => $user->guid,
-					'target_guid' => $album->getGUID(),
-					'access_id' => $access_id,
-					'annotation_id' => $annotation_id,
-				));
+$annotation_id = $image->annotate('phototag', serialize($tag), $access_id);
+if ($annotation_id) {
+	// if tag is a user id, add relationship for searching (find all images with user x)
+	if ($tag->type === 'user') {
+		if (!check_entity_relationship($tag->value, 'phototag', $image_guid)) {
+			add_entity_relationship($tag->value, 'phototag', $image_guid);
 
-				// notify user of tagging as long as not self
-				if ($tagger->guid != $user->guid) {
-					notify_user($user->guid,
-					$tagger->guid,
-					elgg_echo('tidypics:tag:subject'),
-					elgg_echo('tidypics:tag:body', array($image->getTitle(), $tagger->name, $image->getURL()))
-					);
-				}
-			}
-		} else if ($tag->type === 'word') {
-			// also add this to the river - subject is tagger, object is the tagged image
+			// also add this to the river - subject is tagger, object is the tagged user
 			$tagger = elgg_get_logged_in_user_entity();
-			elgg_create_river_item(array(
-				'view' => 'river/object/image/wordtag',
-				'action_type' => 'wordtag',
+			elgg_create_river_item([
+				'view' => 'river/object/image/tag',
+				'action_type' => 'tag',
 				'subject_guid' => $tagger->guid,
-				'object_guid' => $image->guid,
+				'object_guid' => $user->guid,
 				'target_guid' => $album->getGUID(),
 				'access_id' => $access_id,
 				'annotation_id' => $annotation_id,
-			));
+			]);
+
+			// notify user of tagging as long as not self
+			if ($tagger->guid != $user->guid) {
+				notify_user($user->guid,
+					$tagger->guid,
+					elgg_echo('tidypics:tag:subject'),
+					elgg_echo('tidypics:tag:body', [$image->getTitle(), $tagger->name, $image->getURL()])
+				);
+			}
 		}
-		if ($existing_tags) {
-			system_message(elgg_echo("tidypics:phototagging:success_partly"));
-		} else {
-			system_message(elgg_echo("tidypics:phototagging:success"));
-		}
+	} else if ($tag->type === 'word') {
+		// also add this to the river - subject is tagger, object is the tagged image
+		$tagger = elgg_get_logged_in_user_entity();
+		elgg_create_river_item([
+			'view' => 'river/object/image/wordtag',
+			'action_type' => 'wordtag',
+			'subject_guid' => $tagger->guid,
+			'object_guid' => $image->guid,
+			'target_guid' => $album->getGUID(),
+			'access_id' => $access_id,
+			'annotation_id' => $annotation_id,
+		]);
 	}
-} else {
-	register_error(elgg_echo("tidypics:phototagging:nosuccess"));
 }
 
-forward(REFERER);
+if ($existing_tags) {
+	return elgg_ok_response('', elgg_echo('tidypics:phototagging:success_partly'), REFERER);
+}
+
+return elgg_ok_response('', elgg_echo('tidypics:phototagging:success'), REFERER);

@@ -3,19 +3,17 @@
  * Sorting album action - takes a comma separated list of image guids
  */
 
-$album_guid = get_input('album_guid');
+$album_guid = (int) get_input('album_guid');
 $album = get_entity($album_guid);
-if (!$album) {
-
+if (!($album instanceof TidypicsAlbum)) {
+	return elgg_error_response(elgg_echo('album:invalid_album'), REFERER);
 }
 
 $guids = get_input('guids');
 $guids = explode(',', $guids);
 
-if ($album->setImageList($guids)) {
-	system_message(elgg_echo('tidypics:album:sorted', array($album->getTitle())));
-} else {
-	register_error(elgg_echo('tidypics:album:could_not_sort', array($album->getTitle())));
+if (!$album->setImageList($guids)) {
+	return elgg_error_response(elgg_echo('tidypics:album:could_not_sort', [$album->getTitle()]), $album->getURL());
 }
 
-forward($album->getURL());
+return elgg_ok_response('', elgg_echo('tidypics:album:sorted', [$album->getTitle()]), $album->getURL());

@@ -22,18 +22,18 @@ if ($cover_guid) {
 } else {
 	$url = elgg_get_simplecache_url("tidypics/empty_album_{$vars['size']}.png");
 	$url = elgg_normalize_url($url);
-	$img = elgg_view('output/img', array(
+	$img = elgg_view('output/img', [
 		'src' => $url,
 		'class' => 'elgg-photo',
 		'title' => $album->getTitle(),
 		'alt' => $album->getTitle(),
-	));
+	]);
 
-	$params = array(
+	$params = [
 		'href' => $album->getURL(),
 		'text' => $img,
 		'is_trusted' => true,
-	);
+	];
 	if (isset($vars['link_class'])) {
 		$params['class'] = $vars['link_class'];
 	}

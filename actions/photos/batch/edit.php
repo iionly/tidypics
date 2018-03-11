@@ -6,12 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$guids = get_input('guid');
-$titles = get_input('title');
-$captions = get_input('caption');
-$tags = get_input('tags');
+$guids = (array) get_input('guid');
+$titles = (array) get_input('title');
+$captions = (array) get_input('caption');
+$tags = (array) get_input('tags');
 
-$not_updated = array();
+$not_updated = [];
 foreach ($guids as $key => $guid) {
 	$image = get_entity($guid);
 
@@ -19,11 +19,13 @@ foreach ($guids as $key => $guid) {
 
 		// set title appropriately
 		if ($titles[$key]) {
-			$image->title = $titles[$key];
+			$title = htmlspecialchars($titles[$key], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+			$image->title = $title;
 		} else {
-                        $title = substr($image->originalfilename, 0, strrpos($image->originalfilename, '.'));
-                        // remove any possible bad characters from the title
-                        $image->title = preg_replace('/\W/', '', $title);
+			$title = substr($image->originalfilename, 0, strrpos($image->originalfilename, '.'));
+			$title = htmlspecialchars($title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+			// remove any possible bad characters from the title
+			$image->title = preg_replace('/\W/', '', $title);
 		}
 
 		// set description appropriately
@@ -37,8 +39,7 @@ foreach ($guids as $key => $guid) {
 }
 
 if (count($not_updated) > 0) {
-	register_error(elgg_echo("images:notedited"));
-} else {
-	system_message(elgg_echo("images:edited"));
+	return elgg_error_response(elgg_echo('images:notedited'), $image->getContainerEntity()->getURL());
 }
-forward($image->getContainerEntity()->getURL());
+
+return elgg_ok_response('', elgg_echo('images:edited'), $image->getContainerEntity()->getURL());

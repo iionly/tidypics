@@ -6,20 +6,20 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-// set default value
-if (!isset($vars['entity']->num_display)) {
-	$vars['entity']->num_display = 5;
+/* @var $widget ElggWidget */
+$widget = elgg_extract('entity', $vars);
+
+$count = (int) $widget->num_display;
+if ($count < 1) {
+	$count = 4;
 }
 
-$params = array(
+echo elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('tidypics:widget:num_albums'),
 	'name' => 'params[num_display]',
-	'value' => $vars['entity']->num_display,
-	'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20),
-);
-$select = elgg_view('input/select', $params);
-
-?>
-<div>
-	<?php echo elgg_echo('tidypics:widget:num_albums'); ?>:
-	<?php echo $select; ?>
-</div>
+	'value' => $count,
+	'min' => 1,
+	'max' => 25,
+	'step' => 1,
+]);

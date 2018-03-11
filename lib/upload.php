@@ -35,13 +35,13 @@ function tp_upload_get_mimetype($originalName) {
  * @return bool false = not image
  */
 function tp_upload_check_format($mime) {
-	$accepted_formats = array(
+	$accepted_formats = [
 		'image/jpeg',
 		'image/png',
 		'image/gif',
 		'image/pjpeg',
 		'image/x-png',
-	);
+	];
 
 	if (!in_array($mime, $accepted_formats)) {
 		return false;

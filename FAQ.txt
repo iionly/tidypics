@@ -41,20 +41,22 @@ mod/custom_index/views/default/page/layouts/custom_index.php:
 <pre><code>// Tidypics latest photos
 if (elgg_is_active_plugin('tidypics')) {
     $latest_photos = tp_get_latest_photos(6);
-    $latest_images .= elgg_view('output/url', array('href' => "/photos/siteimagesall",
-                                                    'text' => elgg_echo('link:view:all'),
-                                                    'is_trusted' => true,
-                               ));
+    $latest_images .= elgg_view('output/url', [
+        'href' => "/photos/siteimagesall",
+        'text' => elgg_echo('link:view:all'),
+        'is_trusted' => true,
+    ]);
     echo elgg_view_module('featured', elgg_echo("tidypics:mostrecent"), $latest_photos, $mod_params);
 }</code></pre>
 
 <pre><code>// Tidypics latest albums
 if (elgg_is_active_plugin('tidypics')) {
     $latest_albums = tp_get_latest_albums(6);
-    $latest_albums .= elgg_view('output/url', array('href' => "/photos/all",
-                                                    'text' => elgg_echo('link:view:all'),
-                                                    'is_trusted' => true,
-                               ));
+    $latest_albums .= elgg_view('output/url', [
+        'href' => "/photos/all",
+        'text' => elgg_echo('link:view:all'),
+        'is_trusted' => true,
+    ]);
     echo elgg_view_module('featured', elgg_echo("tidypics:albums_mostrecent"), $latest_albums, $mod_params);
 }</code></pre>
 

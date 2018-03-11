@@ -6,23 +6,20 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-elgg_load_library('tidypics:upload');
 $img_river_view = elgg_get_plugin_setting('img_river_view', 'tidypics');
 
 set_input('tidypics_action_name', 'tidypics_photo_upload');
 
 $guid = (int) get_input('guid');
 $album = get_entity($guid);
-if (!$album) {
-	register_error(elgg_echo('tidypics:baduploadform'));
-	forward(REFERER);
+if (!($album instanceof TidypicsAlbum)) {
+	return elgg_error_response(elgg_echo('tidypics:baduploadform'), REFERER);
 }
 
 // post limit exceeded
 if (count($_FILES) == 0) {
 	trigger_error('Tidypics warning: user exceeded post limit on image upload', E_USER_WARNING);
-	register_error(elgg_echo('tidypics:exceedpostlimit'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:exceedpostlimit'), REFERER);
 }
 
 // test to make sure at least 1 image was selected by user
@@ -34,16 +31,15 @@ foreach($_FILES['images']['name'] as $name) {
 }
 if ($num_images == 0) {
 	// have user try again
-	register_error(elgg_echo('tidypics:noimages'));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:noimages'), REFERER);
 }
 
 // create the image object for each upload
-$uploaded_images = array();
-$not_uploaded = array();
-$error_msgs = array();
+$uploaded_images = [];
+$not_uploaded = [];
+$error_msgs = [];
 foreach ($_FILES['images']['name'] as $index => $value) {
-	$data = array();
+	$data = [];
 	foreach ($_FILES['images'] as $key => $values) {
 		$data[$key] = $values[$index];
 	}
@@ -52,7 +48,7 @@ foreach ($_FILES['images']['name'] as $index => $value) {
 		continue;
 	}
 
-	$name = htmlspecialchars($data['name'], ENT_QUOTES, 'UTF-8', false);
+	$name = htmlspecialchars($data['name'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
 	$mime = tp_upload_get_mimetype($name);
 
@@ -75,13 +71,13 @@ foreach ($_FILES['images']['name'] as $index => $value) {
 		array_push($uploaded_images, $image->getGUID());
 
 		if ($img_river_view == "all") {
-			elgg_create_river_item(array(
+			elgg_create_river_item([
 				'view' => 'river/object/image/create',
 				'action_type' => 'create',
 				'subject_guid' => $image->getOwnerGUID(),
 				'object_guid' => $image->getGUID(),
 				'target_guid' => $album->getGUID(),
-			));
+			]);
 		}
 	}
 }
@@ -101,21 +97,21 @@ if (count($uploaded_images)) {
 
 	// "added images to album" river
 	if ($img_river_view == "batch" && !($album->new_album)) {
-		elgg_create_river_item(array(
+		elgg_create_river_item([
 			'view' => 'river/object/tidypics_batch/create',
 			'action_type' => 'create',
 			'subject_guid' => $batch->getOwnerGUID(),
 			'object_guid' => $batch->getGUID(),
 			'target_guid' => $album->getGUID(),
-		));
+		]);
 	} else if ($img_river_view == "1" && !($album->new_album)) {
-		elgg_create_river_item(array(
+		elgg_create_river_item([
 			'view' => 'river/object/tidypics_batch/create_single_image',
 			'action_type' => 'create',
 			'subject_guid' => $batch->getOwnerGUID(),
 			'object_guid' => $batch->getGUID(),
 			'target_guid' => $album->getGUID(),
-		));
+		]);
 	}
 
 	// "created album" river
@@ -125,20 +121,20 @@ if (count($uploaded_images)) {
 
 		$album_river_view = elgg_get_plugin_setting('album_river_view', 'tidypics');
 		if ($album_river_view != "none") {
-			elgg_create_river_item(array(
+			elgg_create_river_item([
 				'view' => 'river/object/album/create',
 				'action_type' => 'create',
 				'subject_guid' => $album->getOwnerGUID(),
 				'object_guid' => $album->getGUID(),
 				'target_guid' => $album->getGUID(),
-			));
+			]);
 		}
 
 		// "created album" notifications
 		// we throw the notification manually here so users are not told about the new album until
 		// there are at least a few photos in it
 		if ($album->shouldNotify()) {
-			elgg_trigger_event('album_first', 'album', $album);
+			elgg_trigger_event('album_first', TidypicsAlbum::SUBTYPE, $album);
 			$album->last_notified = time();
 		}
 	} else {
@@ -148,7 +144,7 @@ if (count($uploaded_images)) {
 		}
 
 		if ($album->shouldNotify()) {
-			elgg_trigger_event('album_more', 'album', $album);
+			elgg_trigger_event('album_more', TidypicsAlbum::SUBTYPE, $album);
 			$album->last_notified = time();
 		}
 	}
@@ -156,25 +152,23 @@ if (count($uploaded_images)) {
 
 if (count($not_uploaded) > 0) {
 	if (count($uploaded_images) > 0) {
-		$error = sprintf(elgg_echo("tidypics:partialuploadfailure"), count($not_uploaded), count($not_uploaded) + count($uploaded_images))  . '<br />';
+		$error = sprintf(elgg_echo("tidypics:partialuploadfailure"), count($not_uploaded), count($not_uploaded) + count($uploaded_images))  . '<br>';
 	} else {
-		$error = elgg_echo("tidypics:completeuploadfailure") . '<br />';
+		$error = elgg_echo("tidypics:completeuploadfailure") . '<br>';
 	}
 
 	$num_failures = count($not_uploaded);
 	for ($i = 0; $i < $num_failures; $i++) {
-		$error .= "{$not_uploaded[$i]}: {$error_msgs[$i]} <br />";
+		$error .= "{$not_uploaded[$i]}: {$error_msgs[$i]} <br>";
 	}
-	register_error($error);
 
 	if (count($uploaded_images) == 0) {
 		//upload failed, so forward to previous page
-		forward(REFERER);
+		return elgg_error_response($error, REFERER);
 	} else {
 		// some images did upload so we fall through
+		return elgg_error_response($error, "photos/edit/$batch->guid");
 	}
-} else {
-	system_message(elgg_echo('tidypics:upl_success'));
 }
 
-forward("photos/edit/$batch->guid");
+return elgg_ok_response('', elgg_echo('tidypics:upl_success'), "photos/edit/$batch->guid");

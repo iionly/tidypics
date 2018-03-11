@@ -5,7 +5,7 @@
  * Supports moving photos from the files plugin to Tidypics. All of a users
  * photos end up in a single album.
  *
- * Not supported
+ * !!!!!! Not supported !!!!!
  */
 
 // need access to ElggDiskFilestore::make_file_matrix(), which is protected.
@@ -35,10 +35,10 @@ function tidypics_migrate_pics() {
 	}
 
 	//echo "Grabbed " . count($users) . " users\n";
-	while (is_array($users) AND count($users) > 0) {
+	while (is_array($users) and count($users) > 0) {
 		foreach ($users as $user_guid) {
 			// reset the query cache.
-			$DB_QUERY_CACHE = array();
+			$DB_QUERY_CACHE = [];
 			if (!$user = get_entity($user_guid)) {
 				continue;
 			}
@@ -68,9 +68,9 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 	$user_guid = $user->getGUID();
 
 	// update all entity subtypes in a single go at the end.
-	$updated_guids = array();
+	$updated_guids = [];
 
-	if (!$pics = tidypics_get_user_pics_from_files($user_guid) OR count($pics) < 1) {
+	if (!$pics = tidypics_get_user_pics_from_files($user_guid) or count($pics) < 1) {
 		return false;
 	}
 
@@ -78,17 +78,19 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 
 	// get an album to migrate into if it already exists.
 	// will create later on if it doesn't.
-	$user_album_entities = elgg_get_entities_from_metadata(array('metadata_name' => 'migrated_from_files',
-                                                                     'metadata_value' => true,
-	                                                             'type' => 'object',
-	                                                             'subtype' => 'album',
-	                                                             'owner_guid' => $user->getGUID(),
-	                                                             'limit' => 1));
-	
+	$user_album_entities = elgg_get_entities_from_metadata([
+		'metadata_name' => 'migrated_from_files',
+		'metadata_value' => true,
+		'type' => 'object',
+		'subtype' => TidypicsAlbum::SUBTYPE,
+		'owner_guid' => $user->getGUID(),
+		'limit' => 1,
+	]);
+
 	$user_album_guid = isset($album_entities[0]) ? $album_entities[0]->getGUID() : false;
 
 	// a list of albums to randomly select a cover for on newly created albums.
-	$new_album_guids = array();
+	$new_album_guids = [];
 
 	foreach ($pics as $pic) {
 		// check that it's not already in tidy pics
@@ -102,8 +104,8 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 
 		// see if we're doing a group file migration.
 		if ($pic->container_guid != $user->getGUID()
-			AND $group = get_entity($pic->container_guid)
-			AND $group instanceof ElggGroup
+			and $group = get_entity($pic->container_guid)
+			and $group instanceof ElggGroup
 		) {
 			//echo "{$pic->getGUID()} is in a group!\n";
 			$group_pic = true;
@@ -111,7 +113,11 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 
 			// yes, this is how you get entities by container_guid.
 			// yes, it's wrong, wrong, wrong for this function to work this way.
-			$group_album_entities = elgg_get_entities(array('type' => 'object', 'subtype' => 'album',  'owner_guid' => $group_guid));
+			$group_album_entities = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => TidypicsAlbum::SUBTYPE,
+				'owner_guid' => $group_guid,
+			]);
 
 			// get_entities_from_metadata doesn't support container_guid (or owner_guid meaning container_guid)
 			// do it the hard way.
@@ -135,7 +141,7 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 		if (!$album_guid) {
 			//echo "Creating new album...\n";
 			$album = new ElggObject();
-			$album->subtype = 'album';
+			$album->subtype = TidypicsAlbum::SUBTYPE;
 			$album->new_album = 1;
 
 			if ($group_pic) {
@@ -187,7 +193,7 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 function tidypics_set_random_cover_pic($album_guid) {
 	$db_prefix = elgg_get_config('dbprefix');
 
-	if ($album = get_entity($album_guid) AND $album instanceof TidypicsAlbum) {
+	if ($album = get_entity($album_guid) and $album instanceof TidypicsAlbum) {
 		$q = "SELECT guid FROM {$db_prefix}entities WHERE container_guid = $album_guid ORDER BY RAND() limit 1";
 		$pic = get_data($q);
 
@@ -205,11 +211,11 @@ function tidypics_migrate_pic_from_files($pic, $album_guid) {
 	global $filestore;
 
 	// get the subtype id.
-	$image_subtype_id = get_subtype_id('object', 'image');
+	$image_subtype_id = get_subtype_id('object', TidypicsImage::SUBTYPE);
 
 	// hold which metadata on the files need to be changes
 	// also holds the images we need to move
-	$file_md_fields = array('filename', 'thumbnail', 'smallthumb', 'largethumb');
+	$file_md_fields = ['filename', 'thumbnail', 'smallthumb', 'largethumb'];
 
 	if (!$user = get_entity($pic->owner_guid)) {
 		return false;
@@ -233,7 +239,7 @@ function tidypics_migrate_pic_from_files($pic, $album_guid) {
 		$new_file = str_replace('file/', "image/$album_guid", $old_file);
 
 		if (!($old_fp = fopen($user_fs_path . $old_file, 'r')
-		AND $new_fp = fopen($user_fs_path . $new_file, 'w'))) {
+		and $new_fp = fopen($user_fs_path . $new_file, 'w'))) {
 			//echo "Could not move {$user_fs_path}{$old_file} to {$user_fs_path}{$new_file}\n";
 			continue;
 		}
@@ -269,9 +275,6 @@ function tidypics_migrate_pic_from_files($pic, $album_guid) {
 function tidypics_get_user_guids_with_pics_in_files($offset, $limit) {
 	$db_prefix = elgg_get_config('dbprefix');
 
-	//$simpletype_ms_id = add_metastring('simple_type');
-	//$image_ms_id = add_metastring('image');
-
 	$q = "SELECT DISTINCT e.owner_guid
 		FROM
 			{$db_prefix}entities as e,
@@ -286,7 +289,7 @@ function tidypics_get_user_guids_with_pics_in_files($offset, $limit) {
 	}
 
 	// return an array of IDs
-	$r = array();
+	$r = [];
 	foreach ($data as $row) {
 		$r[] = $row->owner_guid;
 	}
@@ -299,15 +302,17 @@ function tidypics_get_user_guids_with_pics_in_files($offset, $limit) {
  * @return array of GUIDs, false on fail.
  */
 function tidypics_get_user_pics_from_files($user_guid) {
-	if (!$user = get_entity($user_guid) AND $user instanceof ElggUser) {
+	if (!$user = get_entity($user_guid) and $user instanceof ElggUser) {
 		return false;
 	}
 
 	// @todo Might have to cycle this through with standard while + foreach.
-	return elgg_get_entities_from_metadata(array('metadata_name' => 'simpletype',
-                                                     'metadata_value' => 'image',
-                                                     'type' => 'object',
-                                                     'subtype' => 'file',
-                                                     'owner_guid' => $user_guid,
-                                                     'limit' => 5000));
+	return elgg_get_entities_from_metadata([
+		'metadata_name' => 'simpletype',
+		'metadata_value' => 'image',
+		'type' => 'object',
+		'subtype' => 'file',
+		'owner_guid' => $user_guid,
+		'limit' => 5000,
+	]);
 }

@@ -11,7 +11,7 @@ $image = get_entity($guid);
 
 $disposition = elgg_extract('disposition', $vars, 'attachment');
 
-if ($image && elgg_instanceof($image, 'object', 'image')) {
+if ($image instanceof TidypicsImage) {
 	$filename = $image->originalfilename;
 	$mime = $image->mimetype;
 
@@ -24,7 +24,7 @@ if ($image && elgg_instanceof($image, 'object', 'image')) {
 		forward(elgg_get_simplecache_url("tidypics/image_error_large.png"));
 	} else {
 		// expires every 60 days
-		$expires = 60 * 60*60*24;
+		$expires = 60*60*60*24;
 
 		header("Content-Length: " . strlen($contents));
 		header("Cache-Control: public", true);

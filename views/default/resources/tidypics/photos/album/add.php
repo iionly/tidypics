@@ -16,7 +16,7 @@ $title = elgg_echo('photos:add');
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if (elgg_instanceof($owner, 'user')) {
+if ($owner instanceof ElggUser) {
 	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
 } else {
 	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
@@ -24,13 +24,13 @@ if (elgg_instanceof($owner, 'user')) {
 elgg_push_breadcrumb($title);
 
 $vars = tidypics_prepare_form_vars();
-$content = elgg_view_form('photos/album/save', array('method' => 'post'), $vars);
+$content = elgg_view_form('photos/album/save', ['method' => 'post'], $vars);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'upload')),
-));
+	'sidebar' => elgg_view('photos/sidebar_al', ['page' => 'upload']),
+]);
 
 echo elgg_view_page($title, $body);

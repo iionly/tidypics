@@ -1,17 +1,16 @@
 define(function(require) {
-	var elgg = require("elgg");
-	var $ = require("jquery");
+	var $ = require('jquery');
+	var elgg = require('elgg');
+	var Ajax = require('elgg/Ajax');
 
-	var errorMessages = [];
-	
-	function init() {
-		$('#tidypics-resizethumbnails-run').click(function(e) {
-			run(e);
-		});
-	}
+	// manage Spinner manually
+	var ajax = new Ajax(false);
 
-	function run(e) {
+	$(document).on('submit', '.elgg-form-photos-admin-resize-thumbnails', function(e) {
 		e.preventDefault();
+
+		var $form = $(this);
+		var action = $form.prop('action');
 
 		// The total amount of images to be processed
 		var total = $('#tidypics-resizethumbnails-total').text();
@@ -27,56 +26,41 @@ define(function(require) {
 		$('#tidypics-resizethumbnails-spinner').removeClass('hidden');
 
 		// Start processing from offset 0
-		upgradeBatch(0);
-	}
-	
-	function upgradeBatch(offset) {
-		var options = {
+		upgradeBatch(0, action);
+	});
+
+	function upgradeBatch(offset, action) {
+		ajax.action(action, {
 			data: {
-				offset: offset
-			},
-			dataType: 'json'
-		};
-
-		options.data = elgg.security.addToken(options.data);
-
-		var upgradeCount = $('#tidypics-resizethumbnails-count');
-		var action = $('#tidypics-resizethumbnails-run').attr('href');
-
-		options.success = function(json) {
-			// Append possible errors after the progressbar
-			if (json.system_messages.error.length) {
-				// Display only the errors that haven't already been shown
-				$(json.system_messages.error).each(function(key, message) {
-					if (jQuery.inArray(message, errorMessages) === -1) {
-						var msg = '<li class="elgg-message elgg-state-error">' + message + '</li>';
-						$('#tidypics-resizethumbnails-messages').append(msg);
-
-						// Add this error to the displayed errors
-						errorMessages.push(message);
-					}
-				});
+				offset: offset,
+				elgg_fetch_messages: 0
+			}
+		}).done(function(json, status, jqXHR) {
+			if (jqXHR.AjaxData.status == -1) {
+				$('#tidypics-resizethumbnails-spinner').addClass('hidden');
+				location.reload();
+				return;
 			}
 
 			// Increase success statistics
 			var numSuccess = $('#tidypics-resizethumbnails-success-count');
-			var successCount = parseInt(numSuccess.text()) + json.output.numSuccess;
+			var successCount = parseInt(numSuccess.text()) + json.numSuccess;
 			numSuccess.text(successCount);
 
 			// Increase error statistics
 			var numErrorsInvalidImage = $('#tidypics-resizethumbnails-error-invalid-image-count');
-			var errorCountInvalidImage = parseInt(numErrorsInvalidImage.text()) + json.output.numErrorsInvalidImage;
+			var errorCountInvalidImage = parseInt(numErrorsInvalidImage.text()) + json.numErrorsInvalidImage;
 			numErrorsInvalidImage.text(errorCountInvalidImage);
 
 			var numErrorsRecreateFailed = $('#tidypics-resizethumbnails-error-recreate-failed-count');
-			var errorCountRecreateFailed = parseInt(numErrorsRecreateFailed.text()) + json.output.numErrorsRecreateFailed;
+			var errorCountRecreateFailed = parseInt(numErrorsRecreateFailed.text()) + json.numErrorsRecreateFailed;
 			numErrorsRecreateFailed.text(errorCountRecreateFailed);
 
 			var errorCount = errorCountInvalidImage + errorCountRecreateFailed;
 
 			// Increase total amount of processed images
 			var numProcessed = successCount + errorCount;
-			upgradeCount.text(numProcessed);
+			$('#tidypics-resizethumbnails-count').text(numProcessed);
 
 			// Increase the progress bar
 			$('.elgg-progressbar').progressbar({ value: numProcessed });
@@ -88,7 +72,7 @@ define(function(require) {
 				/**
 				* Start next upgrade call. Offset is the total amount of images processed so far.
 				*/
-				upgradeBatch(numProcessed);
+				upgradeBatch(numProcessed, action);
 			} else {
 				$('#tidypics-resizethumbnails-spinner').addClass('hidden');
 				percent = '100';
@@ -104,12 +88,8 @@ define(function(require) {
 
 			// Increase percentage
 			$('#tidypics-resizethumbnails-counter').text(percent + '%');
-		};
-
-		// We use post() instead of action() so we can catch error messages
-		// and display them manually underneath the process view.
-		return elgg.post(action, options);
+		});
+		
+		return;
 	}
-
-	init();
 });

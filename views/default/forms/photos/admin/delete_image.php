@@ -5,11 +5,18 @@
  * iionly@gmx.de
  */
 
-$title = elgg_echo('tidypics:delete_image');
-$content = '<p>' . elgg_echo('tidypics:delete_image_blurb') . '</p>';
-$content .= '<label>' . elgg_echo('tidypics:delete_image_id') . '</label>';
-$content .= elgg_view('input/text', array('name' => 'guid'));
+echo elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('tidypics:delete_image_id'),
+	'name' => 'guid',
+	'required' => true,
+	'min' => 1,
+	'step' => 1,
+]);
 
-echo elgg_view_module('inline', $title, $content);
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('delete'),
+]);
 
-echo elgg_view('input/submit', array('value' => elgg_echo("delete")));
+elgg_set_form_footer($footer);

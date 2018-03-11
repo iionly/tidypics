@@ -11,22 +11,22 @@ elgg_group_gatekeeper();
 $owner = elgg_get_page_owner_entity();
 
 if (!$owner) {
-	forward(REFERER);
+	forward('', '404');
 }
 
-$title = elgg_echo('album:user', array($owner->name));
+$title = elgg_echo('album:user', [$owner->name]);
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
 elgg_push_breadcrumb($owner->name);
 
-$offset = (int)get_input('offset', 0);
-$limit = (int)get_input('limit', 16);
+$offset = (int) get_input('offset', 0);
+$limit = (int) get_input('limit', 16);
 
-$content = elgg_list_entities(array(
+$content = elgg_list_entities([
 	'type' => 'object',
-	'subtype' => 'album',
+	'subtype' => TidypicsAlbum::SUBTYPE,
 	'container_guid' => $owner->getGUID(),
 	'limit' => $limit,
 	'offset' => $offset,
@@ -34,10 +34,8 @@ $content = elgg_list_entities(array(
 	'list_type' => 'gallery',
 	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
-));
-if (!$content) {
-	$content = elgg_echo('tidypics:none');
-}
+	'no_results' => elgg_echo('tidypics:none'),
+]);
 
 if (!$owner instanceof ElggGroup) {
 	$owner = elgg_get_logged_in_user_entity();
@@ -46,7 +44,7 @@ if (!$owner instanceof ElggGroup) {
 if (tidypics_can_add_new_photos(null, $owner)) {
 	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID();
 	$url = elgg_format_url($url);
-	elgg_register_menu_item('title', array(
+	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
 		'href' => 'javascript:',
 		'data-colorbox-opts' => json_encode([
@@ -54,17 +52,17 @@ if (tidypics_can_add_new_photos(null, $owner)) {
 		]),
 		'text' => elgg_echo("photos:addphotos"),
 		'link_class' => 'elgg-button elgg-button-action elgg-lightbox',
-	));
+	]);
 }
 
-elgg_register_title_button(null, 'add', 'object', 'album');
+elgg_register_title_button(null, 'add', 'object', TidypicsAlbum::SUBTYPE);
 
-$params = array(
+$params = [
 	'filter_context' => 'mine',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'owner')),
-);
+	'sidebar' => elgg_view('photos/sidebar_al', ['page' => 'owner']),
+];
 
 // don't show filter if out of filter context
 if ($owner instanceof ElggGroup) {

@@ -8,20 +8,27 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-echo '<p>';
-echo elgg_view('input/autocomplete', array(
+echo elgg_view_field([
+	'#type' => 'autocomplete',
 	'name' => 'username',
 	'match_on' => 'users',
-));
+	'required' => true,
+]);
 
-echo elgg_view('input/hidden', array(
+echo elgg_view_field([
+	'#type' => 'hidden',
 	'name' => 'guid',
 	'value' => $vars['entity']->getGUID(),
-));
+]);
 
-echo elgg_view('input/hidden', array(
+echo elgg_view_field([
+	'#type' => 'hidden',
 	'name' => 'coordinates',
-));
-echo '</p>';
+]);
 
-echo elgg_view('input/submit', array('value' => elgg_echo('tidypics:actiontag')));
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('tidypics:actiontag'),
+]);
+
+elgg_set_form_footer($footer);

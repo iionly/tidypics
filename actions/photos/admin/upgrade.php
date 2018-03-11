@@ -10,8 +10,7 @@ require_once "{$plugins_path}tidypics/version.php";
 $local_version = elgg_get_plugin_setting('version', 'tidypics');
 
 if ($version <= $local_version) {
-	register_error('No upgrade required');
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('tidypics:upgrade:not_required'), REFERER);
 }
 
 set_time_limit(0);
@@ -20,7 +19,7 @@ $base_dir = "{$plugins_path}tidypics/upgrades";
 
 // taken from engine/lib/version.php
 if ($handle = opendir($base_dir)) {
-	$upgrades = array();
+	$upgrades = [];
 
 	while ($updatefile = readdir($handle)) {
 		// Look for upgrades and add to upgrades list
@@ -46,5 +45,4 @@ if ($handle = opendir($base_dir)) {
 
 elgg_set_plugin_setting('version', $version, 'tidypics');
 
-system_message(elgg_echo('tidypics:upgrade:success'));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('tidypics:upgrade:success'), REFERER);

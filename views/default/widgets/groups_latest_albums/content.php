@@ -7,9 +7,12 @@
  */
 
 // get widget settings
-$count = sanitise_int($vars["entity"]->tp_latest_albums_count, false);
-if(empty($count)){
-	$count = 6;
+/* @var $widget ElggWidget */
+$widget = elgg_extract('entity', $vars);
+
+$limit = (int) $widget->tp_latest_albums_count;
+if ($limit < 1) {
+	$limit = 6;
 }
 
 $group = elgg_get_page_owner_entity();
@@ -17,22 +20,22 @@ $group_guid = $group->getGUID();
 
 $prev_context = elgg_get_context();
 elgg_set_context('groups');
-$image_html = elgg_list_entities(array(
+$image_html = elgg_list_entities([
 	'type' => 'object',
-	'subtype' => 'album',
+	'subtype' => TidypicsAlbum::SUBTYPE,
 	'container_guid' => $group_guid,
-	'limit' => $count,
+	'limit' => $limit,
 	'full_view' => false,
 	'pagination' => false,
-));
+]);
 elgg_set_context($prev_context);
 
-if ($group->canWriteToContainer(0, 'object', 'album')) {
-	$image_html .= elgg_view('output/url', array(
+if ($group->canWriteToContainer(0, 'object', TidypicsAlbum::SUBTYPE)) {
+	$image_html .= elgg_view('output/url', [
 		'href' => "photos/add/" . $group_guid,
 		'text' => elgg_echo('photos:add'),
 		'is_trusted' => true,
-	));
+	]);
 }
 
 echo $image_html;

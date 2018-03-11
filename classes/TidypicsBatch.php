@@ -6,15 +6,23 @@
 
 class TidypicsBatch extends ElggObject {
 
-  protected function initializeAttributes() {
+	/**
+	 * A single-word arbitrary string that defines what
+	 * kind of object this is
+	 *
+	 * @var string
+	 */
+	const SUBTYPE = 'tidypics_batch';
 
-    parent::initializeAttributes();
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
 
-    $this->attributes['subtype'] = "tidypics_batch";
-  }
+		parent::initializeAttributes();
 
-  public function __construct($guid = null) {
+		$this->attributes['subtype'] = self::SUBTYPE;
+	}
 
-    parent::__construct($guid);
-  }
+	public function __construct($guid = null) {
+		parent::__construct($guid);
+	}
 }

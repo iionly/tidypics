@@ -9,7 +9,7 @@
 $db_prefix = elgg_get_config('dbprefix');
 
 // add image class
-$id = get_subtype_id("object", "image");
+$id = get_subtype_id("object", TidypicsImage::SUBTYPE);
 if ($id != 0) {
 	$table = $db_prefix . 'entity_subtypes';
 	$result = update_data("UPDATE {$table} set class='TidypicsImage' where id={$id}");
@@ -19,7 +19,7 @@ if ($id != 0) {
 }
 
 // add album class
-$id = get_subtype_id("object", "album");
+$id = get_subtype_id("object", TidypicsAlbum::SUBTYPE);
 if ($id != 0) {
 	$table = $db_prefix . 'entity_subtypes';
 	$result = update_data("UPDATE {$table} set class='TidypicsAlbum' where id={$id}");

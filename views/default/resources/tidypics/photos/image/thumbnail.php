@@ -9,8 +9,8 @@
 $guid = elgg_extract('guid', $vars);
 $size = elgg_extract('size', $vars);
 $image = get_entity($guid);
-if (!$image || !elgg_instanceof($image, 'object', 'image')) {
-	forward(REFERER);
+if (!($image instanceof TidypicsImage)) {
+	forward('', '404');
 }
 
 if ($size == 'master') {
@@ -23,7 +23,7 @@ if (!$contents) {
 }
 
 // expires every 14 days
-$expires = 14 * 60*60*24;
+$expires = 14*60*60*24;
 
 // overwrite header caused by php session code so images can be cached
 $mime = $image->getMimeType();

@@ -17,27 +17,25 @@ if (!($owner instanceof ElggUser || $owner instanceof ElggGroup)) {
 	$owner = elgg_get_logged_in_user_entity();
 }
 
-$action = "action/photos/image/selectalbum";
-
 if (!tidypics_can_add_new_photos(null, $owner)) {
 	echo elgg_format_element('p', [
-			'class' => 'elgg-help-text',
-			'style' => 'width: 400px',
+			'class' => 'elgg-help-text tidypics-selectalbum',
 		],
 		elgg_echo('tidypics:album_select:no_results')
 	);
 	return;
 }
 
-$albums = new \ElggBatch('elgg_get_entities', [
+$albums = elgg_get_entities([
 	'type' => 'object',
-	'subtype' => 'album',
+	'subtype' => TidypicsAlbum::SUBTYPE,
 	'container_guid' => $owner->getGUID(),
-	'limit' => false
+	'limit' => false,
+	'batch' => true
 ]);
 
-$album_options = array();
-if ($owner->canWriteToContainer(0, 'object', 'album')) {
+$album_options = [];
+if ($owner->canWriteToContainer(0, 'object', TidypicsAlbum::SUBTYPE)) {
 	$album_options[-1] = elgg_echo('album:create');
 }
 
@@ -49,15 +47,12 @@ foreach ($albums as $album) {
 	$album_options[$album->guid] = $album_title;
 }
 
-$body = "<div style=\"width:400px;\">" . elgg_echo('tidypics:album_select') . "<br><br>";
-$body .= elgg_view('input/hidden', array('name' => 'owner_guid', 'value' => $owner->guid));
-$body .= elgg_view('input/select', array(
-	'name' => 'album_guid',
-	'value' => '',
-	'options_values' => $album_options
-));
-$body .= "<br><br>";
-
-$body .= elgg_view('input/submit', array('value' => elgg_echo('tidypics:continue'))) . '</div>';
-
-echo elgg_view('input/form', array('action' => $action, 'body' => $body));
+$form_vars = [
+	'action' => 'action/photos/image/selectalbum',
+	'class' => 'tidypics-selectalbum',
+];
+$body_vars = [
+	'owner' => $owner,
+	'album_options' => $album_options,
+];
+echo elgg_view_form('photos/selectalbum', $form_vars, $body_vars);

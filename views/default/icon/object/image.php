@@ -15,7 +15,7 @@
 
 $entity = $vars['entity'];
 
-$sizes = array('master', 'large', 'small', 'tiny');
+$sizes = ['master', 'large', 'small', 'tiny'];
 // Get size
 if (!in_array($vars['size'], $sizes)) {
 	$vars['size'] = 'small';
@@ -40,19 +40,19 @@ $class = "elgg-photo $class";
 
 $img_src = $entity->getIconURL($vars['size']);
 $img_src = elgg_format_url($img_src);
-$img = elgg_view('output/img', array(
+$img = elgg_view('output/img', [
 	'src' => $img_src,
 	'class' => $class,
 	'title' => $title,
 	'alt' => $title,
-));
+]);
 
 if ($url) {
-	$params = array(
+	$params = [
 		'href' => $url,
 		'text' => $img,
 		'is_trusted' => true,
-	);
+	];
 	if (isset($vars['link_class'])) {
 		$params['class'] = $vars['link_class'];
 	}

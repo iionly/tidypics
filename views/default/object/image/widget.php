@@ -12,9 +12,9 @@ $image = elgg_extract('entity', $vars);
 
 $img = elgg_view_entity_icon($image, 'tiny');
 
-echo elgg_view('output/url', array(
+echo elgg_view('output/url', [
 	'text' => $img,
 	'href' => $image->getURL(),
 	'encode_text' => false,
 	'is_trusted' => true,
-));
+]);

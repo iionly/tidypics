@@ -3,8 +3,6 @@
  * Elgg single upload action for flash/ajax uploaders
  */
 
-elgg_load_library('tidypics:upload');
-
 set_input('tidypics_action_name', 'tidypics_photo_upload');
 
 $album_guid = (int) get_input('album_guid');
@@ -13,14 +11,18 @@ $batch = get_input('batch');
 
 $album = get_entity($album_guid);
 if (!$album) {
-	echo elgg_echo('tidypics:baduploadform');
+	echo json_encode([
+		'error' => ['message' => elgg_echo('tidypics:baduploadform')],
+	]);
 	exit;
 }
 
 // probably POST limit exceeded
 if (empty($_FILES)) {
 	trigger_error('Tidypics warning: user exceeded post limit on image upload', E_USER_WARNING);
-	register_error(elgg_echo('tidypics:exceedpostlimit'));
+	echo json_encode([
+		'error' => ['message' => elgg_echo('tidypics:exceedpostlimit')],
+	]);
 	exit;
 }
 
@@ -39,20 +41,23 @@ try {
 	// remove the bits that were saved
 	$image->delete();
 	$result = false;
-	echo $e->getMessage();
+	echo json_encode([
+		'error' => ['message' => $e->getMessage()],
+	]);
+	exit;
 }
 
 if ($result) {
-	$album->prependImageList(array($image->guid));
+	$album->prependImageList([$image->guid]);
 
 	if (elgg_get_plugin_setting('img_river_view', 'tidypics') === "all") {
-		elgg_create_river_item(array(
+		elgg_create_river_item([
 			'view' => 'river/object/image/create',
 			'action_type' => 'create',
 			'subject_guid' => $image->getOwnerGUID(),
 			'object_guid' => $image->getGUID(),
 			'target_guid' => $album->getGUID(),
-		));
+		]);
 	}
 }
 

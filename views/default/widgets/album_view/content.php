@@ -6,27 +6,35 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
+/* @var $widget ElggWidget */
+$widget = elgg_extract('entity', $vars);
+
+$limit = (int) $widget->num_display;
+if ($limit < 1) {
+	$limit = 4;
+}
+
 $owner = elgg_get_page_owner_entity();
 
-$options = array(
+$content = elgg_list_entities([
 	'type' => 'object',
-	'subtype' => 'album',
+	'subtype' => TidypicsAlbum::SUBTYPE,
 	'container_guid' => $owner->guid,
-	'limit' => $vars['entity']->num_display,
+	'limit' => $limit,
 	'full_view' => false,
 	'pagination' => false,
-);
-$content = elgg_list_entities($options);
+]);
+
+if (empty($content)) {
+	echo elgg_echo('tidypics:widget:no_albums');
+	return;
+}
 
 echo $content;
 
-if ($content) {
-        $more_link = elgg_view('output/url', array(
-                        'href' => "/photos/owner/" . $owner->username,
-                        'text' => elgg_echo('link:view:all'),
-                        'is_trusted' => true,
-        ));
-        echo "<span class=\"elgg-widget-more\">$more_link</span>";
-} else {
-        echo elgg_echo('tidypics:widget:no_albums');
-}
+$more_link = elgg_view('output/url', [
+	'href' => "/photos/owner/" . $owner->username,
+	'text' => elgg_echo('link:view:all'),
+	'is_trusted' => true,
+]);
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);

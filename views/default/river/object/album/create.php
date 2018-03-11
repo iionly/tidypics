@@ -19,30 +19,28 @@ if(!$preview_size) {
 if ($album_river_view == "set") {
 	$images = $album->getImages(7);
 	if (count($images)) {
-		$attachments = '<ul class="tidypics-river-list">';
+		$attachments = '';
 		foreach($images as $image) {
-			$attachments .= '<li class="tidypics-photo-item">';
-			$attachments .= elgg_view_entity_icon($image, $preview_size, array(
+			$attachments .= elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
 				'href' => $image->getIconURL('master'),
 				'img_class' => 'tidypics-photo',
 				'link_class' => 'tidypics-lightbox',
-			));
-			$attachments .= '</li>';
+			]));
 		}
-		$attachments .= '</ul>';
+		$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], $attachments);
 	}
 } else {
 	$image = $album->getCoverImage();
 	if ($image) {
-		$attachments = elgg_view_entity_icon($image, $preview_size, array(
+		$attachments = elgg_view_entity_icon($image, $preview_size, [
 			'href' => $image->getIconURL('master'),
 			'img_class' => 'tidypics-photo',
 			'link_class' => 'tidypics-lightbox',
-		));
+		]);
 	}
 }
 
-echo elgg_view('river/elements/layout', array(
+echo elgg_view('river/elements/layout', [
 	'item' => $vars['item'],
 	'attachments' => $attachments,
-));
+]);

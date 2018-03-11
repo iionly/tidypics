@@ -11,29 +11,29 @@
 $album = elgg_extract('entity', $vars);
 $owner = $album->getOwnerEntity();
 
-$owner_link = elgg_view('output/url', array(
+$owner_link = elgg_view('output/url', [
 	'href' => "photos/owner/$owner->username",
 	'text' => $owner->name,
 	'is_trusted' => true,
-));
-$author_text = elgg_echo('byline', array($owner_link));
+]);
+$author_text = elgg_echo('byline', [$owner_link]);
 $date = elgg_view_friendly_time($album->time_created);
 $categories = elgg_view('output/categories', $vars);
 
 $subtitle = "$author_text $date $categories";
 
-$title = elgg_view('output/url', array(
+$title = elgg_view('output/url', [
 	'text' => $album->getTitle(),
 	'href' => $album->getURL(),
-));
+]);
 
-$params = array(
+$params = [
 	'entity' => $album,
 	'title' => $title,
 	'metadata' => null,
 	'subtitle' => $subtitle,
-	'tags' => elgg_view('output/tags', array('tags' => $album->tags)),
-);
+	'tags' => elgg_view('output/tags', ['tags' => $album->tags]),
+];
 $params = $params + $vars;
 $summary = elgg_view('object/elements/summary', $params);
 

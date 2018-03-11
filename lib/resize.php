@@ -1,12 +1,9 @@
 <?php
 /**
- * Elgg tidypics library of resizing functions
+ * Elgg Tidypics library of resizing functions
  *
  * @package TidypicsImageResize
  */
-
-include dirname(__FILE__) . "/watermark.php";
-
 
 /**
  * Create thumbnails using PHP GD Library
@@ -19,9 +16,6 @@ include dirname(__FILE__) . "/watermark.php";
 function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
 	if (!$image_sizes) {
-		// move this out of library
-		register_error(elgg_echo('tidypics:nosettings'));
-		forward(REFERER);
 		return false;
 	}
 	$image_sizes = unserialize($image_sizes);
@@ -41,7 +35,7 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	$thumb->container_guid = $file->container_guid;
 
 	// tiny thumbail
-	$thumb->setFilename($prefix."thumb".$filestorename);
+	$thumb->setFilename($prefix . "thumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_gd_resize(
 		$file->getFilenameOnFilestore(),
@@ -54,10 +48,10 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->thumbnail = $prefix."thumb".$filestorename;
+	$file->thumbnail = $prefix . "thumb" . $filestorename;
 
 	// album thumbnail
-	$thumb->setFilename($prefix."smallthumb".$filestorename);
+	$thumb->setFilename($prefix . "smallthumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_gd_resize(
 		$file->getFilenameOnFilestore(),
@@ -70,10 +64,10 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->smallthumb = $prefix."smallthumb".$filestorename;
+	$file->smallthumb = $prefix . "smallthumb" . $filestorename;
 
 	// main image
-	$thumb->setFilename($prefix."largethumb".$filestorename);
+	$thumb->setFilename($prefix . "largethumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_gd_resize(
 		$file->getFilenameOnFilestore(),
@@ -86,7 +80,7 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->largethumb = $prefix."largethumb".$filestorename;
+	$file->largethumb = $prefix . "largethumb" . $filestorename;
 
 	unset($thumb);
 
@@ -128,13 +122,13 @@ function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheig
 	$widthoffset = $params['width_offset'];
 	$heightoffset = $params['height_offset'];
 
-	$accepted_formats = array(
+	$accepted_formats = [
 		'image/jpeg' => 'jpeg',
 		'image/pjpeg' => 'jpeg',
 		'image/png' => 'png',
 		'image/x-png' => 'png',
-		'image/gif' => 'gif'
-	);
+		'image/gif' => 'gif',
+	];
 
 	// make sure the function is available
 	$function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
@@ -211,7 +205,6 @@ function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheig
 function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 	$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
 	if (!$image_sizes) {
-		register_error(elgg_echo('tidypics:nosettings'));
 		return false;
 	}
 	$image_sizes = unserialize($image_sizes);
@@ -231,7 +224,7 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 	$thumb->container_guid = $file->container_guid;
 
 	// tiny thumbnail
-	$thumb->setFilename($prefix."thumb".$filestorename);
+	$thumb->setFilename($prefix . "thumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_imagick_resize(
 		$file->getFilenameOnFilestore(),
@@ -243,10 +236,10 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->thumbnail = $prefix."thumb".$filestorename;
+	$file->thumbnail = $prefix . "thumb" . $filestorename;
 
 	// album thumbnail
-	$thumb->setFilename($prefix."smallthumb".$filestorename);
+	$thumb->setFilename($prefix . "smallthumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_imagick_resize(
 		$file->getFilenameOnFilestore(),
@@ -258,10 +251,10 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->smallthumb = $prefix."smallthumb".$filestorename;
+	$file->smallthumb = $prefix . "smallthumb" . $filestorename;
 
 	// main image
-	$thumb->setFilename($prefix."largethumb".$filestorename);
+	$thumb->setFilename($prefix . "largethumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_imagick_resize(
 		$file->getFilenameOnFilestore(),
@@ -273,7 +266,7 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->largethumb = $prefix."largethumb".$filestorename;
+	$file->largethumb = $prefix . "largethumb" . $filestorename;
 
 	tp_imagick_watermark($thumbname);
 
@@ -303,13 +296,13 @@ function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $sq
 		return false;
 	}
 
-	$accepted_formats = array(
+	$accepted_formats = [
 		'image/jpeg' => 'jpeg',
 		'image/pjpeg' => 'jpeg',
 		'image/png' => 'png',
 		'image/x-png' => 'png',
-		'image/gif' => 'gif'
-	);
+		'image/gif' => 'gif',
+	];
 
 	// If it's a file we can manipulate ...
 	if (!array_key_exists($imgsizearray['mime'], $accepted_formats)) {
@@ -385,7 +378,6 @@ function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $sq
 function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
 	if (!$image_sizes) {
-		register_error(elgg_echo('tidypics:nosettings'));
 		return false;
 	}
 
@@ -406,7 +398,7 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	$thumb->container_guid = $file->container_guid;
 
 	// tiny thumbnail
-	$thumb->setFilename($prefix."thumb".$filestorename);
+	$thumb->setFilename($prefix . "thumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_im_cmdline_resize(
 		$file->getFilenameOnFilestore(),
@@ -418,10 +410,10 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->thumbnail = $prefix."thumb".$filestorename;
+	$file->thumbnail = $prefix . "thumb" . $filestorename;
 
 	// album thumbnail
-	$thumb->setFilename($prefix."smallthumb".$filestorename);
+	$thumb->setFilename($prefix . "smallthumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_im_cmdline_resize(
 		$file->getFilenameOnFilestore(),
@@ -433,10 +425,10 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->smallthumb = $prefix."smallthumb".$filestorename;
+	$file->smallthumb = $prefix . "smallthumb" . $filestorename;
 
 	// main image
-	$thumb->setFilename($prefix."largethumb".$filestorename);
+	$thumb->setFilename($prefix . "largethumb" . $filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_im_cmdline_resize(
 		$file->getFilenameOnFilestore(),
@@ -448,7 +440,7 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	if (!$rtn_code) {
 		return false;
 	}
-	$file->largethumb = $prefix."largethumb".$filestorename;
+	$file->largethumb = $prefix . "largethumb" . $filestorename;
 
 	tp_im_cmdline_watermark($thumbname);
 
@@ -487,13 +479,13 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 	$newwidth = $params['new_width'];
 	$newheight = $params['new_height'];
 
-	$accepted_formats = array(
+	$accepted_formats = [
 		'image/jpeg' => 'jpeg',
 		'image/pjpeg' => 'jpeg',
 		'image/png' => 'png',
 		'image/x-png' => 'png',
-		'image/gif' => 'gif'
-	);
+		'image/gif' => 'gif',
+	];
 
 	// If it's a file we can manipulate ...
 	if (!array_key_exists($imgsizearray['mime'], $accepted_formats)) {
@@ -523,7 +515,7 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 		default:
 			$command = $im_path . "convert \"$input_name\" ".$gif_to_convert." -resize ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
 	}
-	$output = array();
+	$output = [];
 	$ret = 0;
 	exec($command, $output, $ret);
 	if ($ret == 127) {
@@ -614,7 +606,7 @@ function tp_im_calc_resize_params($orig_width, $orig_height, $new_width, $new_he
 		}
 	}
 
-	$resize_params = array();
+	$resize_params = [];
 	$resize_params['new_width'] = $new_width;
 	$resize_params['new_height'] = $new_height;
 	$resize_params['region_width'] = $region_width;

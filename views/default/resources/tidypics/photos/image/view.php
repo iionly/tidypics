@@ -9,17 +9,13 @@
 // get the photo entity
 $photo_guid = elgg_extract('guid', $vars);
 $photo = get_entity($photo_guid);
-if (!$photo || !elgg_instanceof($photo, 'object', 'image')) {
-	register_error(elgg_echo('noaccess'));
-	$_SESSION['last_forward_from'] = current_page_url();
-	forward('');
+if (!($photo instanceof TidypicsImage)) {
+	forward('', '404');
 }
 $album = $photo->getContainerEntity();
 $album_container = $album->getContainerEntity();
 if (!$album_container) {
-	register_error(elgg_echo('noaccess'));
-	$_SESSION['last_forward_from'] = current_page_url();
-	forward('');
+	forward('', '404');
 }
 
 // set page owner based on owner of photo album
@@ -39,7 +35,7 @@ if (elgg_get_plugin_setting('tagging', 'tidypics')) {
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if (elgg_instanceof($owner, 'group')) {
+if ($owner instanceof ElggGroup) {
 	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
 } else {
 	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
@@ -54,7 +50,7 @@ if (!$owner instanceof ElggGroup) {
 if (tidypics_can_add_new_photos(null, $owner)) {
 	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID();
 	$url = elgg_format_url($url);
-	elgg_register_menu_item('title', array(
+	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
 		'href' => 'javascript:',
 		'data-colorbox-opts' => json_encode([
@@ -62,29 +58,29 @@ if (tidypics_can_add_new_photos(null, $owner)) {
 		]),
 		'text' => elgg_echo("photos:addphotos"),
 		'link_class' => 'elgg-button elgg-button-action elgg-lightbox',
-	));
+	]);
 }
 
 if (elgg_get_plugin_setting('download_link', 'tidypics')) {
 	// add download button to title menu
-	elgg_register_menu_item('title', array(
+	elgg_register_menu_item('title', [
 		'name' => 'download',
 		'href' => "photos/download/$photo_guid",
 		'text' => elgg_echo('image:download'),
 		'link_class' => 'elgg-button elgg-button-action',
-	));
+	]);
 }
 
-$content = elgg_view_entity($photo, array('full_view' => true));
+$content = elgg_view_entity($photo, ['full_view' => true]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => false,
 	'content' => $content,
 	'title' => $photo->getTitle(),
-	'sidebar' => elgg_view('photos/sidebar_im', array(
+	'sidebar' => elgg_view('photos/sidebar_im', [
 		'page' => 'tp_view',
 		'image' => $photo,
-	)),
-));
+	]),
+]);
 
 echo elgg_view_page($photo->getTitle(), $body);

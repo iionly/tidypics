@@ -10,26 +10,34 @@
 
 $image = $vars['entity'];
 
-echo '<div class="elgg-image-block">';
+$content = elgg_format_element('div', ['class' => 'elgg-image'], elgg_view_entity_icon($image, 'small', ['href' => false]));
 
-echo '<div class="elgg-image">';
-echo elgg_view_entity_icon($image, 'small', array('href' => false));
-echo '</div>';
+$content .= elgg_format_element('div', ['class' => 'elgg-body'], elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'vertical',
+	'fields' => [
+		[
+			'#type' => 'text',
+			'#label' => elgg_echo('album:title'),
+			'name' => 'title[]',
+			'value' => $title,
+		],
+		[
+			'#type' => 'longtext',
+			'#label' => elgg_echo('caption'),
+			'name' => 'caption[]',
+		],
+		[
+			'#type' => 'tags',
+			'#label' => elgg_echo("tags"),
+			'name' => 'tags[]',
+		],
+		[
+			'#type' => 'hidden',
+			'name' => 'guid[]',
+			'value' => $image->getGUID(),
+		],
+	],
+]));
 
-echo '<div class="elgg-body"><fieldset class="mlm">';
-echo '<div><label>' . elgg_echo('album:title') . '</label>';
-echo elgg_view('input/text', array('name' => 'title[]', 'value' => $title,));
-echo '</div>';
-
-echo '<div><label>' . elgg_echo('caption') . '</label>';
-echo elgg_view('input/longtext', array('name' => 'caption[]'));
-echo '</div>';
-
-echo '<div><label>' . elgg_echo("tags") . '</label>';
-echo elgg_view('input/tags', array('name' => 'tags[]'));
-echo '</div>';
-
-echo elgg_view('input/hidden', array('name' => 'guid[]', 'value' => $image->getGUID()));
-echo '<fieldset></div>';
-
-echo '</div>';
+echo elgg_format_element('div', ['class' => 'elgg-image-block'], $content);

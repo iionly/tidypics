@@ -8,19 +8,17 @@
 
 $guid = elgg_extract('guid', $vars);
 $entity = get_entity($guid);
-if (!$entity || !elgg_instanceof($entity, 'object', 'image')) {
-	// @todo either deleted or do not have access
+if (!($entity instanceof TidypicsImage)) {
 	forward('photos/all');
 }
 
 if (!$entity->canEdit()) {
-	// @todo cannot change it
 	forward($entity->getContainerEntity()->getURL());
 }
 
 $album = $entity->getContainerEntity();
 if (!$album) {
-
+	forward('photos/all');
 }
 
 elgg_set_page_owner_guid($album->getContainerGUID());
@@ -33,7 +31,7 @@ $title = elgg_echo('image:edit');
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-if (elgg_instanceof($owner, 'user')) {
+if ($owner instanceof ElggUser) {
 	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
 } else {
 	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
@@ -43,13 +41,13 @@ elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
 elgg_push_breadcrumb($title);
 
 $vars = tidypics_prepare_form_vars($entity);
-$content = elgg_view_form('photos/image/save', array('method' => 'post'), $vars);
+$content = elgg_view_form('photos/image/save', ['method' => 'post'], $vars);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => elgg_view('photos/sidebar_im', array('page' => 'upload')),
-));
+	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'upload']),
+]);
 
 echo elgg_view_page($title, $body);

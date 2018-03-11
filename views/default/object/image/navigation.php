@@ -14,25 +14,19 @@ $size = $album->getSize();
 $index = $album->getIndex($photo->getGUID());
 
 if ($previous_photo && $next_photo) {
-	echo '<ul class="elgg-menu elgg-menu-hz tidypics-album-nav">';
-	echo '<li>';
-	echo elgg_view('output/url', array(
+	$list_item = elgg_format_element('li', [], elgg_view('output/url', [
 		'text' => elgg_view_icon('arrow-left'),
 		'href' => $previous_photo->getURL(),
 		'is_trusted' => true,
-	));
-	echo '</li>';
+	]));
 
-	echo '<li>';
-	echo '<span>' . elgg_echo('image:index', array($index, $size)) . '</span>';
-	echo '</li>';
+	$list_item .= elgg_format_element('li', [], elgg_format_element('span', [], elgg_echo('image:index', [$index, $size])));
 
-	echo '<li>';
-	echo elgg_view('output/url', array(
+	$list_item .= elgg_format_element('li', [], elgg_view('output/url', [
 		'text' => elgg_view_icon('arrow-right'),
 		'href' => $next_photo->getURL(),
 		'is_trusted' => true,
-	));
-	echo '</li>';
-	echo '</ul>';
+	]));
+
+	echo elgg_format_element('ul', ['class' => 'elgg-menu elgg-menu-hz tidypics-album-nav'], $list_item);
 }

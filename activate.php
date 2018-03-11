@@ -7,26 +7,26 @@
  */
 
 // register classes
-if (get_subtype_id('object', 'album')) {
-	update_subtype('object', 'album', 'TidypicsAlbum');
+if (get_subtype_id('object', TidypicsAlbum::SUBTYPE)) {
+	update_subtype('object', TidypicsAlbum::SUBTYPE, 'TidypicsAlbum');
 } else {
-	add_subtype('object', 'album', 'TidypicsAlbum');
+	add_subtype('object', TidypicsAlbum::SUBTYPE, 'TidypicsAlbum');
 }
-if (get_subtype_id('object', 'image')) {
-	update_subtype('object', 'image', 'TidypicsImage');
+if (get_subtype_id('object', TidypicsImage::SUBTYPE)) {
+	update_subtype('object', TidypicsImage::SUBTYPE, 'TidypicsImage');
 } else {
-	add_subtype('object', 'image', 'TidypicsImage');
+	add_subtype('object', TidypicsImage::SUBTYPE, 'TidypicsImage');
 }
-if (get_subtype_id('object', 'tidypics_batch')) {
-	update_subtype('object', 'tidypics_batch', 'TidypicsBatch');
+if (get_subtype_id('object', TidypicsBatch::SUBTYPE)) {
+	update_subtype('object', TidypicsBatch::SUBTYPE, 'TidypicsBatch');
 } else {
-	add_subtype('object', 'tidypics_batch', 'TidypicsBatch');
+	add_subtype('object', TidypicsBatch::SUBTYPE, 'TidypicsBatch');
 }
 
 // set default settings
 $plugin = elgg_get_plugin_from_id('tidypics');
 
-$defaults = array(
+$defaults = [
 	'tagging' => false,
 	'restrict_tagging' => false,
 	'view_count' => true,
@@ -49,7 +49,7 @@ $defaults = array(
 	'remove_exif' => false,
 	'client_image_width' => 2000,
 	'client_image_height' => 2000,
-);
+];
 
 foreach ($defaults as $name => $value) {
 	if ($plugin->getSetting($name) === null) {
@@ -71,7 +71,7 @@ if ($image_sizes) {
 	$image_sizes['large_image_height'] = isset($image_sizes['large_image_height']) ? $image_sizes['large_image_height']: 600;
 	$image_sizes['large_image_square'] = isset($image_sizes['large_image_square']) ? $image_sizes['large_image_square']: false;
 } else {
-	$image_sizes = array();
+	$image_sizes = [];
 	$image_sizes['tiny_image_width'] = 60;
 	$image_sizes['tiny_image_height'] = 60;
 	$image_sizes['tiny_image_square'] = true;

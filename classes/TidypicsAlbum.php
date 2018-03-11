@@ -9,13 +9,22 @@
 
 
 class TidypicsAlbum extends ElggObject {
+
+	/**
+	 * A single-word arbitrary string that defines what
+	 * kind of object this is
+	 *
+	 * @var string
+	 */
+	const SUBTYPE = 'album';
+
 	/**
 	 * Sets the internal attributes
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "album";
+		$this->attributes['subtype'] = self::SUBTYPE;
 	}
 
 	/**
@@ -32,7 +41,6 @@ class TidypicsAlbum extends ElggObject {
 	 * @return bool
 	 */
 	public function save() {
-
 		if (!isset($this->new_album)) {
 			$this->new_album = 1;
 		}
@@ -56,7 +64,6 @@ class TidypicsAlbum extends ElggObject {
 	 * @return bool
 	 */
 	public function delete($recursive = true) {
-
 		$this->deleteImages();
 		$this->deleteAlbumDir();
 
@@ -93,12 +100,12 @@ class TidypicsAlbum extends ElggObject {
 	public function getImages($limit, $offset = 0) {
 		$imageList = $this->getImageList();
 		if ($offset > count($imageList)) {
-			return array();
+			return [];
 		}
 
 		$imageList = array_slice($imageList, $offset, $limit);
 
-		$images = array();
+		$images = [];
 		foreach ($imageList as $guid) {
 			$images[] = get_entity($guid);
 		}
@@ -111,23 +118,23 @@ class TidypicsAlbum extends ElggObject {
 	 * @param array $options Options to pass to elgg_view_entity_list()
 	 * @return string
 	 */
-	public function viewImages(array $options = array()) {
+	public function viewImages(array $options = []) {
 		$count = $this->getSize();
 
 		if ($count == 0) {
 			return '';
 		}
 
-		$defaults = array(
+		$defaults = [
 			'count' => $count,
-			'limit' => (int)get_input('limit', 16),
-			'offset' => (int)get_input('offset', 0),
+			'limit' => (int) get_input('limit', 16),
+			'offset' => (int) get_input('offset', 0),
 			'full_view' => false,
 			'list_type' => 'gallery',
 			'list_type_toggle' => false,
 			'pagination' => true,
 			'gallery_class' => 'tidypics-gallery',
-		);
+		];
 
 		$options = array_merge($defaults, (array) $options);
 		$images = $this->getImages($options['limit'], $options['offset']);
@@ -200,26 +207,24 @@ class TidypicsAlbum extends ElggObject {
 	public function getImageList() {
 		$listString = $this->orderedImages;
 		if (!$listString) {
-			return array();
+			return [];
 		}
 		$list = unserialize($listString);
 
 		// if empty don't need to check the permissions.
 		if (!$list) {
-			return array();
+			return [];
 		}
 
 		// check access levels
 		$guidsString = implode(',', $list);
 
-		$options = array(
-			'wheres' => array("e.guid IN ($guidsString)"),
+		$list = elgg_get_entities([
+			'wheres' => ["e.guid IN ($guidsString)"],
 			'order_by' => "FIELD(e.guid, $guidsString)",
 			'callback' => 'tp_guid_callback',
-			'limit' => ELGG_ENTITIES_NO_VALUE
-		);
-
-		$list = elgg_get_entities($options);
+			'limit' => false,
+		]);
 		return $list;
 	}
 
@@ -263,7 +268,7 @@ class TidypicsAlbum extends ElggObject {
 	public function getPreviousImage($guid) {
 		$imageList = $this->getImageList();
 		$key = array_search($guid, $imageList);
-		if ($key === FALSE) {
+		if ($key === false) {
 			return null;
 		}
 		$key--;
@@ -282,7 +287,7 @@ class TidypicsAlbum extends ElggObject {
 	public function getNextImage($guid) {
 		$imageList = $this->getImageList();
 		$key = array_search($guid, $imageList);
-		if ($key === FALSE) {
+		if ($key === false) {
 			return null;
 		}
 		$key++;
@@ -334,20 +339,21 @@ class TidypicsAlbum extends ElggObject {
 	 * Delete all the images in this album
 	 */
 	protected function deleteImages() {
-		$images_count = elgg_get_entities(array(
-			"type" => "object",
-			"subtype" => "image",
-			"container_guid" => $this->guid,
-			"count" => true,
-		));
+		$images_count = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => TidypicsImage::SUBTYPE,
+			'container_guid' => $this->guid,
+			'count' => true,
+		]);
 		if ($images_count > 0) {
-			$images = new ElggBatch('elgg_get_entities', array(
-				"type" => "object",
-				"subtype" => "image",
-				"container_guid" => $this->guid,
-				"limit" => ELGG_ENTITIES_NO_VALUE,
-			));
-			$images->setIncrementOffset(false);
+			$images = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => TidypicsImage::SUBTYPE,
+				'container_guid' => $this->guid,
+				'limit' => false,
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
 			foreach ($images as $image) {
 				if ($image) {
 					$image->delete();
@@ -362,7 +368,7 @@ class TidypicsAlbum extends ElggObject {
 	protected function deleteAlbumDir() {
 		$tmpfile = new ElggFile();
 		$tmpfile->setFilename('image/' . $this->guid . '/._tmp_del_tidypics_album_');
-		$tmpfile->subtype = 'image';
+		$tmpfile->subtype = TidypicsImage::SUBTYPE;
 		$tmpfile->owner_guid = $this->owner_guid;
 		$tmpfile->container_guid = $this->guid;
 		$tmpfile->open("write");
@@ -380,7 +386,7 @@ class TidypicsAlbum extends ElggObject {
 		// loop through all files that might still remain undeleted in this directory and delete them
 		// note: this does not delete the corresponding image entities from the database
 		while (($file = readdir($handle)) !== false) {
-			if (in_array($file, array('.', '..'))) {
+			if (in_array($file, ['.', '..'])) {
 				continue;
 			}
 			$path = "$albumdir/$file";

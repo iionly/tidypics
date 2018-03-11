@@ -6,23 +6,32 @@
 $album = $vars['album'];
 $image_guids = $album->getImageList();
 
-echo '<div>';
-echo elgg_echo('tidypics:sort:instruct');
-echo '</div>';
+echo elgg_autop(elgg_echo('tidypics:sort:instruct'));
 
-echo '<div>';
-echo elgg_view('input/hidden', array('name' => 'guids'));
-echo elgg_view('input/hidden', array('name' => 'album_guid', 'value' => $album->guid));
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-echo '</div>';
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'guids',
+]);
 
-echo '<div class="elgg-foot">';
-echo '<ul id="tidypics-sort" class="elgg-gallery">';
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'album_guid',
+	'value' => $album->guid,
+]);
+
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+
+$img_list = '';
 foreach ($image_guids as $image_guid) {
 	$image = get_entity($image_guid);
-	$img = elgg_view('output/img', array(
+	$img = elgg_view('output/img', [
 		'src' => $image->getIconURL(),
-	));
-	echo "<li class=\"mam\" id=\"$image_guid\">$img</li>";
+	]);
+	$img_list .= elgg_format_element('li', ['class' => 'elgg-mam', 'id' => $image_guid], $img);
 }
-echo '</ul>';
+$footer .= elgg_format_element('ul', ['class' => 'elgg-gallery', 'id' => 'tidypics-sort'], $img_list);
+
+elgg_set_form_footer($footer);

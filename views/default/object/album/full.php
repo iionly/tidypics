@@ -13,49 +13,49 @@ $owner = $album->getOwnerEntity();
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 
-$metadata = elgg_view_menu('entity', array(
+$metadata = elgg_view_menu('entity', [
 	'entity' => $album,
 	'handler' => 'photos',
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
-));
+]);
 
-$owner_link = elgg_view('output/url', array(
+$owner_link = elgg_view('output/url', [
 	'href' => "photos/owner/$owner->username",
 	'text' => $owner->name,
 	'is_trusted' => true,
-));
-$author_text = elgg_echo('byline', array($owner_link));
+]);
+$author_text = elgg_echo('byline', [$owner_link]);
 $date = elgg_view_friendly_time($album->time_created);
 $categories = elgg_view('output/categories', $vars);
 
 $subtitle = "$author_text $date $categories";
 
-$params = array(
+$params = [
 	'entity' => $album,
 	'title' => false,
 	'metadata' => $metadata,
 	'subtitle' => $subtitle,
-	'tags' => elgg_view('output/tags', array('tags' => $album->tags)),
-);
+	'tags' => elgg_view('output/tags', ['tags' => $album->tags]),
+];
 $params = $params + $vars;
 $summary = elgg_view('object/elements/summary', $params);
 
 $body = '';
 if ($album->description) {
-	$body = elgg_view('output/longtext', array(
+	$body = elgg_view('output/longtext', [
 		'value' => $album->description,
 		'class' => 'mbm',
-	));
+	]);
 }
 
 $body .= $album->viewImages();
 
 $body .= elgg_view_comments($album);
 
-echo elgg_view('object/elements/full', array(
+echo elgg_view('object/elements/full', [
 	'entity' => $album,
 	'icon' => $owner_icon,
 	'summary' => $summary,
 	'body' => $body,
-));
+]);

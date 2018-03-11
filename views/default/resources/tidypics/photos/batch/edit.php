@@ -10,13 +10,11 @@ elgg_gatekeeper();
 
 $guid = elgg_extract('guid', $vars);
 $batch = get_entity($guid);
-if (!$batch || !elgg_instanceof($batch, 'object', 'tidypics_batch')) {
-	// @todo either deleted or do not have access
+if (!($batch instanceof TidypicsBatch)) {
 	forward('photos/all');
 }
 
 if (!$batch->canEdit()) {
-	// @todo cannot change it
 	forward('photos/all');
 }
 
@@ -33,13 +31,13 @@ elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
 elgg_push_breadcrumb($album->getTitle(), $album->getURL());
 elgg_push_breadcrumb($title);
 
-$content = elgg_view_form('photos/batch/edit', array(), array('batch' => $batch));
+$content = elgg_view_form('photos/batch/edit', [], ['batch' => $batch]);
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('content', [
 	'filter' => false,
 	'content' => $content,
 	'title' => elgg_echo('tidypics:editprops'),
-	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'upload')),
-));
+	'sidebar' => elgg_view('photos/sidebar_al', ['page' => 'upload']),
+]);
 
 echo elgg_view_page($title, $body);

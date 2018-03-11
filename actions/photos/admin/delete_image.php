@@ -7,24 +7,13 @@
 
 $guid = (int) get_input('guid');
 $entity = get_entity($guid);
-if (!$entity) {
-    // unable to get Elgg entity
-    register_error(elgg_echo('tidypics:delete_image:no_guid'));
-    forward(REFERER);
+
+if (!($entity instanceof TidypicsImage)) {
+	return elgg_error_response(elgg_echo('tidypics:delete_image:no_image'), REFERER);
 }
 
-$subtype = $entity->getSubtype();
-switch ($subtype) {
-    case 'image':
-        if ($entity->delete()) {
-                system_message(elgg_echo('tidypics:delete_image:success'));
-        } else {
-                register_error(elgg_echo('tidypics:deletefailed'));
-        }
-        break;
-    default:
-        register_error(elgg_echo('tidypics:delete_image:no_image'));
-        break;
+if (!$entity->delete()) {
+	return elgg_error_response(elgg_echo('tidypics:delete_image:deletefailed'), REFERER);
 }
 
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('tidypics:delete_image:success'), REFERER);

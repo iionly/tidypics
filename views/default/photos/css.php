@@ -46,7 +46,7 @@
 	display: inline-block;
 }
 
-.tidypics-photo-item + .tidypics-photo-item {
+.tidypics-photo-item {
 	margin-left: 7px;
 }
 
@@ -126,6 +126,10 @@
 	position:relative;
 	width:540px;
 	min-height:20px;
+}
+
+.tidypics-selectalbum {
+	width: 400px;
 }
 
 #uploader {

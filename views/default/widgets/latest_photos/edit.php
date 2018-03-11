@@ -6,20 +6,20 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-// set default value
-if (!isset($vars['entity']->num_display)) {
-	$vars['entity']->num_display = 8;
+/* @var $widget ElggWidget */
+$widget = elgg_extract('entity', $vars);
+
+$count = (int) $widget->num_display;
+if ($count < 1) {
+	$count = 8;
 }
 
-$params = array(
+echo elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('tidypics:widget:num_latest'),
 	'name' => 'params[num_display]',
-	'value' => $vars['entity']->num_display,
-	'options' => array(4, 8, 12, 16, 20),
-);
-$select = elgg_view('input/select', $params);
-
-?>
-<div>
-	<?php echo elgg_echo('tidypics:widget:num_latest'); ?>:
-	<?php echo $select; ?>
-</div>
+	'value' => $count,
+	'min' => 1,
+	'max' => 25,
+	'step' => 1,
+]);

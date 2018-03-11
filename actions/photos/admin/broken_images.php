@@ -18,7 +18,7 @@ $logtime = get_input('time', false);
 
 if (!$logtime) {
 	error_log('invalid log time');
-	exit;
+	return elgg_error_response('invalid log time', REFERER);
 }
 
 $log = tidypics_get_log_location($logtime);
@@ -30,7 +30,7 @@ $running_logtime = elgg_get_plugin_setting('tidypics_current_log', 'tidypics');
 if ($running_logtime == $logtime && !$delete) {
 	// this is a duplicate thread
 	error_log('duplicate thread');
-	exit;
+	return elgg_error_response('duplicate thread', REFERER);
 }
 
 elgg_set_plugin_setting('tidypics_current_log', $logtime, 'tidypics');
@@ -41,20 +41,19 @@ function tidypics_batch_delete_images() {
 	$log = elgg_get_config('tidypics_log');
 	$log_time = elgg_get_config('tidypics_logtime');
 
-	$options = array(
+	$options = [
 		'type' => 'object',
-		'subtype' => 'image',
-		'metadata_name_value_pairs' => array(
+		'subtype' => TidypicsImage::SUBTYPE,
+		'metadata_name_value_pairs' => [
 			'name' => 'tidypics_delete_check',
-			'value' => $log_time
-		),
-		'limit' => false
-	);
+			'value' => $log_time,
+		],
+		'limit' => false,
+	];
 
-	$images = new ElggBatch('elgg_get_entities_from_metadata', $options);
-	$images->setIncrementOffset(false);
+	$images = elgg_get_entities_from_metadata(array_merge($options, ['batch' => true, 'batch_inc_offset' => false]));
 
-	$total = elgg_get_entities_from_metadata(array_merge($options, array('count' => true)));
+	$total = elgg_get_entities_from_metadata(array_merge($options, ['count' => true]));
 	file_put_contents($log, "Starting deletion of {$total} images" . "\n", FILE_APPEND); 
 	$i = 0;
 	$count = 0;
@@ -68,12 +67,12 @@ function tidypics_batch_delete_images() {
 		if ($count == 1 || !($count % 25)) {
 			$time = date('m/d/Y g:i:s a');
 			$j = $count - $i;
-			$message = "Deleted {$i}, skipped {$j}, of {$total} images as of {$time}";
+			$message = "Deleted {$i}, skipped {$j}, of {$total} images as of {$time}.";
 			file_put_contents($log, $message . "\n", FILE_APPEND);
 		}
 	}
-	
-	$message = '<div class="done">Completed: Deleted ' . $i . ', skipped ' . $j . ', of ' . $total . '</div>';
+
+	$message = elgg_format_element('div', ['class' => 'done'], "Completed: Deleted {$i}, skipped {$j}, of {$total}.");
 	file_put_contents($log, $message . "\n", FILE_APPEND); 
 }
 
@@ -83,17 +82,17 @@ function tidypics_batch_find_images() {
 	$logtime = elgg_get_config('tidypics_logtime');
 
 	// only search
-	$options = array(
+	$options = [
 		'type' => 'object',
-		'subtype' => 'image',
-		'limit' => false
-	);
+		'subtype' => TidypicsImage::SUBTYPE,
+		'limit' => false,
+	];
 
-	$images = new ElggBatch('elgg_get_entities', $options);
+	$images = elgg_get_entities(array_merge($options, ['batch' => true]));
 
 	$count = 0;
 	$bad_images = 0;
-	$total = elgg_get_entities(array_merge($options, array('count' => true)));
+	$total = elgg_get_entities(array_merge($options, ['count' => true]));
 	file_put_contents($log, "Starting scan of {$total} images" . "\n", FILE_APPEND); 
 	foreach ($images as $image) {
 		$count++;
@@ -106,12 +105,18 @@ function tidypics_batch_find_images() {
 
 		if ($count == 1 || !($count % 25)) {
 			$time = date('Y-m-d g:ia');
-			$message = "Checked {$count} of {$total} images as of {$time}";
+			$message = "Checked {$count} of {$total} images as of {$time}.";
 			file_put_contents($log, $message . "\n", FILE_APPEND);
 		}
 	}
 
-	$message = '<div class="done"><a href="#" id="elgg-tidypics-broken-images-delete" data-time="' . $logtime . '">Delete ' . $bad_images . ' broken images</a></div>';
+	$message = elgg_format_element('div', ['class' => 'done'], 
+		elgg_format_element('a', [
+			'href' => '#',
+			'class' => 'elgg-button elgg-button-submit',
+			'id' => 'elgg-tidypics-broken-images-delete',
+			'data-time' => $logtime,
+		], "Delete {$bad_images} broken images"));
 	file_put_contents($log, $message . "\n", FILE_APPEND); 
 }
 
@@ -121,11 +126,9 @@ if ($delete) {
 	elgg_set_config('tidypics_log', $log);
 	elgg_set_config('tidypics_logtime', $logtime);
 	elgg_register_event_handler('shutdown', 'system', 'tidypics_batch_delete_images');
-	forward(REFERER);
 } else {
 	file_put_contents($log, "Starting scan of images" . "\n", FILE_APPEND);
 	elgg_set_config('tidypics_log', $log);
 	elgg_set_config('tidypics_logtime', $logtime);
 	elgg_register_event_handler('shutdown', 'system', 'tidypics_batch_find_images');
-	forward(REFERER);
 }

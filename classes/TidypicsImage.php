@@ -7,12 +7,20 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-
 class TidypicsImage extends ElggFile {
+
+	/**
+	 * A single-word arbitrary string that defines what
+	 * kind of object this is
+	 *
+	 * @var string
+	 */
+	const SUBTYPE = 'image';
+
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "image";
+		$this->attributes['subtype'] = self::SUBTYPE;
 	}
 
 	public function __construct($guid = null) {
@@ -28,14 +36,13 @@ class TidypicsImage extends ElggFile {
 	 * @return bool
 	 */
 	public function save($data = null) {
-
 		if (!parent::save()) {
 			return false;
 		}
 
 		if ($data) {
 			// new image
-			$this->simpletype = "image";
+			$this->simpletype = 'image';
 			$this->saveImageFile($data);
 			$this->saveThumbnails();
 			$this->extractExifData();
@@ -50,21 +57,20 @@ class TidypicsImage extends ElggFile {
 	 * @return bool
 	 */
 	public function delete($follow_symlinks = true) {
-
 		// check if batch should be deleted
-		$batch = elgg_get_entities_from_relationship(array(
+		$batch = elgg_get_entities_from_relationship([
 			'relationship' => 'belongs_to_batch',
 			'relationship_guid' => $this->guid,
 			'inverse_relationship' => false,
-		));
+		]);
 		if ($batch) {
 			$batch = $batch[0];
-			$count = elgg_get_entities_from_relationship(array(
+			$count = elgg_get_entities_from_relationship([
 				'relationship' => 'belongs_to_batch',
 				'relationship_guid' => $batch->guid,
 				'inverse_relationship' => true,
 				'count' => true,
-			));
+			]);
 			if ($count == 1) {
 				// last image so delete batch
 				$batch->delete();
@@ -132,17 +138,22 @@ class TidypicsImage extends ElggFile {
 			$viewer_guid = elgg_get_logged_in_user_guid();
 		}
 
-		$views = elgg_get_annotations(array(
+		$count = elgg_get_annotations([
 			'guid' => $this->getGUID(),
 			'annotation_name' => 'tp_view',
-			'limit' => 0,
-		));
-		if ($views) {
-			$total_views = count($views);
+			'count' => true,
+		]);
+		if ($count > 0) {
+			$views = elgg_get_annotations([
+				'guid' => $this->getGUID(),
+				'annotation_name' => 'tp_view',
+				'limit' => false,
+				'batch' => true,
+			]);
 
 			if ($this->getOwnerGUID() == $viewer_guid) {
 				// get unique number of viewers
-				$diff_viewers = array();
+				$diff_viewers = [];
 				foreach ($views as $view) {
 					$diff_viewers[$view->owner_guid] = 1;
 				}
@@ -157,10 +168,18 @@ class TidypicsImage extends ElggFile {
 				}
 			}
 
-			$view_info = array("total" => $total_views, "unique" => $unique_viewers, "mine" => $my_views);
+			$view_info = [
+				"total" => $count,
+				"unique" => $unique_viewers,
+				"mine" => $my_views,
+			];
 		}
 		else {
-			$view_info = array("total" => 0, "unique" => 0, "mine" => 0);
+			$view_info = [
+				"total" => 0,
+				"unique" => 0,
+				"mine" => 0,
+			];
 		}
 
 		return $view_info;
@@ -200,10 +219,10 @@ class TidypicsImage extends ElggFile {
 	 */
 	protected function OrientationCorrection($data) {
 		// Only try orientation correction if image format contains exif data
-		$exif_formats = array(
+		$exif_formats = [
 			'image/jpeg',
 			'image/pjpeg',
-		);
+		];
 		if (!in_array($data['type'], $exif_formats)) {
 			return;
 		}
@@ -230,7 +249,7 @@ class TidypicsImage extends ElggFile {
 
 				$filename = $data['tmp_name'];
 				$command = $im_path . "mogrify -auto-orient $filename";
-				$output = array();
+				$output = [];
 				$ret = 0;
 				exec($command, $output, $ret);
 			} else if ($imageLib == 'ImageMagickPHP') {
@@ -453,8 +472,6 @@ class TidypicsImage extends ElggFile {
 	 * Save the image thumbnails
 	 */
 	protected function saveThumbnails() {
-		elgg_load_library('tidypics:resize');
-
 		$imageLib = elgg_get_plugin_setting('image_lib', 'tidypics');
 
 		$prefix = "image/" . $this->container_guid . "/";
@@ -520,7 +537,6 @@ class TidypicsImage extends ElggFile {
 	 * @warning image file must be saved first
 	 */
 	public function extractExifData() {
-		elgg_load_library('tidypics:exif');
 		td_get_exif($this);
 	}
 
@@ -530,7 +546,13 @@ class TidypicsImage extends ElggFile {
 	 * @return true/false
 	 */
 	public function isPhotoTagged() {
-		$num_tags = elgg_get_annotations(array('guid' => $this->getGUID(), 'type' => 'object', 'subtype' => 'image', 'annotation_name' => 'phototag', 'count' => true));
+		$num_tags = elgg_get_annotations([
+			'guid' => $this->getGUID(),
+			'type' => 'object',
+			'subtype' => TidypicsImage::SUBTYPE,
+			'annotation_name' => 'phototag',
+			'count' => true,
+		]);
 		if ($num_tags > 0) {
 			return true;
 		} else {
@@ -544,12 +566,11 @@ class TidypicsImage extends ElggFile {
 	 * @return array
 	 */
 	public function getPhotoTags() {
-
-		$tags = array();
-		$annotations = elgg_get_annotations(array(
+		$tags = [];
+		$annotations = elgg_get_annotations([
 			'guid' => $this->getGUID(),
 			'annotation_name' => 'phototag',
-		));
+		]);
 		foreach ($annotations as $annotation) {
 			$tag = unserialize($annotation->value);
 			$tag->annotation_id = $annotation->id;

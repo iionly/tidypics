@@ -12,33 +12,33 @@ elgg_require_js('tidypics/tidypics');
 $batch = $vars['item']->getObjectEntity();
 
 // Get images related to this batch
-$images = elgg_get_entities_from_relationship(array(
+$images = elgg_get_entities_from_relationship([
 	'relationship' => 'belongs_to_batch',
 	'relationship_guid' => $batch->getGUID(),
 	'inverse_relationship' => true,
 	'type' => 'object',
-	'subtype' => 'image',
+	'subtype' => TidypicsImage::SUBTYPE,
 	'offset' => 0,
-));
+]);
 
 $album = $batch->getContainerEntity();
 if (!$album) {
 	// something went quite wrong - this batch has no associated album
 	return true;
 }
-$album_link = elgg_view('output/url', array(
+$album_link = elgg_view('output/url', [
 	'href' => $album->getURL(),
 	'text' => $album->getTitle(),
 	'is_trusted' => true,
-));
+]);
 
 $subject = $vars['item']->getSubjectEntity();
-$subject_link = elgg_view('output/url', array(
+$subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
 	'text' => $subject->name,
 	'class' => 'elgg-river-subject',
 	'is_trusted' => true,
-));
+]);
 
 $attachments = '';
 if (count($images)) {
@@ -46,17 +46,15 @@ if (count($images)) {
 	if(!$preview_size) {
 		$preview_size = 'tiny';
 	}
-	$attachments = '<ul class="tidypics-river-list">';
+	$attachments = '';
 	foreach($images as $image) {
-		$attachments .= '<li class="tidypics-photo-item">';
-		$attachments .= elgg_view_entity_icon($image, $preview_size, array(
+		$attachments .= elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
 			'href' => $image->getIconURL('master'),
 			'img_class' => 'tidypics-photo',
 			'link_class' => 'tidypics-lightbox',
-		));
-		$attachments .= '</li>';
+		]));
 	}
-	$attachments .= '</ul>';
+	$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], $attachments);
 }
 
 if (count($images) == 1) {
@@ -64,26 +62,26 @@ if (count($images) == 1) {
 	$vars['item']->object_guid = $images[0]->guid;
 	$responses = elgg_view('river/elements/responses', $vars);
 	if ($responses) {
-		$responses = "<div class=\"elgg-river-responses\">$responses</div>";
+		$responses = elgg_format_element('div', ['class' => 'elgg-river-responses'], $responses);
 	}
-	$image_link = elgg_view('output/url', array(
+	$image_link = elgg_view('output/url', [
 		'href' => $images[0]->getURL(),
 		'text' => $images[0]->getTitle(),
 		'is_trusted' => true,
-	));
-	$summary = elgg_echo('image:river:created', array($subject_link, $image_link, $album_link));
+	]);
+	$summary = elgg_echo('image:river:created', [$subject_link, $image_link, $album_link]);
 } else {
 	// View the comments of the album
 	$vars['item']->object_guid = $album->guid;
 	$responses = elgg_view('river/elements/responses', $vars);
 	if ($responses) {
-		$responses = "<div class=\"elgg-river-responses\">$responses</div>";
+		$responses = elgg_format_element('div', ['class' => 'elgg-river-responses'], $responses);
 	}
-	$summary = elgg_echo('image:river:created:multiple', array($subject_link, count($images), $album_link));
+	$summary = elgg_echo('image:river:created:multiple', [$subject_link, count($images), $album_link]);
 }
 
-echo elgg_view('river/elements/layout', array(
+echo elgg_view('river/elements/layout', [
 	'item' => $vars['item'],
 	'attachments' => $attachments,
 	'summary' => $summary
-));
+]);

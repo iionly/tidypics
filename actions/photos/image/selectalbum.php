@@ -12,16 +12,16 @@
  *
  */
 
-$album_guid = (int)get_input('album_guid', -1);
-$owner_guid = (int)get_input('owner_guid', elgg_get_logged_in_user_guid());
+$album_guid = (int) get_input('album_guid', -1);
+$owner_guid = (int) get_input('owner_guid', elgg_get_logged_in_user_guid());
 
-if($album_guid == -1) {
-	forward("photos/add/$owner_guid");
-} else {
-	$album = get_entity($album_guid);
-	if (!$album->getContainerEntity()->canWriteToContainer()) {
-		forward(REFERER);
-	}
-
-	forward("photos/upload/$album_guid");
+if ($album_guid == -1) {
+	return elgg_ok_response('', '', "photos/add/$owner_guid");
 }
+
+$album = get_entity($album_guid);
+if (!$album->getContainerEntity()->canWriteToContainer()) {
+	return elgg_ok_response('', '', REFERER);
+}
+
+return elgg_ok_response('', '', "photos/upload/$album_guid");

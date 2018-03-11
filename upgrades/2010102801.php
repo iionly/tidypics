@@ -19,17 +19,19 @@ access_show_hidden_entities(true);
 
 $db_prefix = elgg_get_config('dbprefix');
 
-$batch = new ElggBatch('elgg_get_river', array(
+$batch = elgg_get_river([
 	'view' => 'river/object/image/tag',
-	'limit' => false
-));
+	'limit' => false,
+	'batch' => true,
+]);
 
 foreach ($batch as $river_entry) {
-	$batch_annotations = new ElggBatch('elgg_get_annotations', array(
+	$batch_annotations = elgg_get_annotations([
 		'guid' => $river_entry->subject_guid,
 		'annotation_name' => 'phototag',
-		'limit' => false
-	));
+		'limit' => false,
+		'batch' => true,
+	]);
 	foreach ($batch_annotations as $annotation) {
 		$tag = unserialize($annotation->value);
 		if ($tag->type === 'user') {

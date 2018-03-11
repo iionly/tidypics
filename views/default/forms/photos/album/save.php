@@ -13,36 +13,55 @@ $access_id = elgg_extract('access_id', $vars, get_default_access());
 $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
 $guid = elgg_extract('guid', $vars, 0);
 
-?>
+echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('album:title'),
+	'name' => 'title',
+	'value' => $title,
+	'required' => true,
+]);
 
-<div>
-	<label><?php echo elgg_echo('album:title'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('album:desc'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $description)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
-</div>
-<?php
+echo elgg_view_field([
+	'#type' => 'longtext',
+	'#label' => elgg_echo('album:desc'),
+	'name' => 'description',
+	'value' => $description,
+]);
+
+echo elgg_view_field([
+	'#type' => 'tags',
+	'#label' => elgg_echo('tags'),
+	'name' => 'tags',
+	'value' => $tags,
+]);
 
 $categories = elgg_view('input/categories', $vars);
 if ($categories) {
 	echo $categories;
 }
 
-?>
-<div>
-	<label><?php echo elgg_echo('access'); ?></label>
-	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
-</div>
-<div class="elgg-foot">
-<?php
-echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
-echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-?>
-</div>
+echo elgg_view_field([
+	'#type' => 'access',
+	'#label' => elgg_echo('access'),
+	'name' => 'access_id',
+	'value' => $access_id,
+]);
+
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'guid',
+	'value' => $guid,
+]);
+
+echo elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'container_guid',
+	'value' => $container_guid,
+]);
+
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+
+elgg_set_form_footer($footer);

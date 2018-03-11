@@ -29,7 +29,6 @@ function tp_process_watermark_text($text, $owner) {
  * @return string
  */
 function tp_get_watermark_filename($text, $owner) {
-
 	$base = elgg_strtolower($text);
 	$base = preg_replace("/[^\w-]+/", "-", $base);
 	$base = trim($base, '-');
@@ -46,7 +45,6 @@ function tp_get_watermark_filename($text, $owner) {
  * @param resource $image GD image resource
  */
 function tp_gd_watermark($image) {
-
 	$watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics');
 	if (!$watermark_text) {
 		return;
@@ -89,7 +87,6 @@ function tp_gd_watermark($image) {
  * @return bool
  */
 function tp_imagick_watermark($filename) {
-
 	$watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics');
 	if (!$watermark_text) {
 		return false;
@@ -136,7 +133,6 @@ function tp_imagick_watermark($filename) {
  * @param string $filename
  */
 function tp_im_cmdline_watermark($filename) {
-
 	$watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics');
 	if (!$watermark_text) {
 		return;
@@ -157,7 +153,6 @@ function tp_im_cmdline_watermark($filename) {
 		$im_path .= "/";
 	}
 
-
 	$owner = elgg_get_logged_in_user_entity();
 
 	$watermark_text = tp_process_watermark_text($watermark_text, $owner);
@@ -166,10 +161,9 @@ function tp_im_cmdline_watermark($filename) {
 
 	$user_stamp_base = tp_get_watermark_filename($watermark_text, $owner);
 
-
 	if ( !file_exists( $user_stamp_base . $ext )) {
 		//create the watermark image if it doesn't exist
-		$commands = array();
+		$commands = [];
 		$commands[] = $im_path . 'convert -size 300x50 xc:grey30 -pointsize 20 -gravity center -draw "fill grey70  text 0,0  \''. $watermark_text . '\'" "'. $user_stamp_base . '_fgnd' . $ext . '"';
 		$commands[] = $im_path . 'convert -size 300x50 xc:black -pointsize 20 -gravity center -draw "fill white  text  1,1  \''. $watermark_text . '\' text  0,0  \''. $watermark_text . '\' fill black  text -1,-1 \''. $watermark_text . '\'" +matte ' . $user_stamp_base . '_mask' . $ext;
 		$commands[] = $im_path . 'composite -compose CopyOpacity  "' . $user_stamp_base . "_mask" . $ext . '" "' . $user_stamp_base . '_fgnd' . $ext . '" "' . $user_stamp_base . $ext . '"';
@@ -183,7 +177,7 @@ function tp_im_cmdline_watermark($filename) {
 	}
 
 	//apply the watermark
-	$commands = array();
+	$commands = [];
 	$commands[] = $im_path . 'composite -gravity south -geometry +0+10 "' . $user_stamp_base . $ext . '" "' . $filename . '" "' . $filename . '_watermarked"';
 	$commands[] = "mv \"$filename" . "_watermarked\" \"$filename\"";
 	foreach( $commands as $command ) {
