@@ -134,7 +134,7 @@ return [
 	'tidypics:option:batch' => 'Una entrada con todas las fotos del lote',
 	'tidypics:option:none' => 'Ninguna entrada en cubanada',
 	'tidypics:option:cover' => 'Foto de portada del álbum',
-	'tidypics:option:set' => 'Un conjunto de hasta 7 fotos',
+	'tidypics:option:set' => 'Un conjunto de fotos',
 
 	// Server analysis
 	'tidypics:server_info:gd_desc' => 'Elgg requiere la extensión GD para ser cargado',

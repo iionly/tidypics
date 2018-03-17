@@ -40,8 +40,10 @@ $defaults = [
 
 	'img_river_view' => 'batch',
 	'album_river_view' => 'cover',
+	'river_album_number' => 7,
 	'river_comments_thumbnails' => 'none',
 	'river_thumbnails_size' => 'tiny',
+	'river_tags' => 'show',
 
 	'notify_interval' => 60 * 60 * 24,
 

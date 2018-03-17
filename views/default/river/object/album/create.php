@@ -17,7 +17,8 @@ if(!$preview_size) {
 }
 
 if ($album_river_view == "set") {
-	$images = $album->getImages(7);
+	$river_album_number = (int) elgg_get_plugin_setting('river_album_number', 'tidypics', 7);
+	$images = $album->getImages($river_album_number);
 	if (count($images)) {
 		$attachments = '';
 		foreach($images as $image) {

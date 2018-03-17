@@ -164,6 +164,16 @@ $content_activity .= elgg_view_field([
 ]);
 
 $content_activity .= elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('tidypics:settings:river_album_number'),
+	'name' => 'params[river_album_number]',
+	'value' => $plugin->river_album_number,
+	'min' => 1,
+	'max' => 25,
+	'step' => 1,
+]);
+
+$content_activity .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('tidypics:settings:img_river_view'),
 	'name' => 'params[img_river_view]',
@@ -196,6 +206,17 @@ $content_activity .= elgg_view_field([
 		'tiny' => elgg_echo('tidypics:option:river_comments_thumbnails_tiny'),
 	],
 	'value' => $plugin->river_thumbnails_size,
+]);
+
+$content_activity .= elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('tidypics:settings:river_tags'),
+	'name' => 'params[river_tags]',
+	'options_values' => [
+		'show' => elgg_echo('tidypics:option:river_tags'),
+		'none' => elgg_echo('tidypics:option:none'),
+	],
+	'value' => $plugin->river_tags,
 ]);
 
 echo elgg_view_module('inline', elgg_echo('tidypics:settings:heading:river'), $content_activity);

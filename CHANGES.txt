@@ -13,6 +13,8 @@ Version 2.3.4 (Release Date: XX/XX/XXXX)
 * Changed widget edit view number of item input field from a select to a number input field on all widgets,
 * Fixed "Latest Photos" group widget to display photos again also for users who are allowed to add photos (i.e. who get the "Upload Photos" link displayed); thanks to Pasley70 for reporting the issue,
 * Fixed alignment of image thumbnails in river entries (also with thumbnails shown in more than 1 row),
+* New plugin option for river activity to configure number of images to show at maximum on creation of a new album if option to display a set of images is selected,
+* New plugin option for river activity to enable/disable creation of river entries on tagging of images (no influence on existing river entries),
 * PHP 7.2 compatibility: modified TidypicsAlbum and TidypicsImage delete method declaration to be compatible with parent class delete method declaration,
 * French translation updated and completed thanks to BenaeSan.
 
