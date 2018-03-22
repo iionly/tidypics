@@ -166,7 +166,7 @@ function tidypics_page_handler($page) {
 
 		case "siteimagesowner":
 			if (isset($page[1])) {
-				$resource_vars['guid'] = (int)$page[1];
+				$resource_vars['guid'] = (int) $page[1];
 			}
 			echo elgg_view_resource('tidypics/lists/siteimagesowner', $resource_vars);
 			break;
@@ -177,7 +177,7 @@ function tidypics_page_handler($page) {
 
 		case "siteimagesgroup":
 			if (isset($page[1])) {
-				$resource_vars['guid'] = (int)$page[1];
+				$resource_vars['guid'] = (int) $page[1];
 			}
 			echo elgg_view_resource('tidypics/lists/siteimagesgroup', $resource_vars);
 			break;
@@ -201,19 +201,19 @@ function tidypics_page_handler($page) {
 			break;
 
 		case "album": // view an album individually
-			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['guid'] = (int) $page[1];
 			echo elgg_view_resource('tidypics/photos/album/view', $resource_vars);
 			break;
 
 		case "new":  // create new album
 		case "add":
-			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['guid'] = (int) $page[1];
 			echo elgg_view_resource('tidypics/photos/album/add', $resource_vars);
 			break;
 			
 		case "edit": //edit image or album
-			$resource_vars['guid'] = (int)$page[1];
-			$entity = get_entity((int)$page[1]);
+			$resource_vars['guid'] = (int) $page[1];
+			$entity = get_entity($resource_vars['guid']);
 			switch ($entity->getSubtype()) {
 				case TidypicsAlbum::SUBTYPE:
 					echo elgg_view_resource('tidypics/photos/album/edit', $resource_vars);
@@ -230,18 +230,18 @@ function tidypics_page_handler($page) {
 			break;
 
 		case "sort": // sort a photo album
-			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['guid'] = (int) $page[1];
 			echo elgg_view_resource('tidypics/photos/album/sort', $resource_vars);
 			break;
 
 		case "image": //view an image
 		case "view":
-			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['guid'] = (int) $page[1];
 			echo elgg_view_resource('tidypics/photos/image/view', $resource_vars);
 			break;
 
 		case "thumbnail": // tidypics thumbnail
-			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['guid'] = (int) $page[1];
 			$resource_vars['size'] = elgg_extract(2, $page, 'small');
 			echo elgg_view_resource('tidypics/photos/image/thumbnail', $resource_vars);
 			break;
@@ -252,19 +252,30 @@ function tidypics_page_handler($page) {
 			} else {
 				$default_uploader = 'basic';
 			}
-			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['guid'] = (int) $page[1];
 			$resource_vars['uploader'] = elgg_extract(2, $page, $default_uploader);
 			echo elgg_view_resource('tidypics/photos/image/upload', $resource_vars);
 			break;
 
 		case "download": // download an image
-			$resource_vars['guid'] = (int)$page[1];
+			$resource_vars['guid'] = (int) $page[1];
 			$resource_vars['disposition'] = elgg_extract(2, $page, 'attachment');
 			echo elgg_view_resource('tidypics/photos/image/download', $resource_vars);
 			break;
 
 		case "tagged": // all photos tagged with logged in user
 			echo elgg_view_resource('tidypics/photos/tagged');
+			break;
+
+		case "riverpopup": // show image in lightbox on activity page
+			if (isset($page[1])) {
+				$resource_vars['guid'] = (int) $page[1];
+			}
+			if (elgg_is_xhr()) {
+				echo elgg_view_resource('tidypics/photos/riverpopup', $resource_vars);
+			} else {
+				return elgg_redirect_response('photos/image/' . $resource_vars['guid']);
+			}
 			break;
 
 		case "mostviewed": // images with the most views

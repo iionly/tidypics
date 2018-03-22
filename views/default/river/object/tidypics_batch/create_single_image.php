@@ -61,9 +61,10 @@ if ($images) {
 
 	$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
 		elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($images[0], $preview_size, [
-			'href' => $images[0]->getIconURL('master'),
+			'href' => 'photos/riverpopup/' . $images[0]->getGUID(),
+			'title' => $images[0]->title,
 			'img_class' => 'tidypics-photo',
-			'link_class' => 'tidypics-lightbox',
+			'link_class' => 'tidypics-river-lightbox',
 		]))
 	);
 

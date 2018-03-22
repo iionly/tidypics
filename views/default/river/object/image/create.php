@@ -24,9 +24,10 @@ $image = $vars['item']->getObjectEntity();
 
 $attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
 	elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
-		'href' => $image->getIconURL('master'),
+		'href' => 'photos/riverpopup/' . $image->getGUID(),
+		'title' => $image->title,
 		'img_class' => 'tidypics-photo',
-		'link_class' => 'tidypics-lightbox',
+		'link_class' => 'tidypics-river-lightbox',
 	]))
 );
 

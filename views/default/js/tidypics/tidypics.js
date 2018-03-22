@@ -4,7 +4,25 @@ define(function(require) {
 
 	function init() {
 		if ($(".tidypics-lightbox").length) {
-			$(".tidypics-lightbox").colorbox({photo:true, maxWidth:'95%', maxHeight:'95%'});
+			$(".tidypics-lightbox").colorbox({
+				photo:true,
+				maxWidth:'95%',
+				maxHeight:'95%'
+			});
+			$("#cboxOverlay").css("z-index", "10100");
+			$("#colorbox").css("z-index", "10101");
+		}
+
+		if ($(".tidypics-river-lightbox").length) {
+			$(".tidypics-river-lightbox").colorbox({
+				maxWidth:'95%',
+				maxHeight:'95%',
+				onComplete: function() {
+					$(this).colorbox.resize();
+				}
+			});
+			$("#cboxOverlay").css("z-index", "10100");
+			$("#colorbox").css("z-index", "10101");
 		}
 
 		$("#tidypics-sort").sortable({

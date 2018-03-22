@@ -122,6 +122,11 @@
 	color: #666;
 }
 
+.tidypics-river-popup {
+	max-width: 610px;
+	height: auto;
+}
+
 #tidypics-uploader {
 	position:relative;
 	width:540px;
