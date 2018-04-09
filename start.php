@@ -214,6 +214,9 @@ function tidypics_page_handler($page) {
 		case "edit": //edit image or album
 			$resource_vars['guid'] = (int) $page[1];
 			$entity = get_entity($resource_vars['guid']);
+			if (!$entity) {
+				return false;
+			}
 			switch ($entity->getSubtype()) {
 				case TidypicsAlbum::SUBTYPE:
 					echo elgg_view_resource('tidypics/photos/album/edit', $resource_vars);
