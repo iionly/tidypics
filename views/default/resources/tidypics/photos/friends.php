@@ -44,16 +44,11 @@ if ($friends = $owner->getFriends(['limit' => false])) {
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
-	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->getGUID();
-	$url = elgg_format_url($url);
 	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
-		'href' => 'javascript:',
-		'data-colorbox-opts' => json_encode([
-			'href' => $url,
-		]),
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->getGUID(),
 		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action elgg-lightbox',
+		'link_class' => 'elgg-button elgg-button-action tidypics-selectalbum-lightbox',
 	]);
 }
 

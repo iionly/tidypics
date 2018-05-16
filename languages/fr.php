@@ -102,7 +102,6 @@ return [
 	'tidypics:tags:taggedby' => '(Taggé par %s)',
 	'tidypics:usertagged' => 'Photos où vous êtes taggé',
 	'tidypics_tagged_members' => 'Membres taggé dans cette photo',
-	'tidypics:usertag:nosuccess' => 'L\'utilisateur n\'existe pas.',
 	'tidypics:usertags_photos:nosuccess' => 'Vous n\'avez pas encore été taggé sur aucune photos.',
 	'tidypics:phototagging:nosuccess' => 'L\'ajout de tag à échoué car il n\'y a pas de tag entré ou tout les tags entré sont des tags déjà existant.',
 	'tidypics:phototagging:success_partly' => 'Les tags ont été ajoutés mais les existant ont était ignorés.',

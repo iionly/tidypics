@@ -351,3 +351,22 @@ function tidypics_get_last_log_line($filename) {
 function tidypics_get_log_location($time) {
 	return elgg_get_config('dataroot') . 'tidypics_log' . '/' . $time . '.txt';
 }
+
+// Return data array for Galleria slideshow
+function tidypics_slideshow_json_data($images) {
+	$img_array = [];
+	if (is_array($images) && sizeof($images) > 0) {
+		foreach ($images as $image) {
+			$image->addView();
+			$img_array[] = [
+				'thumb' => elgg_normalize_url('/photos/thumbnail/' . $image->guid . '/small'),
+				'image' => elgg_normalize_url('/photos/thumbnail/' . $image->guid . '/large'),
+// 				'big' => elgg_normalize_url('/photos/thumbnail/' . $image->guid . '/master'),
+				'title' => $image->getTitle(),
+				'description' => ($image->description) ? $image->description : '',
+				'link' => elgg_normalize_url('/photos/image/' . $image->guid),
+			];
+		}
+	}
+	return json_encode($img_array);
+}

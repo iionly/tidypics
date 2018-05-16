@@ -18,16 +18,11 @@ $all_link = elgg_view('output/url', [
 
 $new_link = '';
 if (tidypics_can_add_new_photos(null, $group)) {
-	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid;
-	$url = elgg_format_url($url);
-	$new_link = elgg_view('output/url', [
-		'href' => 'javascript:',
+	$new_link .= elgg_view('output/url', [
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid,
 		'text' => elgg_echo("photos:addphotos"),
-		'data-colorbox-opts' => json_encode([
-			'href' => $url,
-		]),
 		'class' => 'elgg-lightbox',
-		'link_class' => 'elgg-lightbox',
+		'link_class' => 'tidypics-selectalbum-lightbox',
 		'is_trusted' => true,
 	]);
 }

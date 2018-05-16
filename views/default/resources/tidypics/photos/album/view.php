@@ -40,16 +40,11 @@ if (!$owner instanceof ElggGroup) {
 }
 
 if (tidypics_can_add_new_photos(null, $owner)) {
-	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID();
-	$url = elgg_format_url($url);
 	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
-		'href' => 'javascript:',
-		'data-colorbox-opts' => json_encode([
-			'href' => $url,
-		]),
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
 		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action elgg-lightbox',
+		'link_class' => 'elgg-button elgg-button-action tidypics-selectalbum-lightbox',
 	]);
 }
 
@@ -74,19 +69,20 @@ if ($album->canEdit() && $album->getSize() > 0) {
 }
 
 // only show slideshow link if slideshow is enabled in plugin settings and there are images
-if (elgg_get_plugin_setting('slideshow', 'tidypics') && $album->getSize() > 0) {
+if (elgg_get_plugin_setting('slideshow', 'tidypics') && ($album->getSize() > 0)) {
 	elgg_require_js('tidypics/slideshow');
-	$offset = (int)get_input('offset', 0);
-	$url = $album->getURL() . "?limit=64&offset=$offset&view=rss";
-	$url = elgg_format_url($url);
+	$offset = (int) get_input('offset', 0);
+	$limit = (int) get_input('limit', 16);
 	elgg_register_menu_item('title', [
 		'name' => 'slideshow',
 		'id' => 'slideshow',
-		'data-slideshowurl' => $url,
-		'href' => '#',
+		'data-slideshowurl' => $album->getURL() . "?guid={$album->guid}",
+		'data-limit' => $limit,
+		'data-offset' => $offset,
+		'href' => 'ajax/view/photos/galleria',
 		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
 		'title' => elgg_echo('album:slideshow'),
-		'link_class' => 'elgg-button elgg-button-action',
+		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 		'priority' => 300,
 	]);
 }

@@ -231,7 +231,6 @@ return [
 	'tidypics:usertagged' => "Fotos en las que está etiquetado",
 	'tidypics_tagged_members' => "Amigos etiquetados en estas fotos",
 	'tidypics:usertag' => "%s etiquetados en fotos",
-	'tidypics:usertag:nosuccess' => "Usuario no existe.",
 	'tidypics:usertags_photos:nosuccess' => "Aún no ha sido etiquetado en ninguna foto.",
 	'tidypics:phototagging:success' => 'La etiqueta a la foto sido agregada con éxito.',
 	'tidypics:phototagging:nosuccess' => 'El etiquetado de la foto falló porque no ha introducido la etiqueta o todas las etiquetas introducidas eran duplicados de etiquetas existentes.',

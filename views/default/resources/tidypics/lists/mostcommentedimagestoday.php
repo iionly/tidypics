@@ -38,43 +38,38 @@ $title = elgg_echo('tidypics:mostcommentedtoday');
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
-	$url = elgg_get_site_url() . "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->getGUID();
-	$url = elgg_format_url($url);
 	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
-		'href' => 'javascript:',
-		'data-colorbox-opts' => json_encode([
-			'href' => $url,
-		]),
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->getGUID(),
 		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action elgg-lightbox',
+		'link_class' => 'elgg-button elgg-button-action tidypics-selectalbum-lightbox',
 	]);
 }
 
 // only show slideshow link if slideshow is enabled in plugin settings and there are images
 if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 	elgg_require_js('tidypics/slideshow');
-	$url = elgg_get_site_url() . "photos/mostcommentedtoday?limit=64&offset=$offset&view=rss";
-	$url = elgg_format_url($url);
 	elgg_register_menu_item('title', [
 		'name' => 'slideshow',
 		'id' => 'slideshow',
-		'data-slideshowurl' => $url,
-		'href' => '#',
+		'data-slideshowurl' => elgg_get_site_url() . "photos/mostcommentedtoday",
+		'data-limit' => $limit,
+		'data-offset' => $offset,
+		'href' => 'ajax/view/photos/galleria',
 		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
 		'title' => elgg_echo('album:slideshow'),
-		'link_class' => 'elgg-button elgg-button-action',
+		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 	]);
 }
 
 if (!empty($result)) {
-	$area2 = $result;
+	$content = $result;
 } else {
-	$area2 = elgg_echo('tidypics:mostcommentedtoday:nosuccess');
+	$content = elgg_echo('tidypics:mostcommentedtoday:nosuccess');
 }
 $body = elgg_view_layout('content', [
 	'filter_override' => '',
-	'content' => $area2,
+	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'all']),
 ]);

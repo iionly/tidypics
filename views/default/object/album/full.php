@@ -49,7 +49,12 @@ if ($album->description) {
 	]);
 }
 
-$body .= $album->viewImages();
+$album_content = $album->viewImages();
+if ($album_content) {
+	$body .=  $album_content;
+} else {
+	$body .= elgg_echo('tidypics:album:nosuccess');
+}
 
 $body .= elgg_view_comments($album);
 

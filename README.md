@@ -34,14 +34,6 @@ Features
 - Admin Customization: supports GD, Imagick and ImageMagick, quotas, size restrictions, and more.
 
 
-Todo
-----
-
-- Get watermarking fully working (original uploaded image file gets not yet watermarked but only the resized image files),
-- Add option to remove the original uploaded image after resized thumbnail images have been created,
-- Replace PiclensLite slideshow with Galleria slideshow (no flash required, responsive).
-
-
 Installation and configuration
 ------------------------------
 

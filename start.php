@@ -25,6 +25,9 @@ function tidypics_init() {
 	// Register an ajax view for the broken images cleanup routine
 	elgg_register_ajax_view('photos/broken_images_delete_log');
 
+	// Register an ajax view for the Galleria slideshow
+	elgg_register_ajax_view('photos/galleria');
+
 	// Set up site menu
 	$site_menu_links_to = elgg_get_plugin_setting('site_menu_link', 'tidypics');
 	if ($site_menu_links_to == 'albums') {
@@ -49,7 +52,6 @@ function tidypics_init() {
 	elgg_extend_view('css/admin', 'photos/css');
 
 	// Register the JavaScript libs
-	elgg_register_js('tidypics:slideshow', elgg_get_simplecache_url('tidypics/js/PicLensLite/piclens.js'), 'head');
 	elgg_register_js('jquery.plupload-tp', elgg_get_simplecache_url('tidypics/js/plupload/plupload.full.min.js'), 'footer');
 	elgg_register_js('jquery.plupload.ui-tp', elgg_get_simplecache_url('tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js'), 'footer');
 	$plupload_language = tidypics_get_plugload_language();
@@ -154,9 +156,6 @@ function tidypics_page_handler($page) {
 	}
 
 	elgg_require_js('tidypics/tidypics');
-	if (elgg_get_plugin_setting('slideshow', 'tidypics')) {
-		elgg_load_js('tidypics:slideshow');
-	}
 
 	$resource_vars = [];
 	switch ($page[0]) {

@@ -4,6 +4,7 @@ Changelog and contributors list
 Version 2.3.4 (Release Date: XX/XX/XXXX)
 ----------------------------------------
 
+* Requires PHP 5.6 (for the new slideshow),
 * General code cleanup and restructuring (bringing it up to date with some new stuff of Elgg 2.3 API),
 * Action error and success handling: updated to new Elgg API functions were appropriate,
 * JS: usage of new elgg/Ajax AMD module methods for action handling,
@@ -11,6 +12,7 @@ Version 2.3.4 (Release Date: XX/XX/XXXX)
 * Rewritten forms and usage of Elgg API for input fields including making use of HTML5/CSS3 required attribute where appropriate,
 * Rewritten and reordered settings page/tabs,
 * Rewritten and expanded layout for image popups on activity page,
+* Replaced PiclensLite slideshow with Galleria-based slideshow (responsive, no Flash required but HTML5/CSS3 only, ajax-loading of images dynamically),
 * Changed widget edit view number of item input field from a select to a number input field on all widgets,
 * Fixed "Latest Photos" group widget to display photos again also for users who are allowed to add photos (i.e. who get the "Upload Photos" link displayed); thanks to Pasley70 for reporting the issue,
 * Fixed alignment of image thumbnails in river entries (also with thumbnails shown in more than 1 row),
