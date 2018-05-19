@@ -442,7 +442,7 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	}
 	$file->largethumb = $prefix . "largethumb" . $filestorename;
 
-	tp_im_cmdline_watermark($thumbname);
+	tp_im_cmdline_watermark($thumbname, $thumb->container_guid);
 
 	unset($thumb);
 

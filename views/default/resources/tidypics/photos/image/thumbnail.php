@@ -13,6 +13,11 @@ if (!($image instanceof TidypicsImage)) {
 	forward('', '404');
 }
 
+$watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics', '');
+if ($watermark_text && $size == 'master') {
+	$size = 'large';
+}
+
 if ($size == 'master') {
 	$contents = $image->getImage();
 } else {

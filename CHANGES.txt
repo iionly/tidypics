@@ -14,8 +14,11 @@ Version 2.3.4 (Release Date: XX/XX/XXXX)
 * Rewritten and expanded layout for image popups on activity page,
 * Replaced PiclensLite slideshow with Galleria-based slideshow (responsive, no Flash required but HTML5/CSS3 only, ajax-loading of images dynamically),
 * Changed widget edit view number of item input field from a select to a number input field on all widgets,
+* No access (no download) of original image anymore if watermarking is enabled (original image doesn't get watermarked so making it available contradicts watermarking; no longer offering the original image also means no image popup in full-size image view anymore),
+* Fixed usage of imagick image library usage when watermarking is enabled,
 * Fixed "Latest Photos" group widget to display photos again also for users who are allowed to add photos (i.e. who get the "Upload Photos" link displayed); thanks to Pasley70 for reporting the issue,
 * Fixed alignment of image thumbnails in river entries (also with thumbnails shown in more than 1 row),
+* Fixed display of PHP Warning: exif_read_data(...): Illegal IFD size,
 * New plugin option for river activity to configure number of images to show at maximum on creation of a new album if option to display a set of images is selected,
 * New plugin option for river activity to enable/disable creation of river entries on tagging of images (no influence on existing river entries),
 * PHP 7.2 compatibility: modified TidypicsAlbum and TidypicsImage delete method declaration to be compatible with parent class delete method declaration,
@@ -24,6 +27,8 @@ Version 2.3.4 (Release Date: XX/XX/XXXX)
 Contributors:
 
 * iionly
+* Matt Beckett
+* BenaeSan
 
 
 Version 2.3.3 (Release Date: 08/01/2017)

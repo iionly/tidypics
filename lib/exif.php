@@ -23,7 +23,8 @@ function td_get_exif($image) {
 	}
 
 	$filename = $image->getFilenameOnFilestore();
-	$exif = exif_read_data($filename, "ANY_TAG", true);
+	// @ added as a fix to prevent PHP Warning: exif_read_data(...): Illegal IFD size
+	$exif = @exif_read_data($filename, "ANY_TAG", true);
 	if (is_array($exif)) {
 		// What data is in the image file?
 		$data = false; // We start with no data

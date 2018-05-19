@@ -20,6 +20,10 @@ $sizes = ['master', 'large', 'small', 'tiny'];
 if (!in_array($vars['size'], $sizes)) {
 	$vars['size'] = 'small';
 }
+$watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics', '');
+if ($watermark_text && $vars['size'] == 'master') {
+	$vars['size'] = 'large';
+}
 
 if (!isset($vars['title'])) {
 	$title = $entity->getTitle();

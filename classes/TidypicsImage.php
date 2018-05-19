@@ -231,7 +231,8 @@ class TidypicsImage extends ElggFile {
 		if (!is_callable('exif_read_data')) {
 			return;
 		}
-		$exif = exif_read_data($data['tmp_name']);
+		// @ added as a fix to prevent PHP Warning: exif_read_data(...): Illegal IFD size
+		$exif = @exif_read_data($data['tmp_name']);
 		$orientation = isset($exif['Orientation']) ? $exif['Orientation'] : 0;
 		if($orientation != 0 || $orientation != 1) {
 

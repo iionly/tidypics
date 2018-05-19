@@ -50,11 +50,21 @@ if ($album->getSize() > 1) {
 }
 $body .= elgg_view('photos/tagging/help', $vars);
 $body .= elgg_view('photos/tagging/select', $vars);
-$body .= elgg_view_entity_icon($image, 'large', [
-	'href' => $image->getIconURL('master'),
-	'img_class' => 'tidypics-photo',
-	'link_class' => 'tidypics-lightbox',
-]);
+
+$watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics', '');
+if ($watermark_text) {
+	$body .= elgg_view_entity_icon($image, 'large', [
+		'href' => false,
+		'img_class' => 'tidypics-photo',
+		'link_class' => 'tidypics-lightbox',
+	]);
+} else {
+	$body .= elgg_view_entity_icon($image, 'large', [
+		'href' => $image->getIconURL('master'),
+		'img_class' => 'tidypics-photo',
+		'link_class' => 'tidypics-lightbox',
+	]);
+}
 $body .= elgg_view('photos/tagging/tags', $vars);
 
 echo elgg_format_element('div', ['class' => 'tidypics-photo-wrapper center'], $body);

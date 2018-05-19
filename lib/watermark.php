@@ -28,13 +28,13 @@ function tp_process_watermark_text($text, $owner) {
  * @param ElggUser $owner
  * @return string
  */
-function tp_get_watermark_filename($text, $owner) {
+function tp_get_watermark_filename($text, $owner, $album_guid) {
 	$base = elgg_strtolower($text);
 	$base = preg_replace("/[^\w-]+/", "-", $base);
 	$base = trim($base, '-');
 
-	$filename = tp_get_img_dir();
-	$filename .= elgg_strtolower($owner->username . "_" . $base . "_stamp");
+	$filename = tp_get_img_dir($album_guid);
+	$filename .= "/" . elgg_strtolower($owner->username . "_" . $base . "_stamp");
 
 	return $filename;
 }
@@ -98,20 +98,18 @@ function tp_imagick_watermark($filename) {
 	}
 
 	$owner = elgg_get_logged_in_user_entity();
-
 	$watermark_text = tp_process_watermark_text($watermark_text, $owner);
 
 	$img = new Imagick($filename);
 
-	$img->readImage($image);
+	$img->readImage($filename);
 
 	$draw = new ImagickDraw();
 
 	//$draw->setFont("");
-
 	$draw->setFontSize(28);
-
-	$draw->setFillOpacity(0.5);
+	$draw->setFillColor("rgb(50, 50, 50)");
+	$draw->setFillOpacity(0.6);
 
 	$draw->setGravity(Imagick::GRAVITY_SOUTH);
 
@@ -132,7 +130,7 @@ function tp_imagick_watermark($filename) {
  *
  * @param string $filename
  */
-function tp_im_cmdline_watermark($filename) {
+function tp_im_cmdline_watermark($filename, $album_guid) {
 	$watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics');
 	if (!$watermark_text) {
 		return;
@@ -154,14 +152,13 @@ function tp_im_cmdline_watermark($filename) {
 	}
 
 	$owner = elgg_get_logged_in_user_entity();
-
 	$watermark_text = tp_process_watermark_text($watermark_text, $owner);
 
 	$ext = ".png";
 
-	$user_stamp_base = tp_get_watermark_filename($watermark_text, $owner);
+	$user_stamp_base = tp_get_watermark_filename($watermark_text, $owner, $album_guid);
 
-	if ( !file_exists( $user_stamp_base . $ext )) {
+	if (!file_exists($user_stamp_base . $ext)) {
 		//create the watermark image if it doesn't exist
 		$commands = [];
 		$commands[] = $im_path . 'convert -size 300x50 xc:grey30 -pointsize 20 -gravity center -draw "fill grey70  text 0,0  \''. $watermark_text . '\'" "'. $user_stamp_base . '_fgnd' . $ext . '"';
@@ -171,8 +168,8 @@ function tp_im_cmdline_watermark($filename) {
 		$commands[] = 'rm "' . $user_stamp_base . '_mask' . $ext . '"';
 		$commands[] = 'rm "' . $user_stamp_base . '_fgnd' . $ext . '"';
 
-		foreach( $commands as $command ) {
-			exec( $command );
+		foreach($commands as $command) {
+			exec($command);
 		}
 	}
 
@@ -180,7 +177,7 @@ function tp_im_cmdline_watermark($filename) {
 	$commands = [];
 	$commands[] = $im_path . 'composite -gravity south -geometry +0+10 "' . $user_stamp_base . $ext . '" "' . $filename . '" "' . $filename . '_watermarked"';
 	$commands[] = "mv \"$filename" . "_watermarked\" \"$filename\"";
-	foreach( $commands as $command ) {
-		exec( $command );
+	foreach($commands as $command) {
+		exec($command);
 	}
 }
