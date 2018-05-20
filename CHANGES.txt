@@ -1,7 +1,7 @@
 Changelog and contributors list
 ===============================
 
-Version 2.3.4 (Release Date: XX/XX/XXXX)
+Version 2.3.4 (Release Date: 20/05/2018)
 ----------------------------------------
 
 * Requires PHP 5.6 (for the new slideshow),
