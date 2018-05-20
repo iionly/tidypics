@@ -239,6 +239,14 @@ define(function(require) {
 									}
 								});
 							} else {
+								if (this._data.length == 1) {
+									// Special case: slideshow with only 1 image
+									$('.galleria-image-nav-left').hide();
+								} else if (this._active != 0) {
+									// Jumped directly to last with no more images available to be loaded but
+									// with more than one image in slideshow we need to enable the prev button
+									$('.galleria-image-nav-left').show();
+								}
 								// No more images so hide next button
 								$('.galleria-image-nav-right').hide();
 							}
@@ -313,6 +321,11 @@ define(function(require) {
 									// done with dealing with the init hassle
 									galleryInitCount--;
 								} else {
+									// Jumped directly to first with no more images available to be loaded but
+									// with more than one image in slideshow we need to enable the next button
+									if (this._active != this._data.length - 1) {
+										$('.galleria-image-nav-right').show();
+									}
 									// No more previous images so hide prev button
 									$('.galleria-image-nav-left').hide();
 								}
