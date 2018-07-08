@@ -356,7 +356,7 @@ Schau Dir das Bilderalbum an und schreibe einen Kommentar:
 	'tidypics:album:sorted' => 'Das Bilderalbum %s wurde umsortiert.',
 	'tidypics:album:could_not_sort' => 'Das Bilderalbum %s konnte nicht umsortiert werden. Vergewissere Dich, dass in diesem Album Bilder vorhanden sind und versuche es noch einmal.',
 	'tidypics:upgrade:success' => 'Das Upgrade des Tidypics-Plugins war erfolgreich.',
-	'tidypics:upgrade:not_required' => 'Es ist keine Aktualisiertung notwendig.',
+	'tidypics:upgrade:not_required' => 'Es ist keine Aktualisierung notwendig.',
 
 	// Error messages
 	'tidypics:baduploadform' => "Es gab ein unerwartetes Problem mit dem Uploader.",

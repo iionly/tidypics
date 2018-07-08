@@ -123,6 +123,7 @@ function tidypics_init() {
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:image', 'Elgg\Values::getTrue');
 
 	// Register actions
+	elgg_register_action("tidypics/settings/save", dirname(__FILE__) . '/actions/tidypics/settings/save.php');
 	elgg_register_action("photos/delete", dirname(__FILE__) . '/actions/photos/delete.php');
 	elgg_register_action("photos/album/save", dirname(__FILE__) . '/actions/photos/album/save.php');
 	elgg_register_action("photos/album/sort", dirname(__FILE__) . '/actions/photos/album/sort.php');

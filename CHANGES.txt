@@ -1,6 +1,17 @@
 Changelog and contributors list
 ===============================
 
+Version 2.3.5 (Release Date: 07/07/2018)
+----------------------------------------
+
+* Fix: plugin settings action override (correctly save all settings including thumbnail image sizes),
+* Fix: caching of plupload uploader language files.
+
+Contributors:
+
+* iionly
+
+
 Version 2.3.4 (Release Date: 20/05/2018)
 ----------------------------------------
 
