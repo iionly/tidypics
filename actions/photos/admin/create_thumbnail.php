@@ -67,4 +67,4 @@ $output = json_encode([
 	'thumbnail_src' => $url,
 ]);
 
-return elgg_ok_response($output, elgg_echo('tidypics:thumbnail_tool:created'));
+return elgg_ok_response($output, elgg_echo('tidypics:thumbnail_tool:created'), REFERER);

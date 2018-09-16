@@ -1,6 +1,16 @@
 Changelog and contributors list
 ===============================
 
+Version 2.3.6 (Release Date: 16/09/2018)
+----------------------------------------
+
+* Fix: edit album page access fixed so you can edit an album again,
+* Fix: redirect on create thumbnail admin action on calling page.
+
+Contributors:
+
+* iionly
+
 Version 2.3.5 (Release Date: 07/07/2018)
 ----------------------------------------
 

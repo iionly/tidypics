@@ -8,7 +8,7 @@
 
 $guid = elgg_extract('guid', $vars);
 $entity = get_entity($guid);
-if (!($album instanceof TidypicsAlbum)) {
+if (!($entity instanceof TidypicsAlbum)) {
 	forward('photos/all');
 }
 
