@@ -6,6 +6,8 @@
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\OrderByClause;
 
 
 class TidypicsAlbum extends ElggObject {
@@ -220,8 +222,12 @@ class TidypicsAlbum extends ElggObject {
 		$guidsString = implode(',', $list);
 
 		$list = elgg_get_entities([
-			'wheres' => ["e.guid IN ($guidsString)"],
-			'order_by' => "FIELD(e.guid, $guidsString)",
+			'wheres' => [
+				function(QueryBuilder $qb) use ($guidsString) {
+					return $qb->compare('e.guid', 'IN', $guidsString);
+				},
+			],
+			'order_by' => [new OrderByClause("FIELD(e.guid, $guidsString)"),],
 			'callback' => 'tp_guid_callback',
 			'limit' => false,
 		]);

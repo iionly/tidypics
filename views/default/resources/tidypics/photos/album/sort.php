@@ -5,13 +5,12 @@
  * This displays a listing of all the photos so that they can be sorted
  */
 
-elgg_gatekeeper();
-elgg_group_gatekeeper();
 
 // get the album entity
 $album_guid = elgg_extract('guid', $vars);
 $album = get_entity($album_guid);
 
+elgg_entity_gatekeeper($album_guid, 'object', $album->subtype);
 // panic if we can't get it
 if (!($album instanceof TidypicsAlbum)) {
 	forward('', '404');

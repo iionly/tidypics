@@ -21,19 +21,11 @@ $categories = elgg_view('output/categories', $vars);
 
 $owner_icon = elgg_view_entity_icon($photo->getOwnerEntity(), 'tiny');
 
-$metadata = elgg_view_menu('entity', [
-	'entity' => $vars['entity'],
-	'handler' => 'photos',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-]);
-
 $subtitle = "$author_text $date $categories";
 
 $params = [
 	'entity' => $photo,
 	'title' => false,
-	'metadata' => $metadata,
 	'subtitle' => $subtitle,
 	'tags' => $tags,
 ];

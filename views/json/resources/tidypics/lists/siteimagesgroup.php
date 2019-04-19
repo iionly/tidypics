@@ -1,11 +1,13 @@
 <?php
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+use Elgg\Database\Clauses\OrderByClause;
 
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 16);
 
 $container_guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($container_guid);
-elgg_group_gatekeeper();
 $container = get_entity($container_guid);
 
 if($container instanceof ElggGroup) {
@@ -14,9 +16,17 @@ if($container instanceof ElggGroup) {
 		'type' => 'object',
 		'subtype' => TidypicsImage::SUBTYPE,
 		'owner_guid' => null,
-		'joins' => ["join {$db_prefix}entities u on e.container_guid = u.guid"],
-		'wheres' => ["u.container_guid = {$container_guid}"],
-		'order_by' => "e.time_created desc",
+		'joins' => [
+			new JoinClause('entities', 'u', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+				return $qb->compare("$joined_alias.guid", '=', "$main_alias.container_guid");
+			}),
+		],
+		'wheres' => [
+			function(QueryBuilder $qb) use ($container_guid) {
+				return $qb->compare('u.container_guid', '=', $container_guid);
+			},
+		],
+		'order_by' => [new OrderByClause('e.time_created', 'DESC'),],
 		'limit' => $limit,
 		'offset' => $offset,
 	]);

@@ -1,4 +1,7 @@
 <?php
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+use Elgg\Database\Clauses\OrderByClause;
 
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 16);
@@ -14,12 +17,20 @@ $images = elgg_get_entities([
 	'offset' => $offset,
 	'selects' => ["count( * ) AS views"],
 	'joins' => [
-		"JOIN {$db_prefix}entities ce ON ce.container_guid = e.guid",
-		"JOIN {$db_prefix}entity_subtypes cs ON ce.subtype = cs.id AND cs.subtype = 'comment'",
+		new JoinClause('entities', 'ce', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->merge([
+				$qb->compare("$joined_alias.container_guid", '=', "$main_alias.guid"),
+				$qb->compare("$joined_alias.subtype", '=', '"comment"'),
+			], 'AND');
+		}),
 	],
-	'wheres' => ["ce.time_created BETWEEN {$start} AND {$end}"],
+	'wheres' => [
+		function(QueryBuilder $qb, $alias) use ($guidsString) {
+			return $qb->between($alias('time_created'), $start, $end);
+		},
+	],
 	'group_by' => 'e.guid',
-	'order_by' => "views DESC",
+	'order_by' => [new OrderByClause('views', 'DESC'),],
 ]);
 
 echo tidypics_slideshow_json_data($images);

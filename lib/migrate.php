@@ -78,7 +78,7 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 
 	// get an album to migrate into if it already exists.
 	// will create later on if it doesn't.
-	$user_album_entities = elgg_get_entities_from_metadata([
+	$user_album_entities = elgg_get_entities([
 		'metadata_name' => 'migrated_from_files',
 		'metadata_value' => true,
 		'type' => 'object',
@@ -307,7 +307,7 @@ function tidypics_get_user_pics_from_files($user_guid) {
 	}
 
 	// @todo Might have to cycle this through with standard while + foreach.
-	return elgg_get_entities_from_metadata([
+	return elgg_get_entities([
 		'metadata_name' => 'simpletype',
 		'metadata_value' => 'image',
 		'type' => 'object',

@@ -51,9 +51,9 @@ function tidypics_batch_delete_images() {
 		'limit' => false,
 	];
 
-	$images = elgg_get_entities_from_metadata(array_merge($options, ['batch' => true, 'batch_inc_offset' => false]));
+	$images = elgg_get_entities(array_merge($options, ['batch' => true, 'batch_inc_offset' => false]));
 
-	$total = elgg_get_entities_from_metadata(array_merge($options, ['count' => true]));
+	$total = elgg_get_entities(array_merge($options, ['count' => true]));
 	file_put_contents($log, "Starting deletion of {$total} images" . "\n", FILE_APPEND); 
 	$i = 0;
 	$count = 0;

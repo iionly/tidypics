@@ -17,7 +17,7 @@ return [
 
 	'photos:add' => "Crear Álbum",
 	'photos:addphotos' => "Subir Fotos",
-	'images:upload' => "Subir fotos a este álbum",
+	'images:upload' => "Subir fotos",
 
 	'album:slideshow' => "Presentación",
 	'album:yours' => "Su álbum",
@@ -270,7 +270,7 @@ La foto se puede ver aquí: %s",
 	'image:river:wordtagged' => '%s añadió nuevas etiquetas a la foto %s',
 	'image:river:wordtagged_single' => '%s añadió una nueva etiqueta a la foto %s',
 	'image:river:tagged:unknown' => "%s etiquetado %s en una foto",
-	'river:create:object:album' => "%s ha creado un nuevo álbum %s",
+	'river:object:album:create' => "%s ha creado un nuevo álbum %s",
 	'album:river:item' => "Un álbum",
 	'album:river:annotate' => "Un comentario sobre el álbum de fotos",
 	'river:comment:object:image' => '%s ha comentado en la foto %s',

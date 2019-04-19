@@ -7,21 +7,9 @@
  */
 
 // register classes
-if (get_subtype_id('object', TidypicsAlbum::SUBTYPE)) {
-	update_subtype('object', TidypicsAlbum::SUBTYPE, 'TidypicsAlbum');
-} else {
-	add_subtype('object', TidypicsAlbum::SUBTYPE, 'TidypicsAlbum');
-}
-if (get_subtype_id('object', TidypicsImage::SUBTYPE)) {
-	update_subtype('object', TidypicsImage::SUBTYPE, 'TidypicsImage');
-} else {
-	add_subtype('object', TidypicsImage::SUBTYPE, 'TidypicsImage');
-}
-if (get_subtype_id('object', TidypicsBatch::SUBTYPE)) {
-	update_subtype('object', TidypicsBatch::SUBTYPE, 'TidypicsBatch');
-} else {
-	add_subtype('object', TidypicsBatch::SUBTYPE, 'TidypicsBatch');
-}
+	elgg_set_entity_class('object', TidypicsAlbum::SUBTYPE, 'TidypicsAlbum');
+	elgg_set_entity_class('object', TidypicsImage::SUBTYPE, 'TidypicsImage');
+	elgg_set_entity_class('object', TidypicsBatch::SUBTYPE, 'TidypicsBatch');
 
 // set default settings
 $plugin = elgg_get_plugin_from_id('tidypics');

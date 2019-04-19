@@ -17,7 +17,7 @@ return [
 
 	'photos:add' => "Create album",
 	'photos:addphotos' => "Upload photos",
-	'images:upload' => "Upload photos to this album",
+	'images:upload' => "Upload photos",
 
 	'album:slideshow' => "Slideshow",
 	'album:yours' => "Your photo albums",
@@ -313,7 +313,7 @@ The photo can be viewed here: %s",
 	'image:river:wordtagged' => '%s added new tags to the photo %s',
 	'image:river:wordtagged_single' => '%s added a new tag to the photo %s',
 	'image:river:tagged:unknown' => "%s tagged %s in a photo",
-	'river:create:object:album' => "%s created a new photo album %s",
+	'river:object:album:create' => "%s created a new photo album %s",
 	'album:river:item' => "an album",
 	'album:river:annotate' => "a comment on the photo album",
 	'river:comment:object:image' => '%s commented on the photo %s',

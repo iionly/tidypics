@@ -7,7 +7,7 @@ $guid = (int) get_input('guid', false);
 $user = get_entity($guid);
 
 if ($user instanceof ElggUser) {
-	$images = elgg_get_entities_from_relationship([
+	$images = elgg_get_entities([
 		'relationship' => 'phototag',
 		'relationship_guid' => $user->guid,
 		'inverse_relationship' => false,

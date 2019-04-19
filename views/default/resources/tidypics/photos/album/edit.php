@@ -19,8 +19,7 @@ if (!$entity->canEdit()) {
 elgg_set_page_owner_guid($entity->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
 
-elgg_gatekeeper();
-elgg_group_gatekeeper();
+// elgg_entity_gatekeeper($owner->guid, 'user');
 
 $title = elgg_echo('album:edit');
 

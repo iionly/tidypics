@@ -7,7 +7,7 @@ return [
 
 	'photos:add' => "Luo uusi kuva-albumi",
 	'photos:addphotos' => "Lisää kuvia",
-	'images:upload' => "Lisää kuvia tähän albumiin",
+	'images:upload' => "Lisää kuvia",
 
 	'album:user' => "Henkilön %s kuvat",
 	'album:all' => "Kaikki kuva-albumit",
@@ -76,7 +76,7 @@ return [
 
 	// River
 	'image:river:created:multiple' => "%s lisäsi %u uutta kuvaa albumiin %s",
-	'river:create:object:album' => "%s loi uuden kuva-albumin %s",
+	'river:object:album:create' => "%s loi uuden kuva-albumin %s",
 	'river:comment:object:image' => '%s kommentoi kuvaa %s',
 	'river:comment:object:album' => '%s kommentoi albumia %s',
 

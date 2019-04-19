@@ -19,7 +19,7 @@ if (!$container) {
 
 elgg_set_page_owner_guid($album->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
-elgg_group_gatekeeper();
+elgg_entity_gatekeeper($album_guid, 'object', $album->subtype);
 
 $title = elgg_echo($album->getTitle());
 
@@ -37,15 +37,6 @@ $content = elgg_view_entity($album, ['full_view' => true]);
 
 if (!$owner instanceof ElggGroup) {
 	$owner = elgg_get_logged_in_user_entity();
-}
-
-if (tidypics_can_add_new_photos(null, $owner)) {
-	elgg_register_menu_item('title', [
-		'name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
-		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action tidypics-selectalbum-lightbox',
-	]);
 }
 
 if ($album->canWriteToContainer(0, 'object', TidypicsImage::SUBTYPE)) {
@@ -80,9 +71,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && ($album->getSize() > 0))
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="fa fa-fw fa-play"></i>',
 		'title' => elgg_echo('album:slideshow'),
-		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
+		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox elgg-lightbox',
 		'priority' => 300,
 	]);
 }

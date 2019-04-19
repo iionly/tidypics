@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
 
 /**
  * Update view path of river entries for comments made on Tidypics images, albums and tidypics_batches (image uploads)
@@ -47,8 +49,16 @@ $batch = elgg_get_river([
 	'type' => 'object',
 	'subtype' => 'comment',
 	'action_type' => 'comment',
-	'joins' => ["JOIN {$db_prefix}entities im ON im.guid = rv.target_guid"],
-	'wheres' => ["im.subtype = $image_subtype_id"],
+	'joins' => [
+		new JoinClause('entities', 'im', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.target_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($image_subtype_id) {
+			return $qb->compare('im.subtype', '=', $image_subtype_id);
+		},
+	],
 	'limit' => false,
 	'batch' => true,
 ]);
@@ -77,8 +87,16 @@ $batch = elgg_get_river([
 	'type' => 'object',
 	'subtype' => 'comment',
 	'action_type' => 'comment',
-	'joins' => ["JOIN {$db_prefix}entities al ON al.guid = rv.target_guid"],
-	'wheres' => ["al.subtype = $album_subtype_id"],
+	'joins' => [
+		new JoinClause('entities', 'al', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.target_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($album_subtype_id) {
+			return $qb->compare('al.subtype', '=', $album_subtype_id);
+		},
+	],
 	'limit' => false,
 	'batch' => true,
 ]);
@@ -109,8 +127,16 @@ $batch = elgg_get_river([
 	'type' => 'object',
 	'subtype' => 'comment',
 	'action_type' => 'comment',
-	'joins' => ["JOIN {$db_prefix}entities ba ON ba.guid = rv.target_guid"],
-	'wheres' => ["ba.subtype = $tidypics_batch_subtype_id"],
+	'joins' => [
+		new JoinClause('entities', 'ba', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.target_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($tidypics_batch_subtype_id) {
+			return $qb->compare('ba.subtype', '=', $tidypics_batch_subtype_id);
+		},
+	],
 	'limit' => false,
 	'batch' => true,
 ]);
@@ -120,7 +146,7 @@ foreach ($batch as $river_entry) {
 	$tidypics_batch = get_entity($river_entry->target_guid);
 
 	// Get images related to this batch
-	$images = elgg_get_entities_from_relationship([
+	$images = elgg_get_entities([
 		'relationship' => 'belongs_to_batch',
 		'relationship_guid' => $tidypics_batch->getGUID(),
 		'inverse_relationship' => true,
@@ -186,8 +212,16 @@ foreach ($batch as $river_entry) {
 $batch = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => 'comment',
-	'joins' => ["JOIN {$db_prefix}entities ba ON ba.guid = e.container_guid"],
-	'wheres' => ["ba.subtype = $tidypics_batch_subtype_id"],
+	'joins' => [
+		new JoinClause('entities', 'ba', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.container_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($tidypics_batch_subtype_id) {
+			return $qb->compare('ba.subtype', '=', $tidypics_batch_subtype_id);
+		},
+	],
 	'limit' => false,
 	'batch' => true,
 ]);
@@ -198,7 +232,7 @@ foreach ($batch as $comment_entity_entry) {
 	$tidypics_batch = get_entity($comment_entity_entry->container_guid);
 
 	// Get images related to this batch
-	$images = elgg_get_entities_from_relationship([
+	$images = elgg_get_entities([
 		'relationship' => 'belongs_to_batch',
 		'relationship_guid' => $tidypics_batch->getGUID(),
 		'inverse_relationship' => true,
@@ -267,8 +301,16 @@ foreach ($batch as $comment_entity_entry) {
 $batch = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => 'comment',
-	'joins' => ["JOIN {$db_prefix}entities al ON al.guid = e.container_guid"],
-	'wheres' => ["al.subtype = $album_subtype_id"],
+	'joins' => [
+		new JoinClause('entities', 'al', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.container_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($album_subtype_id) {
+			return $qb->compare('al.subtype', '=', $album_subtype_id);
+		},
+	],
 	'limit' => false,
 	'batch' => true,
 ]);
@@ -303,8 +345,16 @@ if ($album_comment_entry_guids) {
 // Update likes made to Tidypics batches and assign them either to the image uploaded (if only one) or the album
 $batch = elgg_get_annotations([
 	'annotation_name' => 'likes',
-	'joins' => ["JOIN {$db_prefix}entities li ON li.guid = n_table.entity_guid"],
-	'wheres' => ["li.subtype = $tidypics_batch_subtype_id"],
+	'joins' => [
+		new JoinClause('entities', 'li', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.entity_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($tidypics_batch_subtype_id) {
+			return $qb->compare('li.subtype', '=', $tidypics_batch_subtype_id);
+		},
+	],
 	'limit' => false,
 	'batch' => true,
 ]);
@@ -315,7 +365,7 @@ foreach ($batch as $like_entry) {
 	$tidypics_batch = get_entity($like_entry->entity_guid);
 
 	// Get images related to this batch
-	$images = elgg_get_entities_from_relationship([
+	$images = elgg_get_entities([
 		'relationship' => 'belongs_to_batch',
 		'relationship_guid' => $tidypics_batch->getGUID(),
 		'inverse_relationship' => true,

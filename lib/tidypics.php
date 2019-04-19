@@ -141,7 +141,7 @@ function tidypics_is_upgrade_available() {
 	$local_version = elgg_get_plugin_setting('version', 'tidypics');
 	if ($local_version === null) {
 		// no version set so either new install or really old one
-		if (!get_subtype_class('object', TidypicsImage::SUBTYPE) || !get_subtype_class('object', TidypicsAlbum::SUBTYPE)) {
+		if (!elgg_get_entity_class('object', TidypicsImage::SUBTYPE) || !elgg_get_entity_class('object', TidypicsAlbum::SUBTYPE)) {
 			$local_version = 0;
 		} else {
 			// set initial version for new install

@@ -1,4 +1,7 @@
 <?php
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * Images recently commented on - world view only
@@ -19,10 +22,14 @@ $result = elgg_list_entities([
 	'limit' => $limit,
 	'offset' => $offset,
 	'joins' => [
-		"JOIN {$db_prefix}entities ce ON ce.container_guid = e.guid",
-		"JOIN {$db_prefix}entity_subtypes cs ON ce.subtype = cs.id AND cs.subtype = 'comment'",
+		new JoinClause('entities', 'ce', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->merge([
+				$qb->compare("$joined_alias.container_guid", '=', "$main_alias.guid"),
+				$qb->compare("$joined_alias.subtype", '=', '"comment"'),
+			], 'AND');
+		}),
 	],
-	'order_by' => "ce.time_created DESC",
+	'order_by' => [new OrderByClause('ce.time_created', 'DESC'),],
 	'full_view' => false,
 	'list_type' => 'gallery',
 	'gallery_class' => 'tidypics-gallery',
@@ -36,7 +43,7 @@ if (tidypics_can_add_new_photos(null, $logged_in_user)) {
 		'name' => 'addphotos',
 		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->getGUID(),
 		'text' => elgg_echo("photos:addphotos"),
-		'link_class' => 'elgg-button elgg-button-action tidypics-selectalbum-lightbox',
+		'link_class' => 'elgg-button elgg-button-action tidypics-selectalbum-lightbox elgg-lightbox',
 	]);
 }
 
@@ -50,9 +57,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="fa fa-fw fa-play"></i>',
 		'title' => elgg_echo('album:slideshow'),
-		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
+		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox elgg-lightbox',
 	]);
 }
 

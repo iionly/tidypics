@@ -9,7 +9,6 @@
 $owner = elgg_get_page_owner_entity();
 
 elgg_gatekeeper();
-elgg_group_gatekeeper();
 
 $title = elgg_echo('photos:add');
 

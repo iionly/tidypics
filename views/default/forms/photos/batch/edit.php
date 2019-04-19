@@ -11,7 +11,7 @@
 $batch = $vars['batch'];
 $album = $batch->getContainerEntity();
 
-$images = elgg_get_entities_from_relationship([
+$images = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'relationship' => 'belongs_to_batch',

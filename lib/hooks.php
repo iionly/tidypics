@@ -51,9 +51,15 @@ function tidypics_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	$entity = $params['entity'];
-	$handler = elgg_extract('handler', $params, false);
-	if ($handler != 'photos') {
-		return $return;
+
+	if (elgg_in_context('photos')) {
+		$params = [
+			'name' => 'tidypic_edit',
+			'href' => elgg_get_site_url()."photos/edit/".$entity->guid,
+			'text' => elgg_echo('edit'),
+			'icon' => 'edit',
+		];
+		$return[] = ElggMenuItem::factory($params);
 	}
 
 	if ($entity instanceof TidypicsImage) {
@@ -65,20 +71,16 @@ function tidypics_entity_menu_setup($hook, $type, $return, $params) {
 				. '&album_guid=' . $album->getGUID();
 
 			$params = [
+				'name' => 'set_cover',
 				'href' => $url,
 				'text' => elgg_echo('album:cover_link'),
 				'is_action' => true,
 				'is_trusted' => true,
 				'confirm' => elgg_echo('album:cover'),
-			];
-			$text = elgg_view('output/url', $params);
-
-			$options = [
-				'name' => 'set_cover',
-				'text' => $text,
 				'priority' => 80,
+				'icon' => 'picture-o',
 			];
-			$return[] = ElggMenuItem::factory($options);
+			$return[] = ElggMenuItem::factory($params);
 		}
 
 		if (elgg_get_plugin_setting('view_count', 'tidypics')) {
@@ -88,7 +90,7 @@ function tidypics_entity_menu_setup($hook, $type, $return, $params) {
 				'name' => 'views',
 				'text' => "<span>$text</span>",
 				'href' => false,
-				'priority' => 90,
+				'priority' => 70,
 			];
 			$return[] = ElggMenuItem::factory($options);
 		}
@@ -102,6 +104,7 @@ function tidypics_entity_menu_setup($hook, $type, $return, $params) {
 				'title' => elgg_echo('tidypics:tagthisphoto'),
 				'rel' => 'photo-tagging',
 				'priority' => 80,
+				'icon' => 'link',
 			];
 			$return[] = ElggMenuItem::factory($options);
 		}

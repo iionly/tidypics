@@ -26,7 +26,7 @@ if ($album_river_view == "set") {
 				'href' => 'photos/riverpopup/' . $image->getGUID(),
 				'title' => $image->title,
 				'img_class' => 'tidypics-photo',
-				'link_class' => 'tidypics-river-lightbox',
+				'link_class' => 'tidypics-river-lightbox elgg-lightbox',
 			]));
 		}
 		$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], $attachments);
@@ -39,7 +39,7 @@ if ($album_river_view == "set") {
 				'href' => 'photos/riverpopup/' . $image->getGUID(),
 				'title' => $image->title,
 				'img_class' => 'tidypics-photo',
-				'link_class' => 'tidypics-river-lightbox',
+				'link_class' => 'tidypics-river-lightbox elgg-lightbox',
 			]))
 		);
 		

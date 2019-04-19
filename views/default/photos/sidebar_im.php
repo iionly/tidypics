@@ -57,7 +57,7 @@ switch ($page) {
 
 			// list of tagged members in an image (code from Tagged people plugin by Kevin Jardine)
 			if (elgg_get_plugin_setting('tagging', 'tidypics')) {
-				$body = elgg_list_entities_from_relationship([
+				$body = elgg_list_entities([
 					'relationship' => 'phototag',
 					'relationship_guid' => $image->guid,
 					'inverse_relationship' => true,

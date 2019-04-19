@@ -1,6 +1,15 @@
 Changelog and contributors list
 ===============================
 
+Version 3.0.0 (Release Date: __/__/____)
+----------------------------------------
+
+* Fix of deprecation apis/function for Elgg 3.0
+
+Contributors:
+
+* rohit1290
+
 Version 2.3.6 (Release Date: 16/09/2018)
 ----------------------------------------
 

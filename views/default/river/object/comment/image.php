@@ -37,7 +37,7 @@ if ($river_comments_thumbnails == "show") {
 			'href' => 'photos/riverpopup/' . $target->getGUID(),
 			'title' => $target->title,
 			'img_class' => 'tidypics-photo',
-			'link_class' => 'tidypics-river-lightbox',
+			'link_class' => 'tidypics-river-lightbox elgg-lightbox',
 		]))
 	);
 }

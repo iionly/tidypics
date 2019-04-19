@@ -203,7 +203,7 @@ Dans TOUT les cas, avant d\'utiliser cet utilitaire faite une sauvegarde de votr
 	'tidypics:phototagging:delete:confirm' => 'Retirer ce tag ?',
 	'image:river:created:multiple' => '%s a ajouté %u photos à l\'album %s',
 	'image:river:tagged:unknown' => '%s a identifié %s dans une photo',
-	'river:create:object:album' => '%s a créé un nouvel album photo %s',
+	'river:object:album:create' => '%s a créé un nouvel album photo %s',
 	'river:comment:object:image' => '%s a commenté la photo %s',
 	'river:comment:object:album' => '%s a commenté l\'album %s',
 	'tidypics:newalbum_subject' => 'Nouvel album photo',

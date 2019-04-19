@@ -1,4 +1,7 @@
 <?php
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+
 // Only admin users can run this upgrade
 if ( !elgg_is_admin_logged_in() ) {
 	return;
@@ -20,8 +23,16 @@ $options = [
 	'subtype' => TidypicsBatch::SUBTYPE,
 	'limit' => false,
 	'count' => true,
-	'joins' => ["JOIN {$db_prefix}entities e2 ON e2.guid = e.container_guid"],
-	'wheres' => ["e.access_id <> e2.access_id"],
+	'joins' => [
+		new JoinClause('entities', 'e2', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.container_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) {
+			return $qb->compare('e.access_id', '<>', 'e2.access_id');
+		},
+	],
 ];
 $tidypics_batch = elgg_get_entities($options);
 

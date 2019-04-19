@@ -12,7 +12,7 @@ elgg_require_js('tidypics/tidypics');
 $batch = $vars['item']->getObjectEntity();
 
 // Get images related to this batch
-$images = elgg_get_entities_from_relationship([
+$images = elgg_get_entities([
 	'relationship' => 'belongs_to_batch',
 	'relationship_guid' => $batch->getGUID(),
 	'inverse_relationship' => true,
@@ -52,7 +52,7 @@ if (count($images)) {
 			'href' => 'photos/riverpopup/' . $image->getGUID(),
 			'title' => $image->title,
 			'img_class' => 'tidypics-photo',
-			'link_class' => 'tidypics-river-lightbox',
+			'link_class' => 'tidypics-river-lightbox elgg-lightbox',
 		]));
 	}
 	$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], $attachments);

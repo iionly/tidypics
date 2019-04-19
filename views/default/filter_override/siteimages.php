@@ -5,18 +5,18 @@ if (elgg_is_logged_in()) {
 
 	$tabs = [
 		'all' => [
-			'title' => elgg_echo('all'),
-			'url' => $base . 'siteimagesall',
+			'text' => elgg_echo('all'),
+			'href' => $base . 'siteimagesall',
 			'selected' => $vars['selected'] == 'all',
 		],
 		'mine' => [
-			'title' => elgg_echo('mine'),
-			'url' => $base . 'siteimagesowner',
+			'text' => elgg_echo('mine'),
+			'href' => $base . 'siteimagesowner',
 			'selected' => $vars['selected'] == 'mine',
 		],
 		'friends' => [
-			'title' => elgg_echo('friends'),
-			'url' => $base . 'siteimagesfriends',
+			'text' => elgg_echo('friends'),
+			'href' => $base . 'siteimagesfriends',
 			'selected' => $vars['selected'] == 'friends',
 		],
 	];

@@ -25,7 +25,7 @@ if (!$album->getContainerEntity()->canWriteToContainer()) {
 // set page owner based on container (user or group)
 elgg_set_page_owner_guid($album->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
-elgg_group_gatekeeper();
+elgg_entity_gatekeeper($album_guid, 'object', $album->subtype);
 
 $title = elgg_echo('album:addpix');
 

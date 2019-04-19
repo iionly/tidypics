@@ -4,6 +4,7 @@
  * Highest rated images - world view only
  *
  */
+use Elgg\Database\Clauses\OrderByClause;
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
@@ -12,14 +13,14 @@ elgg_push_breadcrumb(elgg_echo('tidypics:highestrated'));
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 16);
 
-$result = elgg_list_entities_from_annotation_calculation([
+$result = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'limit' => $limit,
 	'offset' => $offset,
 	'annotation_name' => 'fivestar',
 	'calculation' => 'avg',
-	'order_by' => 'annotation_calculation desc',
+	'order_by' => [new OrderByClause('"annotation_calculation"', 'DESC'),],
 	'full_view' => false,
 	'list_type' => 'gallery',
 	'gallery_class' => 'tidypics-gallery',
@@ -47,9 +48,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="fa fa-fw fa-play"></i>',
 		'title' => elgg_echo('album:slideshow'),
-		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
+		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox elgg-lightbox',
 	]);
 }
 

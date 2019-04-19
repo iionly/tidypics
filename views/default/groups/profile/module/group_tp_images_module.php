@@ -2,6 +2,9 @@
 /**
  * Group images module
  */
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+use Elgg\Database\Clauses\OrderByClause;
 
 $group = $vars['entity'];
 $group_guid = $group->getGUID();
@@ -32,9 +35,17 @@ elgg_push_context('groups');
 $content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
-	'joins' => ["join {$db_prefix}entities u on e.container_guid = u.guid"],
-	'wheres' => ["u.container_guid = {$group_guid}"],
-	'order_by' => "e.time_created desc",
+	'joins' => [
+		new JoinClause('entities', 'u', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.container_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($group_guid) {
+			return $qb->compare('u.container_guid', '=', $group_guid);
+		},
+	],
+	'order_by' => [new OrderByClause('e.time_created', 'DESC'),],
 	'limit' => 12,
 	'full_view' => false,
 	'list_type_toggle' => false,

@@ -13,13 +13,6 @@ $owner = $album->getOwnerEntity();
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 
-$metadata = elgg_view_menu('entity', [
-	'entity' => $album,
-	'handler' => 'photos',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-]);
-
 $owner_link = elgg_view('output/url', [
 	'href' => "photos/owner/$owner->username",
 	'text' => $owner->name,
@@ -34,7 +27,6 @@ $subtitle = "$author_text $date $categories";
 $params = [
 	'entity' => $album,
 	'title' => false,
-	'metadata' => $metadata,
 	'subtitle' => $subtitle,
 	'tags' => elgg_view('output/tags', ['tags' => $album->tags]),
 ];
@@ -55,8 +47,6 @@ if ($album_content) {
 } else {
 	$body .= elgg_echo('tidypics:album:nosuccess');
 }
-
-$body .= elgg_view_comments($album);
 
 echo elgg_view('object/elements/full', [
 	'entity' => $album,

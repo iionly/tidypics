@@ -43,7 +43,7 @@ if (isset($vars['img_class'])) {
 $class = "elgg-photo $class";
 
 $img_src = $entity->getIconURL($vars['size']);
-$img_src = elgg_format_url($img_src);
+$img_src = preg_replace('/&(?!amp;)/', '&amp;', $img_src);
 $img = elgg_view('output/img', [
 	'src' => $img_src,
 	'class' => $class,

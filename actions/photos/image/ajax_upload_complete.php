@@ -10,7 +10,7 @@ $batch = get_input('batch');
 $album_guid = (int) get_input('album_guid');
 $img_river_view = elgg_get_plugin_setting('img_river_view', 'tidypics');
 
-$images = elgg_get_entities_from_metadata([
+$images = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'metadata_names' => 'batch',

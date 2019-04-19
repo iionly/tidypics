@@ -17,7 +17,7 @@ return [
 
 	'photos:add' => "Album hinzufügen",
 	'photos:addphotos' => "Bilder hochladen",
-	'images:upload' => "Bilder zu Album hinzufügen",
+	'images:upload' => "Fotos hinzufügen",
 
 	'album:slideshow' => "Diashow ansehen",
 	'album:yours' => "Deine Bilderalben",
@@ -313,7 +313,7 @@ Um das Bild zu sehen, folge diesem Link: %s",
 	'image:river:wordtagged' => '%s hat neue Word-Tags zum Bild %s hinzugefügt',
 	'image:river:wordtagged_single' => '%s hat ein neues Word-Tag zum Bild %s hinzugefügt',
 	'image:river:tagged:unknown' => "%s hat %s in einem Bild getaggt",
-	'river:create:object:album' => "%s erstellte das Bilderalbum %s",
+	'river:object:album:create' => "%s erstellte das Bilderalbum %s",
 	'album:river:item' => "ein Album",
 	'album:river:annotate' => "einen Kommentar zum Bilderalbum",
 	'river:comment:object:image' => '%s schrieb einen Kommentar zum Bild %s',
