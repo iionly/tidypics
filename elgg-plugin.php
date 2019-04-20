@@ -71,7 +71,7 @@ return [
 			'resource' => 'tidypics/photos/owner',
 		],
 		'collection:object:photos:group' => [
-			'path' => '/photos/group',
+			'path' => '/photos/group/{guid}/all',
 			'resource' => 'tidypics/photos/owner',
 		],
 		'collection:object:photos:owner' => [
