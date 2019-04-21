@@ -5,6 +5,8 @@ return [
 	'photos' => "Kuvat",
 	'albums' => "Kuva-albumit",
 	'collection:object:album' => "Kuva-albumit",
+	'collection:object:image' => "Kuva",
+	'collection:object:tidypics_batch' => "Kuva",
 
 	'photos:add' => "Luo uusi kuva-albumi",
 	'photos:addphotos' => "Lisää kuvia",

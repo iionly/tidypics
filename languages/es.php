@@ -6,6 +6,8 @@ return [
 
 	// Menu items and titles
 	'collection:object:album' => "Álbumes",
+	'collection:object:image' => "Fotos",
+	'collection:object:tidypics_batch' => "Fotos",
 	'image' => "Foto",
 	'images' => "Fotos",
 	'caption' => "Subtítulo",
