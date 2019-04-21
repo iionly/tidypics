@@ -5,6 +5,7 @@ return [
 	'untitled' => "untitled",
 
 	// Menu items and titles
+	'collection:object:album' => "Photo Albums",
 	'image' => "Photo",
 	'images' => "Photos",
 	'caption' => "Caption",

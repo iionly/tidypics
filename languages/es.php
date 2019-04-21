@@ -5,6 +5,7 @@ return [
 	'untitled' => "Sin título",
 
 	// Menu items and titles
+	'collection:object:album' => "Álbumes",
 	'image' => "Foto",
 	'images' => "Fotos",
 	'caption' => "Subtítulo",

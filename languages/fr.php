@@ -5,6 +5,7 @@
  */
 
 return [
+	'collection:object:album' => 'Albums photo',
 	'photos:addphotos' => 'Envoyer des photos',
 	'photos:group_albums' => 'Albums photo de groupe',
 	'item:object:tidypics_batch' => 'Envoies de photo',

@@ -4,6 +4,7 @@ return [
 	'caption' => "Kuvateksti",
 	'photos' => "Kuvat",
 	'albums' => "Kuva-albumit",
+	'collection:object:album' => "Kuva-albumit",
 
 	'photos:add' => "Luo uusi kuva-albumi",
 	'photos:addphotos' => "Lisää kuvia",
