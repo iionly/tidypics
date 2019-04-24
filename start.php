@@ -74,16 +74,38 @@ function tidypics_init() {
 	]);
 
 	// Register widgets
-	elgg_register_widget_type('album_view', elgg_echo("tidypics:widget:albums"), elgg_echo("tidypics:widget:album_descr"), ['profile']);
-	elgg_register_widget_type('latest_photos', elgg_echo("tidypics:widget:latest"), elgg_echo("tidypics:widget:latest_descr"), ['profile']);
-	
+	elgg_register_widget_type([
+		'id' => 'album_view',
+		'context' => ['profile'],
+	]);
+	elgg_register_widget_type([
+		'id' => 'latest_photos',
+		'context' => ['profile'],
+	]);
+
 	// Add index widgets for Widget Manager plugin
-	elgg_register_widget_type('index_latest_photos', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), ['index']);
-	elgg_register_widget_type('index_latest_albums', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), ['index']);
+	elgg_register_widget_type([
+		'id' => 'index_latest_photos',
+		'context' => ['index'],
+	]);
+	// elgg_register_widget_type('', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), ['']);
+	elgg_register_widget_type([
+		'id' => 'index_latest_albums',
+		'context' => ['index'],
+	]);
+	// elgg_register_widget_type('', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), ['index']);
 
 	// Add groups widgets for Widget Manager plugin
-	elgg_register_widget_type('groups_latest_photos', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), ['groups']);
-	elgg_register_widget_type('groups_latest_albums', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), ['groups']);
+	elgg_register_widget_type([
+		'id' => 'groups_latest_photos',
+		'context' => ['groups'],
+	]);
+	// elgg_register_widget_type('', elgg_echo("tidypics:mostrecent"), elgg_echo('tidypics:mostrecent:description'), ['']);
+	elgg_register_widget_type([
+		'id' => 'groups_latest_albums',
+		'context' => ['groups'],
+	]);
+	// elgg_register_widget_type('', elgg_echo("tidypics:albums_mostrecent"), elgg_echo('tidypics:albums_mostrecent:description'), ['groups']);
 	
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');
