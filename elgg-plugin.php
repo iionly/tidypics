@@ -17,7 +17,7 @@ return [
 			'type' => 'object',
 			'subtype' => TidypicsBatch::SUBTYPE,
 			'class' => 'TidypicsBatch',
-			'searchable' => true,
+			'searchable' => false,
 		],
 	],
 	'actions' => [

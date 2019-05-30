@@ -35,14 +35,6 @@ function tidypics_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Subtype tidypics_batch is registered only to be included in activity page filter
- * but we don't want any results for this subtype returned in a search
- */
-function tidypics_batch_no_search_results($hook, $handler, $return, $params) {
-	return false;
-}
-
-/**
  * Add Tidypics links/info to entity menu
  */
 function tidypics_entity_menu_setup($hook, $type, $return, $params) {

@@ -110,9 +110,6 @@ function tidypics_init() {
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');
 
-	// Override search for tidypics_batch subtype to not return any results
-	elgg_register_plugin_hook_handler('search', 'object:tidypics_batch', 'tidypics_batch_no_search_results');
-
 	// Register for the entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'tidypics_entity_menu_setup');
 	
