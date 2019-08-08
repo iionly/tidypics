@@ -50,7 +50,7 @@ if ($img_river_view == "batch" && !($album->new_album)) {
 		'object_guid' => $batch->getGUID(),
 		'target_guid' => $album->getGUID(),
 	]);
-}  else if ($img_river_view == "1" && !($album->new_album)) {
+} else if ($img_river_view == "1" && !($album->new_album)) {
 	elgg_create_river_item([
 		'view' => 'river/object/tidypics_batch/create_single_image',
 		'action_type' => 'create',

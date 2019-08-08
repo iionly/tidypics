@@ -37,7 +37,7 @@ if ($tag->type == 'user') {
 	if (is_array($image->tags)) {
 		$tagarray = [];
 		$removed_tags = [];
-		foreach($image->tags as $image_tag) {
+		foreach ($image->tags as $image_tag) {
 			if ((!in_array($image_tag, $obsolete_tags)) || (in_array($image_tag, $removed_tags))) {
 				$tagarray[] = $image_tag;
 			} else {

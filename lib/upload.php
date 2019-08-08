@@ -53,7 +53,7 @@ function tp_upload_check_format($mime) {
  * Check if there is enough memory to process this image
  *
  * @param string $image_lib
- * @param int $requiredMemory
+ * @param int    $requiredMemory
  * @return bool false = not enough memory
  */
 function tp_upload_memory_check($image_lib, $mem_required) {
@@ -110,7 +110,7 @@ function tp_upload_check_quota($image_size, $owner_guid) {
 	}
 
 	$owner = get_entity($owner_guid);
-	$image_repo_size = (int)$owner->image_repo_size;
+	$image_repo_size = (int) $owner->image_repo_size;
 
 	return ($image_repo_size + $image_size) < $quota;
 }

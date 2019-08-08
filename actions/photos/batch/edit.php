@@ -16,7 +16,6 @@ foreach ($guids as $key => $guid) {
 	$image = get_entity($guid);
 
 	if ($image->canEdit()) {
-
 		// set title appropriately
 		if ($titles[$key]) {
 			$title = htmlspecialchars($titles[$key], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');

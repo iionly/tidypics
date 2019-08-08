@@ -10,7 +10,7 @@ $container_guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($container_guid);
 $container = get_entity($container_guid);
 
-if($container instanceof ElggGroup) {
+if ($container instanceof ElggGroup) {
 	$db_prefix = elgg_get_config('dbprefix');
 	$images = elgg_get_entities([
 		'type' => 'object',

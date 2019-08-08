@@ -12,7 +12,7 @@ $container_guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($container_guid);
 // elgg_entity_gatekeeper($container_guid, 'object', TidypicsImage::SUBTYPE);
 $container = get_entity($container_guid);
-if(!($container instanceof ElggGroup)) {
+if (!($container instanceof ElggGroup)) {
 	forward('', '404');
 }
 

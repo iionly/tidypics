@@ -7,7 +7,7 @@
  *
  * @uses bool  $_REQUEST['delete'] Delete images
  * @uses array $_REQUEST['images'] Array of GUIDs to delete. (Required if delete == true)
- * 
+ *
  */
 
 set_time_limit(0);
@@ -54,7 +54,7 @@ function tidypics_batch_delete_images() {
 	$images = elgg_get_entities(array_merge($options, ['batch' => true, 'batch_inc_offset' => false]));
 
 	$total = elgg_get_entities(array_merge($options, ['count' => true]));
-	file_put_contents($log, "Starting deletion of {$total} images" . "\n", FILE_APPEND); 
+	file_put_contents($log, "Starting deletion of {$total} images" . "\n", FILE_APPEND);
 	$i = 0;
 	$count = 0;
 	foreach ($images as $image) {
@@ -73,7 +73,7 @@ function tidypics_batch_delete_images() {
 	}
 
 	$message = elgg_format_element('div', ['class' => 'done'], "Completed: Deleted {$i}, skipped {$j}, of {$total}.");
-	file_put_contents($log, $message . "\n", FILE_APPEND); 
+	file_put_contents($log, $message . "\n", FILE_APPEND);
 }
 
 
@@ -93,7 +93,7 @@ function tidypics_batch_find_images() {
 	$count = 0;
 	$bad_images = 0;
 	$total = elgg_get_entities(array_merge($options, ['count' => true]));
-	file_put_contents($log, "Starting scan of {$total} images" . "\n", FILE_APPEND); 
+	file_put_contents($log, "Starting scan of {$total} images" . "\n", FILE_APPEND);
 	foreach ($images as $image) {
 		$count++;
 
@@ -110,14 +110,14 @@ function tidypics_batch_find_images() {
 		}
 	}
 
-	$message = elgg_format_element('div', ['class' => 'done'], 
+	$message = elgg_format_element('div', ['class' => 'done'],
 		elgg_format_element('a', [
 			'href' => '#',
 			'class' => 'elgg-button elgg-button-submit',
 			'id' => 'elgg-tidypics-broken-images-delete',
 			'data-time' => $logtime,
 		], "Delete {$bad_images} broken images"));
-	file_put_contents($log, $message . "\n", FILE_APPEND); 
+	file_put_contents($log, $message . "\n", FILE_APPEND);
 }
 
 

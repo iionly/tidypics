@@ -86,7 +86,7 @@ class TidypicsImage extends ElggFile {
 
 		// update quota
 		$owner = $this->getOwnerEntity();
-		$owner->image_repo_size = (int)$owner->image_repo_size - $this->getSize();
+		$owner->image_repo_size = (int) $owner->image_repo_size - $this->getSize();
 
 		return parent::delete($follow_symlinks);
 	}
@@ -173,8 +173,7 @@ class TidypicsImage extends ElggFile {
 				"unique" => $unique_viewers,
 				"mine" => $my_views,
 			];
-		}
-		else {
+		} else {
 			$view_info = [
 				"total" => 0,
 				"unique" => 0,
@@ -197,7 +196,7 @@ class TidypicsImage extends ElggFile {
 		}
 
 		if ($viewer_guid != $this->owner_guid && tp_is_person()) {
-			create_annotation($this->getGUID(), "tp_view", "1", "integer", $viewer_guid, ACCESS_PUBLIC);
+			$this->annotate("tp_view", 1, ACCESS_PUBLIC, $viewer_guid);
 		}
 	}
 
@@ -234,8 +233,7 @@ class TidypicsImage extends ElggFile {
 		// @ added as a fix to prevent PHP Warning: exif_read_data(...): Illegal IFD size
 		$exif = @exif_read_data($data['tmp_name']);
 		$orientation = isset($exif['Orientation']) ? $exif['Orientation'] : 0;
-		if($orientation != 0 || $orientation != 1) {
-
+		if ($orientation != 0 || $orientation != 1) {
 			$imageLib = elgg_get_plugin_setting('image_lib', 'tidypics');
 
 			if ($imageLib == 'ImageMagick') {
@@ -258,7 +256,7 @@ class TidypicsImage extends ElggFile {
 				$rotate = false;
 				$flop = false;
 				$angle = 0;
-				switch($orientation) {
+				switch ($orientation) {
 					case 2:
 						$rotate = false;
 						$flop = true;
@@ -309,13 +307,13 @@ class TidypicsImage extends ElggFile {
 				$imagick->setImageOrientation(imagick::ORIENTATION_TOPLEFT);
 				$imagick->writeImage($data['tmp_name']);
 				$imagick->clear();
-				$imagick->destroy(); 
+				$imagick->destroy();
 			} else {
 				// make sure the in memory image size does not exceed memory available
 				$imginfo = getimagesize($data['tmp_name']);
 				$requiredMemory1 = ceil($imginfo[0] * $imginfo[1] * 5.35);
 				$requiredMemory2 = ceil($imginfo[0] * $imginfo[1] * ($imginfo['bits'] / 8) * $imginfo['channels'] * 2.5);
-				$requiredMemory = (int)max($requiredMemory1, $requiredMemory2);
+				$requiredMemory = (int) max($requiredMemory1, $requiredMemory2);
 
 				$mem_avail = elgg_get_ini_setting_in_bytes('memory_limit');
 				$mem_used = memory_get_usage();
@@ -326,7 +324,7 @@ class TidypicsImage extends ElggFile {
 					$rotate = false;
 					$flip = false;
 					$angle = 0;
-					switch($orientation) {
+					switch ($orientation) {
 						case 2:
 							$rotate = false;
 							$flip = true;
@@ -422,7 +420,7 @@ class TidypicsImage extends ElggFile {
 		}
 
 		$owner = $this->getOwnerEntity();
-		$owner->image_repo_size = (int)$owner->image_repo_size + $this->getSize();
+		$owner->image_repo_size = (int) $owner->image_repo_size + $this->getSize();
 
 		return true;
 	}
@@ -456,7 +454,7 @@ class TidypicsImage extends ElggFile {
 		$imginfo = getimagesize($data['tmp_name']);
 		$requiredMemory1 = ceil($imginfo[0] * $imginfo[1] * 5.35);
 		$requiredMemory2 = ceil($imginfo[0] * $imginfo[1] * ($imginfo['bits'] / 8) * $imginfo['channels'] * 2.5);
-		$requiredMemory = (int)max($requiredMemory1, $requiredMemory2);
+		$requiredMemory = (int) max($requiredMemory1, $requiredMemory2);
 		$image_lib = elgg_get_plugin_setting('image_lib', 'tidypics');
 		if (!tp_upload_memory_check($image_lib, $requiredMemory)) {
 			trigger_error('Tidypics warning: image memory size too large for resizing so rejecting', E_USER_WARNING);

@@ -21,7 +21,6 @@ $params = [
 ];
 
 foreach ($tabs as $tab => $tab_settings) {
-
 	$href = elgg_extract('href', $tab_settings);
 	if (empty($href)) {
 		$href = elgg_http_add_url_query_elements($base_url, [

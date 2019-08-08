@@ -275,7 +275,7 @@ function tidypics_can_add_new_photos(\ElggUser $user = null, \ElggEntity $contai
 	if (!isset($container)) {
 		$container = elgg_get_page_owner_entity();
 	}
-	if (!elgg_instanceof($container)) {
+	if (!$container instanceof ElggEntity) {
 		return false;
 	}
 

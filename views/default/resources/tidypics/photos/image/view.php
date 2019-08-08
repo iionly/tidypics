@@ -14,7 +14,7 @@ if (!($photo instanceof TidypicsImage)) {
 }
 $album = $photo->getContainerEntity();
 if (!$album) {
-	forward('', '404');	
+	forward('', '404');
 }
 $album_container = $album->getContainerEntity();
 if (!$album_container) {

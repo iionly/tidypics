@@ -28,7 +28,6 @@ $error_count_invalid_image = 0;
 $error_count_recreate_failed = 0;
 
 while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs) {
-
 	$batch = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => TidypicsImage::SUBTYPE,
@@ -36,7 +35,7 @@ while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs) {
 		'offset' => $offset,
 	]);
 
-	foreach($batch as $image) {
+	foreach ($batch as $image) {
 		$filename = $image->getFilename();
 		$container_guid = $image->container_guid;
 

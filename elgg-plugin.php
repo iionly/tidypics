@@ -1,23 +1,36 @@
 <?php
 return [
+	'views' => [
+		'default' => [
+			'tidypics/' => __DIR__ . '/graphics',
+			"tidypics/js/plupload/plupload.full.min.js" => __DIR__ . "/vendors/plupload/js/plupload.full.min.js",
+			"tidypics/js/plupload/" => __DIR__ . "/vendors/plupload/js",
+			"tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js" => __DIR__ . "/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js",
+			"tidypics/js/plupload/i18n/" => __DIR__ . "/vendors/plupload/js/i18n",
+			"tidypics/css/plupload/css/jquery.ui.plupload.css" => __DIR__ . "/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css",
+			"tidypics/css/plupload/img/" => __DIR__ . "/vendors/plupload/js/jquery.ui.plupload/img",
+
+			"tidypics/css/jqueryui-theme.css" => "/vendor/bower-asset/jquery-ui/themes/smoothness/jquery-ui.min.css",
+		],
+	],
 	'entities' => [
 		[
 			'type' => 'object',
-			'subtype' => TidypicsImage::SUBTYPE,
+			'subtype' => 'image',
 			'class' => 'TidypicsImage',
 			'searchable' => true,
 		],
 		[
 			'type' => 'object',
-			'subtype' => TidypicsAlbum::SUBTYPE,
+			'subtype' => 'album',
 			'class' => 'TidypicsAlbum',
 			'searchable' => true,
 		],
 		[
 			'type' => 'object',
-			'subtype' => TidypicsBatch::SUBTYPE,
+			'subtype' => 'tidypics_batch',
 			'class' => 'TidypicsBatch',
-			'searchable' => true,
+			'searchable' => false,
 		],
 	],
 	'actions' => [

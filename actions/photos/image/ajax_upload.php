@@ -36,7 +36,6 @@ $image->batch = $batch;
 
 try {
 	$result = $image->save($file);
-
 } catch (Exception $e) {
 	// remove the bits that were saved
 	$image->delete();

@@ -91,12 +91,12 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
  * Writes resized version of an already uploaded image - original from Elgg filestore.php
  * Saves it in the same format as uploaded
  *
- * @param string $input_name The name of the file on the disk
- * @param string $output_name The name of the file to be written
+ * @param string                       $input_name  The name of the file on the disk
+ * @param string                       $output_name The name of the file to be written
  * @param bool - watermark this image?
- * @param int $maxwidth The maximum width of the resized image
- * @param int $maxheight The maximum height of the resized image
- * @param TRUE|FALSE $square If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
+ * @param int                          $maxwidth    The maximum width of the resized image
+ * @param int                          $maxheight   The maximum height of the resized image
+ * @param TRUE|FALSE                   $square      If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
  * @return bool TRUE on success or FALSE on failure
  */
 function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
@@ -282,11 +282,11 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
  * Writes resized version of an already uploaded image
  *
  *
- * @param string $input_name The name of the file input field on the submission form
- * @param string $output_name The name of the file to be written
- * @param int $maxwidth The maximum width of the resized image
- * @param int $maxheight The maximum height of the resized image
- * @param TRUE|FALSE $square If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
+ * @param string     $input_name  The name of the file input field on the submission form
+ * @param string     $output_name The name of the file to be written
+ * @param int        $maxwidth    The maximum width of the resized image
+ * @param int        $maxheight   The maximum height of the resized image
+ * @param TRUE|FALSE $square      If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
  * @return bool TRUE on success
  */
 function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
@@ -335,7 +335,7 @@ function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $sq
 	if ($format == 'GIF') {
 		$img = $img->coalesceImages();
 
-		foreach($img as $frame) {
+		foreach ($img as $frame) {
 			$frame->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
 
 			// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
@@ -453,11 +453,11 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
  * Gets the jpeg contents of the resized version of an already uploaded image
  * (Returns FALSE if the uploaded file was not an image)
  *
- * @param string $input_name The name of the file input field on the submission form
- * @param string $output_name The name of the file to be written
- * @param int $maxwidth The maximum width of the resized image
- * @param int $maxheight The maximum height of the resized image
- * @param TRUE|FALSE $square If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
+ * @param string     $input_name  The name of the file input field on the submission form
+ * @param string     $output_name The name of the file to be written
+ * @param int        $maxwidth    The maximum width of the resized image
+ * @param int        $maxheight   The maximum height of the resized image
+ * @param TRUE|FALSE $square      If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
  * @return bool
  */
 function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
@@ -505,7 +505,7 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 	// see imagemagick web site for explanation of these parameters
 	// the ^ in the resize means those are minimum width and height values
 	$thumbnail_optimized = elgg_get_plugin_setting('thumbnail_optimization', 'tidypics');
-	switch($thumbnail_optimized) {
+	switch ($thumbnail_optimized) {
 		case "complex":
 			$command = $im_path . "convert \"$input_name\" ".$gif_to_convert." -filter Triangle -define filter:support=2 -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB -strip \"$output_name\"";
 			break;
@@ -532,15 +532,15 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 /**
  * Calculate the resizing/cropping parameters
  *
- * @param int $orig_width
- * @param int $orig_height
- * @param int $new_width
- * @param int $new_height
+ * @param int  $orig_width
+ * @param int  $orig_height
+ * @param int  $new_width
+ * @param int  $new_height
  * @param bool $square
- * @param int $x1
- * @param int $y1
- * @param int $x2
- * @param int $y2
+ * @param int  $x1
+ * @param int  $y1
+ * @param int  $x2
+ * @param int  $y2
  * @return array|FALSE
  */
 function tp_im_calc_resize_params($orig_width, $orig_height, $new_width, $new_height, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
@@ -590,10 +590,10 @@ function tp_im_calc_resize_params($orig_width, $orig_height, $new_width, $new_he
 		// non-square new image
 
 		// maintain aspect ratio of original image/crop
-		if (($region_height / (float)$new_height) > ($region_width / (float)$new_width)) {
-			$new_width = floor($new_height * $region_width / (float)$region_height);
+		if (($region_height / (float) $new_height) > ($region_width / (float) $new_width)) {
+			$new_width = floor($new_height * $region_width / (float) $region_height);
 		} else {
-			$new_height = floor($new_width * $region_height / (float)$region_width);
+			$new_height = floor($new_width * $region_height / (float) $region_width);
 		}
 
 		// by default, use entire image

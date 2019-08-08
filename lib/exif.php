@@ -152,7 +152,7 @@ function tp_exif_formatted($image) {
  *    - 41/1
  *    - 54/1
  *    - 9843/500
- * @param string $ref 'S', 'N', 'E', 'W'. eg: 'N'
+ * @param string   $ref 'S', 'N', 'E', 'W'. eg: 'N'
  * @return float eg: 41.905468
  */
 function parse_exif_gps_data($raw, $ref) {

@@ -29,11 +29,11 @@ define(function(require) {
 			var preserve_exif = !remove_exif;
 
 			var resizing_parameters = {
-					width: client_width,
-					height: client_height,
-					quality: 100,
-					preserve_headers: preserve_exif
-				};
+				width: client_width,
+				height: client_height,
+				quality: 100,
+				preserve_headers: preserve_exif
+			};
 		} else {
 			var resizing_parameters = false;
 		}
@@ -86,10 +86,10 @@ define(function(require) {
 				},
 
 				FilesAdded: function(up, files) {
-					if(up.files.length > maxfiles ) {
+					if (up.files.length > maxfiles ) {
 						alert(elgg.echo('tidypics:exceedmax_number', [maxfiles]));
 					}
-					if(up.files.length > maxfiles ) {
+					if (up.files.length > maxfiles ) {
 						up.splice(maxfiles);
 					}
 					if (up.files.length >= maxfiles) {

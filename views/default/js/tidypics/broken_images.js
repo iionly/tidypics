@@ -77,7 +77,7 @@ define(function(require) {
 			ajax.view('photos/broken_images_delete_log', {
 				data: {
 					time: time
-			},
+				},
 			}).done(function (output, statusText, jqXHR) {
 				if (jqXHR.AjaxData.status == -1) {
 					return;

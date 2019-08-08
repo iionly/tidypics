@@ -50,14 +50,6 @@ function tidypics_init() {
 	elgg_extend_view('css/elgg', 'photos/css');
 	elgg_extend_view('css/admin', 'photos/css');
 
-	// Register the JavaScript libs
-	elgg_register_js('jquery.plupload-tp', elgg_get_simplecache_url('tidypics/js/plupload/plupload.full.min.js'), 'footer');
-	elgg_register_js('jquery.plupload.ui-tp', elgg_get_simplecache_url('tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js'), 'footer');
-	$plupload_language = tidypics_get_plugload_language();
-	elgg_register_js('jquery.plupload.ui.lang-tp', elgg_get_simplecache_url('tidypics/js/plupload/i18n/' . $plupload_language . '.js'), 'footer');
-	elgg_register_css('jquery.plupload.jqueryui-theme', elgg_get_simplecache_url('tidypics/css/jqueryui-theme.css'));
-	elgg_register_css('jquery.plupload.ui', elgg_get_simplecache_url('tidypics/css/plupload/css/jquery.ui.plupload.css'));
-	
 	elgg_require_js('tidypics/tidypics');
 
 	// RSS extensions for embedded media
@@ -109,9 +101,6 @@ function tidypics_init() {
 	
 	// Add photos link to owner block/hover menus
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tidypics_owner_block_menu');
-
-	// Override search for tidypics_batch subtype to not return any results
-	elgg_register_plugin_hook_handler('search', 'object:tidypics_batch', 'tidypics_batch_no_search_results');
 
 	// Register for the entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'tidypics_entity_menu_setup');

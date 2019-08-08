@@ -28,7 +28,7 @@ function tp_readable_size($bytes) {
 
 $disablefunc = explode(',', ini_get('disable_functions'));
 $exec_avail = elgg_echo('tidypics:disabled');
-if (is_callable('exec') && !in_array('exec',$disablefunc)) {
+if (is_callable('exec') && !in_array('exec', $disablefunc)) {
 	$exec_avail = elgg_echo('tidypics:enabled');
 }
 

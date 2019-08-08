@@ -17,12 +17,12 @@ $subject_link = elgg_view('output/url', [
 ]);
 
 $preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics');
-if(!$preview_size) {
+if (!$preview_size) {
 	$preview_size = 'tiny';
 }
 $image = $vars['item']->getObjectEntity();
 
-$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
+$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'],
 	elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
 		'href' => 'photos/riverpopup/' . $image->getGUID(),
 		'title' => $image->title,

@@ -8,7 +8,7 @@
 /**
  * Make replacements in watermark text
  *
- * @param string $text
+ * @param string   $text
  * @param ElggUser $owner
  * @return string
  */
@@ -24,7 +24,7 @@ function tp_process_watermark_text($text, $owner) {
 /**
  * Create the watermark image filename
  *
- * @param string $text
+ * @param string   $text
  * @param ElggUser $owner
  * @return string
  */
@@ -168,7 +168,7 @@ function tp_im_cmdline_watermark($filename, $album_guid) {
 		$commands[] = 'rm "' . $user_stamp_base . '_mask' . $ext . '"';
 		$commands[] = 'rm "' . $user_stamp_base . '_fgnd' . $ext . '"';
 
-		foreach($commands as $command) {
+		foreach ($commands as $command) {
 			exec($command);
 		}
 	}
@@ -177,7 +177,7 @@ function tp_im_cmdline_watermark($filename, $album_guid) {
 	$commands = [];
 	$commands[] = $im_path . 'composite -gravity south -geometry +0+10 "' . $user_stamp_base . $ext . '" "' . $filename . '" "' . $filename . '_watermarked"';
 	$commands[] = "mv \"$filename" . "_watermarked\" \"$filename\"";
-	foreach($commands as $command) {
+	foreach ($commands as $command) {
 		exec($command);
 	}
 }

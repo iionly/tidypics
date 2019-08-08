@@ -47,14 +47,14 @@ $existing_tags = false;
 if ($tag->type === 'word') {
 	$new_tags = string_to_tag_array($value);
 	// check to see if the photo has this tag and add if not
-	if(!isset($image->tags)) {
+	if (!isset($image->tags)) {
 		$image->tags = $new_tags;
 	} else if (!is_array($image->tags)) {
-		if(in_array($image->tags, $new_tags)) {
+		if (in_array($image->tags, $new_tags)) {
 			$existing_tags = true;
 			$value = '';
 			$tagarray = string_to_tag_array($image->tags);
-			foreach($new_tags as $new_tag) {
+			foreach ($new_tags as $new_tag) {
 				if (!in_array($newtag, $tagarray)) {
 					$tagarray[] = $newtag;
 					$value .= ', ' . $newtag;
@@ -73,7 +73,7 @@ if ($tag->type === 'word') {
 	} else {
 		$tagarray = $image->tags;
 		$value = '';
-		foreach($new_tags as $newtag) {
+		foreach ($new_tags as $newtag) {
 			if (!in_array($newtag, $tagarray)) {
 				$tagarray[] = $newtag;
 				$value .= ', ' . $newtag;

@@ -6,7 +6,10 @@
 /**
  * Add a menu item to an ownerblock
  */
-function tidypics_owner_block_menu($hook, $type, $return, $params) {
+function tidypics_owner_block_menu(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
+	$params = $hook->getParams();
+		
 	if ($params['entity'] instanceof ElggUser) {
 		$url = "photos/siteimagesowner/{$params['entity']->guid}";
 		$item = new ElggMenuItem('photos', elgg_echo('photos'), $url);
@@ -35,17 +38,12 @@ function tidypics_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Subtype tidypics_batch is registered only to be included in activity page filter
- * but we don't want any results for this subtype returned in a search
- */
-function tidypics_batch_no_search_results($hook, $handler, $return, $params) {
-	return false;
-}
-
-/**
  * Add Tidypics links/info to entity menu
  */
-function tidypics_entity_menu_setup($hook, $type, $return, $params) {
+function tidypics_entity_menu_setup(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
+	$params = $hook->getParams();
+	
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -116,13 +114,14 @@ function tidypics_entity_menu_setup($hook, $type, $return, $params) {
 /**
  * Register title urls for widgets (Widget Manager plugin)
  */
-function tidypics_widget_urls($hook_name, $entity_type, $return_value, $params){
-	$result = $return_value;
+function tidypics_widget_urls(\Elgg\Hook $hook) {
+	$params = $hook->getParams();
+	$result = $hook->getValue();
 	$widget = $params["entity"];
 
 	if (empty($result) && ($widget instanceof ElggWidget)) {
 		$owner = $widget->getOwnerEntity();
-		switch($widget->handler) {
+		switch ($widget->handler) {
 			case "latest_photos":
 				$result = "/photos/siteimagesowner/" . $owner->guid;
 				break;
@@ -136,14 +135,14 @@ function tidypics_widget_urls($hook_name, $entity_type, $return_value, $params){
 				$result = "/photos/all";
 				break;
 			case "groups_latest_photos":
-				if($owner instanceof ElggGroup){
+				if ($owner instanceof ElggGroup) {
 					$result = "photos/siteimagesgroup/{$owner->guid}";
 				} else {
 					$result = "/photos/siteimagesowner/" . $owner->guid;
 				}
 				break;
 			case "groups_latest_albums":
-				if($owner instanceof ElggGroup){
+				if ($owner instanceof ElggGroup) {
 					$result = "photos/group/{$owner->guid}/all";
 				} else {
 					$result = "/photos/owner/" . $owner->username;
@@ -157,7 +156,10 @@ function tidypics_widget_urls($hook_name, $entity_type, $return_value, $params){
 /**
  * Add or remove a group's Tidypics widgets based on the corresponding group tools option
  */
-function tidypics_tool_widgets_handler($hook, $type, $return_value, $params) {
+function tidypics_tool_widgets_handler(\Elgg\Hook $hook) {
+	$return_value = $hook->getValue();
+	$params = $hook->getParams();
+	
 	if (!empty($params) && is_array($params)) {
 		$entity = elgg_extract("entity", $params);
 
@@ -201,7 +203,9 @@ function tidypics_tool_widgets_handler($hook, $type, $return_value, $params) {
  * @param array  $params
  * @return mixed
  */
-function tidypics_group_permission_override($hook, $type, $result, $params) {
+function tidypics_group_permission_override(\Elgg\Hook $hook) {
+	$params = $hook->getParams();
+	
 	$action_name_input = get_input('tidypics_action_name');
 	if ($action_name_input == 'tidypics_photo_upload') {
 		if (isset($params['container'])) {
@@ -229,12 +233,14 @@ function tidypics_group_permission_override($hook, $type, $result, $params) {
  * @param array                           $params       Hook parameters
  * @return Elgg_Notifications_Notification (on Elgg 1.9); mixed (on Elgg 1.8)
  */
-function tidypics_notify_message($hook, $type, $notification, $params) {
+function tidypics_notify_message(\Elgg\Hook $hook) {
+	$type = $hook->getType();
+	$notification = $hook->getValue();
+	$params = $hook->getParams();
 
 	$entity = $params['event']->getObject();
 
 	if ($entity instanceof TidypicsAlbum) {
-
 		$owner = $params['event']->getActor();
 		$recipient = $params['recipient'];
 		$language = $params['language'];
@@ -263,7 +269,9 @@ function tidypics_notify_message($hook, $type, $notification, $params) {
  * Allows the flash uploader actions through walled garden since
  * they come without the session cookie
  */
-function tidypics_walled_garden_override($hook, $type, $pages) {
+function tidypics_walled_garden_override(\Elgg\Hook $hook) {
+	$pages = $hook->getValue();
+	
 	$pages[] = 'action/photos/image/ajax_upload';
 	$pages[] = 'action/photos/image/ajax_upload_complete';
 	return $pages;
@@ -272,7 +280,9 @@ function tidypics_walled_garden_override($hook, $type, $pages) {
 /**
  * Return the album url of the album the tidypics_batch entitities belongs to
  */
-function tidypics_batch_url_handler($hook, $type, $url, $params) {
+function tidypics_batch_url_handler(\Elgg\Hook $hook) {
+	$params = $hook->getParams();
+	
 	$batch = $params['entity'];
 	if ($batch instanceof TidypicsBatch) {
 		if (!$batch->getOwnerEntity()) {
@@ -290,9 +300,8 @@ function tidypics_batch_url_handler($hook, $type, $url, $params) {
  * custom layout for comments on tidypics river entries
  * Overriding generic_comment view
  */
-function tidypics_comments_handler($hook, $type, $value, $params) {
-
-	$result = $value;
+function tidypics_comments_handler(\Elgg\Hook $hook) {
+	$result = $hook->getValue();
 
 	$action_type = $value['action_type'];
 	if ($action_type != 'comment') {

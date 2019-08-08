@@ -12,7 +12,7 @@ $guid = elgg_get_logged_in_user_guid();
 
 $user = get_entity($guid);
 
-if(!($user instanceof ElggUser)) {
+if (!($user instanceof ElggUser)) {
 	forward('', '404');
 }
 
