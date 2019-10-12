@@ -14,8 +14,8 @@ if ( $upgrade_version and $file_version <= $upgrade_version) {
 	return;
 }
 
-$db_prefix = elgg_get_config('dbprefix');
-$ignore_access = elgg_set_ignore_access(true);
+// $db_prefix = elgg_get_config('dbprefix');
+elgg_call(ELGG_IGNORE_ACCESS, function() use ($file_version) {
 
 // Count tidypics_batch entities that need to correct the access_id
 $options = [
@@ -56,7 +56,7 @@ if ($tidypics_batch) {
 	tidypics_adjust_river_access_id($tidypics_batch_river);
 	error_log("Tidypics batches upgrade (2012111901) succeeded");
 }
-elgg_set_ignore_access($ignore_access);
+});
 
 // Set upgrade as runned
 return elgg_set_plugin_setting('upgrade_version', $file_version, 'tidypics');

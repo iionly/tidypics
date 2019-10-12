@@ -2,6 +2,7 @@
 /**
  * Tidypics thumbnail creation tool
  */
+$content2 = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() {
 
 $plugin = elgg_get_plugin_from_id('tidypics');
 
@@ -18,15 +19,11 @@ $content .= elgg_view_form('photos/admin/create_thumbnail', $form_vars, $body_va
 
 echo elgg_view_module('inline', elgg_echo('tidypics:thumbnail'), $content);
 
-
-$access_status = access_get_show_hidden_status();
-access_show_hidden_entities(true);
 $count = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'count' => true,
 ]);
-access_show_hidden_entities($access_status);
 
 $action = 'action/photos/admin/resize_thumbnails';
 
@@ -42,5 +39,8 @@ $body_vars2 = [
 	'count' => $count,
 ];
 $content2 .= elgg_view_form('photos/admin/resize_thumbnails', $form_vars2, $body_vars2);
+return $content2;
+
+});
 
 echo elgg_view_module('inline', elgg_echo('tidypics:settings:resize_thumbnails_title'), $content2);

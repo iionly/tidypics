@@ -6,6 +6,8 @@
  *
  */
 
+$output = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() {
+
 global $START_MICROTIME;
 $batch_run_time_in_secs = 5;
 
@@ -17,9 +19,6 @@ $image_lib = elgg_get_plugin_setting('image_lib', 'tidypics');
 if (!$image_lib) {
 	$image_lib = "GD";
 }
-
-$access_status = access_get_show_hidden_status();
-access_show_hidden_entities(true);
 
 _elgg_services()->db->disableQueryCache();
 
@@ -73,7 +72,6 @@ while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs) {
 	$offset += $limit;
 }
 
-access_show_hidden_entities($access_status);
 
 _elgg_services()->db->enableQueryCache();
 
@@ -82,5 +80,7 @@ $output = json_encode([
 	'numErrorsInvalidImage' => $error_count_invalid_image,
 	'numErrorsRecreateFailed' => $error_count_recreate_failed,
 ]);
+return $output;
+});
 
 return elgg_ok_response($output, '');

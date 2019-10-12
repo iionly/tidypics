@@ -7,15 +7,11 @@
 // prevent timeout when script is running
 set_time_limit(0);
 
-// Ignore access to make sure all items get updated
-$ia = elgg_set_ignore_access(true);
-
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions');
 elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions');
 
 // Make sure that entries for disabled entities also get upgraded
-$access_status = access_get_show_hidden_status();
-access_show_hidden_entities(true);
+elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
 
 $db_prefix = elgg_get_config('dbprefix');
 
@@ -47,5 +43,4 @@ foreach ($batch as $river_entry) {
 	}
 }
 
-elgg_set_ignore_access($ia);
-access_show_hidden_entities($access_status);
+});
