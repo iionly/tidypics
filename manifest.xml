@@ -3,7 +3,7 @@
 	<name>Tidypics</name>
 	<id>tidypics</id>
 	<author>iionly, Cash Costello</author>
-	<version>3.0.0</version>
+	<version>3.3.0</version>
 	<description>A photo gallery with albums, tagging, and a slideshow.</description>
 	<category>content</category>
 	<category>multimedia</category>
@@ -12,7 +12,7 @@
 	<license>GNU General Public License Version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>3.0.0</version>
+		<version>3.3.0</version>
 	</requires>
 	<suggests>
 		<type>plugin</type>

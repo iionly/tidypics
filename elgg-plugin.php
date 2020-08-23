@@ -363,4 +363,12 @@ return [
 			'tidypics/css/plupload/img/' => __DIR__ . '/vendors/plupload/js/jquery.ui.plupload/img',
 		],
 	],
+	'view_extensions' => [
+		'css/elgg' => [
+			'photos/css' => [],
+		],
+		'css/admin' => [
+			'photos/css' => [],
+		],
+	],
 ];

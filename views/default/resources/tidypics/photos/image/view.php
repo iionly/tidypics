@@ -34,7 +34,8 @@ elgg_push_entity_breadcrumbs($photo, false);
 $photo->addView();
 
 if (elgg_get_plugin_setting('tagging', 'tidypics')) {
-	elgg_load_js('jquery.imgareaselect');
+	elgg_load_external_file('js', 'jquery.imgareaselect');
+	elgg_load_external_file('css', 'jquery.imgareaselect');
 	elgg_require_js('tidypics/tagging');
 }
 

@@ -1,6 +1,16 @@
 Changelog and contributors list
 ===============================
 
+Version 3.3.0 (Release Date: 23/08/2020)
+----------------------------------------
+
+* Minimum Elgg version required is Elgg 3.3.0,
+* Updated for Elgg 3.3.
+
+Contributors:
+
+* iionly
+
 Version 3.0.0 (Release Date: 23/08/2020)
 ----------------------------------------
 

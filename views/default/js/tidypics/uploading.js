@@ -3,6 +3,10 @@ define(function(require) {
 	var elgg = require('elgg');
 	var Ajax = require('elgg/Ajax');
 
+	require('jquery.plupload-tp');
+	require('jquery.plupload.ui-tp');
+	require('jquery.plupload.ui.lang-tp');
+
 	// manage Spinner manually
 	var ajax = new Ajax(false);
 

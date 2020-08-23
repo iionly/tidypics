@@ -39,11 +39,8 @@ if ($uploader == 'basic') {
 	];
 	$content = elgg_view_form('photos/basic_upload', $form_vars, $body_vars);
 } else {
-	elgg_load_js('jquery.plupload-tp');
-	elgg_load_js('jquery.plupload.ui-tp');
-	elgg_load_js('jquery.plupload.ui.lang-tp');
-	elgg_load_css('jquery.plupload.jqueryui-theme');
-	elgg_load_css('jquery.plupload.ui');
+	elgg_require_css('tidypics/css/jqueryui-theme');
+	elgg_require_css('tidypics/css/plupload/css/jquery.ui.plupload');
 	elgg_require_js('tidypics/uploading');
 	$content = elgg_view('forms/photos/ajax_upload', ['entity' => $album]);
 }
