@@ -8,39 +8,23 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$image = $photo = $vars['entity'];
+$image = elgg_extract('entity', $vars);
+
+if (!($image instanceof TidypicsImage)) {
+	return true;
+}
+
 $album = $image->getContainerEntity();
 
-$owner_link = elgg_view('output/url', [
-	'href' => "photos/owner/" . $photo->getOwnerEntity()->username,
-	'text' => $photo->getOwnerEntity()->name,
-]);
-$author_text = elgg_echo('byline', [$owner_link]);
-$date = elgg_view_friendly_time($image->time_created);
-$categories = elgg_view('output/categories', $vars);
-
-$owner_icon = elgg_view_entity_icon($photo->getOwnerEntity(), 'tiny');
-
-$metadata = elgg_view_menu('entity', [
-	'entity' => $vars['entity'],
-	'handler' => 'photos',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-]);
-
-$subtitle = "$author_text $date $categories";
+$owner_icon = elgg_view_entity_icon($image->getOwnerEntity(), 'tiny');
 
 $params = [
-	'entity' => $photo,
+	'entity' => $image,
 	'title' => false,
-	'metadata' => $metadata,
-	'subtitle' => $subtitle,
-	'tags' => $tags,
 ];
 $list_body = elgg_view('object/elements/summary', $params);
 
-$params = ['class' => 'mbl'];
-$summary = elgg_view_image_block($owner_icon, $list_body, $params);
+$summary = elgg_view_image_block($owner_icon, $list_body, ['class' => 'mbl']);
 
 echo $summary;
 
@@ -69,11 +53,11 @@ $body .= elgg_view('photos/tagging/tags', $vars);
 
 echo elgg_format_element('div', ['class' => 'tidypics-photo-wrapper center'], $body);
 
-if ($photo->description) {
+if ($image->description) {
 	echo elgg_view('output/longtext', [
-		'value' => $photo->description,
+		'value' => $image->description,
 		'class' => 'mbl',
 	]);
 }
 
-echo elgg_view_comments($photo);
+echo elgg_view_comments($image);

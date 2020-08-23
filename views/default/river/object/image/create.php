@@ -8,7 +8,26 @@
 
 elgg_require_js('tidypics/tidypics');
 
-$subject = $vars['item']->getSubjectEntity();
+$item = elgg_extract('item', $vars);
+if (!($item instanceof ElggRiverItem)) {
+	return;
+}
+
+$subject = $item->getSubjectEntity();
+if (!($subject instanceof ElggUser)) {
+	return;
+}
+
+$image = $item->getObjectEntity();
+if (!($image instanceof TidypicsImage)) {
+	return;
+}
+
+$album = $image->getContainerEntity();
+if (!($album instanceof TidypicsAlbum)) {
+	return;
+}
+
 $subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
 	'text' => $subject->name,
@@ -16,13 +35,9 @@ $subject_link = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 
-$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics');
-if(!$preview_size) {
-	$preview_size = 'tiny';
-}
-$image = $vars['item']->getObjectEntity();
+$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics', 'tiny');
 
-$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
+$vars['attachments'] = elgg_format_element('ul', ['class' => 'tidypics-river-list'],
 	elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
 		'href' => 'ajax/view/photos/riverpopup?guid=' . $image->getGUID(),
 		'title' => $image->title,
@@ -38,13 +53,11 @@ $image_link = elgg_view('output/url', [
 ]);
 
 $album_link = elgg_view('output/url', [
-	'href' => $image->getContainerEntity()->getURL(),
-	'text' => $image->getContainerEntity()->getTitle(),
+	'href' => $album->getURL(),
+	'text' => $album->getTitle(),
 	'is_trusted' => true,
 ]);
 
-echo elgg_view('river/elements/layout', [
-	'item' => $vars['item'],
-	'attachments' => $attachments,
-	'summary' => elgg_echo('image:river:created', [$subject_link, $image_link, $album_link]),
-]);
+$vars['summary'] = elgg_echo('river:object:image:created', [$subject_link, $image_link, $album_link]);
+
+echo elgg_view('river/elements/layout', $vars);

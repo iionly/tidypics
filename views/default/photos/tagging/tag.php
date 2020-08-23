@@ -8,12 +8,14 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$coords = json_decode('{' . $vars['tag']->coords . '}');
+$tag = elgg_extract('tag', $vars);
 
-$annotation = elgg_get_annotation_from_id($vars['tag']->annotation_id);
+$coords = json_decode('{' . $tag->coords . '}');
 
-if ($vars['tag']->type == 'user') {
-	$user = get_entity($vars['tag']->value);
+$annotation = elgg_get_annotation_from_id($tag->annotation_id);
+
+if ($tag->type == 'user') {
+	$user = get_entity($tag->value);
 	$user_link = elgg_view('output/url', [
 		'text' => $user->name,
 		'href' => $user->getURL(),
@@ -25,13 +27,13 @@ if ($vars['tag']->type == 'user') {
 	]);
 	$label = elgg_echo('tidypics:tags:membertag') . $user_link . elgg_echo('tidypics:tags:taggedby', [$tagger_link]);
 } else {
-	$label = elgg_echo('tidypics:tags:wordtags') . $vars['tag']->value;
+	$label = elgg_echo('tidypics:tags:wordtags') . $tag->value;
 }
 
 $delete = '';
 if ($annotation->canEdit()) {
 	$url = elgg_http_add_url_query_elements('action/photos/image/untag', [
-		'annotation_id' => $vars['tag']->annotation_id
+		'annotation_id' => $tag->annotation_id
 	]);
 	$delete = elgg_view('output/url', [
 		'href' => $url,

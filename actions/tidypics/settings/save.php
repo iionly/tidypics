@@ -6,15 +6,19 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$plugin = elgg_get_plugin_from_id('tidypics');
-
 $params = (array) get_input('params');
+$plugin = elgg_get_plugin_from_id('tidypics');
+if (!$plugin) {
+	return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_id]));
+}
+$plugin_name = $plugin->getDisplayName();
+
+$result = false;
+
 foreach ($params as $k => $v) {
 	$result = $plugin->setSetting($k, $v);
 	if (!$result) {
-		register_error(elgg_echo('plugins:settings:save:fail', ['tidypics']));
-		forward(REFERER);
-		exit;
+		return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_name]));
 	}
 }
 
@@ -32,9 +36,7 @@ $image_sizes['tiny_image_square'] = (bool) get_input('tiny_image_square');
 
 $result = $plugin->setSetting('image_sizes', serialize($image_sizes));
 if (!$result) {
-	register_error(elgg_echo('plugins:settings:save:fail', ['tidypics']));
-	forward(REFERER);
+	return elgg_error_response(elgg_echo('plugins:settings:save:fail', [$plugin_name]));
 }
 
-system_message(elgg_echo('plugins:settings:save:ok', ['tidypics']));
-forward(REFERER);
+return elgg_ok_response('', elgg_echo('plugins:settings:save:ok', [$plugin_name]));

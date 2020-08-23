@@ -5,29 +5,27 @@
  *
  */
 
+elgg_require_js('tidypics/tidypics');
+
 $owner_guid = elgg_extract('guid', $vars);
 $owner = get_entity($owner_guid);
-if (!($owner instanceof ElggUser)) {
-	if (!$owner = elgg_get_logged_in_user_entity()) {
-		// no one logged in and no user guid provided so error
-		forward('', '404');
-	} else {
-		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-		$filter = elgg_view('filter_override/siteimages', ['selected' => 'mine']);
-	}
-} else if ($owner_guid == elgg_get_logged_in_user_guid()) {
-	$filter = elgg_view('filter_override/siteimages', ['selected' => 'mine']);
-} else {
-	elgg_set_page_owner_guid($owner_guid);
-	$filter = elgg_view('filter_override/siteimages', ['selected' => '']);
+if (!$owner) {
+	$owner = elgg_get_logged_in_user_entity();
+}
+if (!$owner) {
+	throw new \Elgg\EntityNotFoundException();
 }
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb($owner->name);
+elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE, $owner);
+
+if ($owner->guid === elgg_get_logged_in_user_guid()) {
+	$title = elgg_echo('collection:object:image');
+} else {
+	$title = elgg_echo('collection:object:image:owner', [$owner->getDisplayName()]);
+}
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
 // grab the html to display the most recent images
 $result = elgg_list_entities([
@@ -37,15 +35,12 @@ $result = elgg_list_entities([
 	'limit' => $limit,
 	'offset' => $offset,
 	'full_view' => false,
-	'preload_owners' => true,
-	'preload_containers' => true,
+	'preload_owners' => false,
 	'distinct' => false,
 	'list_type' => 'gallery',
 	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
-
-$title = elgg_echo('tidypics:siteimagesowner', [$owner->name]);
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
@@ -67,8 +62,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="far fa-images"></i>',
 		'title' => elgg_echo('album:slideshow'),
+		'item_class' => 'tidypics-slideshow-button',
 		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 	]);
 }
@@ -78,12 +74,21 @@ if (!empty($result)) {
 } else {
 	$content = elgg_echo('tidypics:siteimagesowner:nosuccess');
 }
-$body = elgg_view_layout('content', [
-	'filter_override' => $filter,
+
+$params = [
+	'filter_id' => 'tidypics_siteimages_tabs',
+	'filter_value' => 'mine',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'owner']),
-]);
+];
+
+if ($owner->guid != elgg_get_logged_in_user_guid()) {
+	$params['filter_value'] = '';
+	$params['filter'] = '';
+}
+
+$body = elgg_view_layout('default', $params);
 
 // Draw it
 echo elgg_view_page($title, $body);

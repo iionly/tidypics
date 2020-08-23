@@ -6,10 +6,10 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$guid = elgg_extract('guid', $vars);
-$image = get_entity($guid);
-
+$guid = (int) elgg_extract('guid', $vars);
 $disposition = elgg_extract('disposition', $vars, 'attachment');
+
+$image = get_entity($guid);
 
 if ($image instanceof TidypicsImage) {
 	$filename = $image->originalfilename;

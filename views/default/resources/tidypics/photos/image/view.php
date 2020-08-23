@@ -6,45 +6,37 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-// get the photo entity
-$photo_guid = elgg_extract('guid', $vars);
+elgg_require_js('tidypics/tidypics');
+
+$photo_guid = (int) elgg_extract('guid', $vars);
+elgg_entity_gatekeeper($photo_guid, 'object', TidypicsImage::SUBTYPE);
+
 $photo = get_entity($photo_guid);
-if (!($photo instanceof TidypicsImage)) {
-	forward('', '404');
-}
+
 $album = $photo->getContainerEntity();
-if (!$album) {
-	forward('', '404');	
+if (!($album instanceof TidypicsAlbum)) {
+	return;
 }
+
 $album_container = $album->getContainerEntity();
 if (!$album_container) {
-	forward('', '404');
+	return;
 }
 
 // set page owner based on owner of photo album
-if ($album) {
-	elgg_set_page_owner_guid($album->getContainerGUID());
-}
+elgg_set_page_owner_guid($album->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
-elgg_group_gatekeeper();
 
+$title = $photo->getTitle();
+
+elgg_push_entity_breadcrumbs($photo, false);
+ 
 $photo->addView();
 
 if (elgg_get_plugin_setting('tagging', 'tidypics')) {
 	elgg_load_js('jquery.imgareaselect');
 	elgg_require_js('tidypics/tagging');
 }
-
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if ($owner instanceof ElggGroup) {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-}
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb($photo->getTitle());
 
 if (!$owner instanceof ElggGroup) {
 	$owner = elgg_get_logged_in_user_entity();
@@ -71,14 +63,14 @@ if (elgg_get_plugin_setting('download_link', 'tidypics')) {
 
 $content = elgg_view_entity($photo, ['full_view' => true]);
 
-$body = elgg_view_layout('content', [
-	'filter' => false,
+$body = elgg_view_layout('default', [
+	'filter' => '',
 	'content' => $content,
-	'title' => $photo->getTitle(),
+	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', [
 		'page' => 'tp_view',
 		'image' => $photo,
 	]),
 ]);
 
-echo elgg_view_page($photo->getTitle(), $body);
+echo elgg_view_page($title, $body);

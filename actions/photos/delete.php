@@ -26,7 +26,7 @@ switch ($subtype) {
 		if ($container instanceof ElggUser) {
 			$forward_url = "photos/owner/$container->username";
 		} else {
-			$forward_url = "photos/group/$container->guid/all";
+			$forward_url = "photos/group/$container->guid";
 		}
 		break;
 	case TidypicsImage::SUBTYPE:

@@ -16,7 +16,7 @@ if (!$annotation->canEdit()) {
 $entity_guid = $annotation->entity_guid;
 
 $image = get_entity($entity_guid);
-if (!$image) {
+if (!($image instanceof TidypicsImage) {
 	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
 }
 
@@ -37,7 +37,7 @@ if ($tag->type == 'user') {
 	if (is_array($image->tags)) {
 		$tagarray = [];
 		$removed_tags = [];
-		foreach($image->tags as $image_tag) {
+		foreach ($image->tags as $image_tag) {
 			if ((!in_array($image_tag, $obsolete_tags)) || (in_array($image_tag, $removed_tags))) {
 				$tagarray[] = $image_tag;
 			} else {

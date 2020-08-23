@@ -3,12 +3,25 @@ define(function(require) {
 	var $ = require("jquery");
 	require('jquery.colorbox');
 
+	function boxstyle(identifier) {
+		var opts = {};
+		var defaults = elgg.data.lightbox;
+		if (!defaults.reposition) {
+			// don't move colorbox on small viewports https://github.com/Elgg/Elgg/issues/5312
+			defaults.reposition = $(window).height() > 600;
+		}
+		var settings = $.extend({}, defaults, opts);
+		var values = elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
+		$(identifier).colorbox(values);
+	}
+
 	function init() {
 		if ($(".tidypics-lightbox").length) {
 			$(".tidypics-lightbox").colorbox({
 				photo:true,
 				maxWidth:'95%',
-				maxHeight:'95%'
+				maxHeight:'95%',
+				onOpen: boxstyle(".tidypics-lightbox")
 			});
 			$("#cboxOverlay").css("z-index", "10100");
 			$("#colorbox").css("z-index", "10101");
@@ -19,6 +32,7 @@ define(function(require) {
 				width:'640px',
 				maxWidth:'95%',
 				maxHeight:'95%',
+				onOpen: boxstyle(".tidypics-river-lightbox"),
 				onComplete: function() {
 					$(this).colorbox.resize();
 				}
@@ -28,7 +42,9 @@ define(function(require) {
 		}
 
 		if ($(".tidypics-selectalbum-lightbox").length) {
-			$(".tidypics-selectalbum-lightbox").colorbox();
+			$(".tidypics-selectalbum-lightbox").colorbox({
+				onOpen: boxstyle(".tidypics-selectalbum-lightbox")
+			});
 			$("#cboxOverlay").css("z-index", "10100");
 			$("#colorbox").css("z-index", "10101");
 		}
@@ -40,7 +56,8 @@ define(function(require) {
 				maxWidth: '95%',
 				maxHeight: '95%',
 				title: false,
-				arrowKey: false
+				arrowKey: false,
+				onOpen: boxstyle(".tidypics-slideshow-lightbox")
 			});
 			$("#cboxOverlay").css("z-index", "10100");
 			$("#colorbox").css("z-index", "10101");

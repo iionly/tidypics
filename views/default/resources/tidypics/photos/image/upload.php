@@ -6,37 +6,28 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-elgg_gatekeeper();
-
-$album_guid = elgg_extract('guid', $vars);
-if (!$album_guid) {
-	forward('', '404');
-}
+$album_guid = (int) elgg_extract('guid', $vars);
+elgg_entity_gatekeeper($album_guid, 'object', TidypicsAlbum::SUBTYPE);
 
 $album = get_entity($album_guid);
 if (!($album instanceof TidypicsAlbum)) {
-	forward('', '404');
+	return;
 }
 
 if (!$album->getContainerEntity()->canWriteToContainer()) {
-	forward('', '404');
+	return;
 }
 
-// set page owner based on container (user or group)
-elgg_set_page_owner_guid($album->getContainerGUID());
-$owner = elgg_get_page_owner_entity();
-elgg_group_gatekeeper();
+elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE, $album);
+elgg_push_breadcrumb(elgg_echo('add:object:image'));
 
-$title = elgg_echo('album:addpix');
+$title = elgg_echo('add:object:image');
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb(elgg_echo('album:addpix'));
-
-$uploader = elgg_extract('uploader', $vars);
+if (elgg_get_plugin_setting('uploader', 'tidypics')) {
+	$uploader = 'ajax';
+} else {
+	$uploader = 'basic';
+}
 if ($uploader == 'basic') {
 	$form_vars = [
 		'action' => 'action/photos/image/upload',
@@ -57,7 +48,7 @@ if ($uploader == 'basic') {
 	$content = elgg_view('forms/photos/ajax_upload', ['entity' => $album]);
 }
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',

@@ -10,6 +10,10 @@
 
 $album = elgg_extract('entity', $vars);
 
+if (!($album instanceof TidypicsAlbum)) {
+	return true;
+}
+
 $album_cover = elgg_view_entity_icon($album, 'small');
 
 $album_title = $album->getTitle();

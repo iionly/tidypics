@@ -5,35 +5,32 @@
  *
  */
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:mostcommented'));
+elgg_require_js('tidypics/tidypics');
+
+elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE);
+
+$title = elgg_echo('collection:object:image:mostcommented');
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
-$db_prefix = elgg_get_config('dbprefix');
 $result = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'limit' => $limit,
 	'offset' => $offset,
-	'selects' => ["count( * ) AS views"],
-	'joins' => [
-		"JOIN {$db_prefix}entities ce ON ce.container_guid = e.guid",
-		"JOIN {$db_prefix}entity_subtypes cs ON ce.subtype = cs.id AND cs.subtype = 'comment'",
-	],
-	'group_by' => 'e.guid',
-	'order_by' => "views DESC",
+	'wheres' => function(\Elgg\Database\QueryBuilder $qb, $alias) {
+		$qb->groupBy("$alias.guid");
+		$qb->innerJoin($alias, 'entities', 'ce', "ce.container_guid = e.guid");
+		$qb->addSelect("count( * ) as views");
+		$qb->orderBy('views', 'DESC');
+		return $qb->compare('ce.subtype', '=', 'comment', ELGG_VALUE_STRING);
+	},
 	'full_view' => false,
-	'preload_owners' => true,
-	'preload_containers' => true,
 	'list_type' => 'gallery',
 	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
-
-$title = elgg_echo('tidypics:mostcommented');
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
@@ -55,8 +52,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="far fa-images"></i>',
 		'title' => elgg_echo('album:slideshow'),
+		'item_class' => 'tidypics-slideshow-button',
 		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 	]);
 }
@@ -66,12 +64,13 @@ if (!empty($result)) {
 } else {
 	$content = elgg_echo('tidypics:mostcommented:nosuccess');
 }
-$body = elgg_view_layout('content', [
-	'filter_override' => '',
+
+$body = elgg_view_layout('default', [
+	'filter' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'all']),
 ]);
 
 // Draw it
-echo elgg_view_page(elgg_echo('tidypics:mostcommented'), $body);
+echo elgg_view_page($title, $body);

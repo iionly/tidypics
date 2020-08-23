@@ -1,13 +1,13 @@
 <?php
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
 $guid = (int) get_input('guid', false);
 $user = get_entity($guid);
 
 if ($user instanceof ElggUser) {
-	$images = elgg_get_entities_from_relationship([
+	$images = elgg_get_entities([
 		'relationship' => 'phototag',
 		'relationship_guid' => $user->guid,
 		'inverse_relationship' => false,

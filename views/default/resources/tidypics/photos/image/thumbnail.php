@@ -6,11 +6,11 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$guid = elgg_extract('guid', $vars);
-$size = elgg_extract('size', $vars);
+$guid = (int) elgg_extract('guid', $vars);
+$size = elgg_extract('size', $vars, 'small');
 $image = get_entity($guid);
 if (!($image instanceof TidypicsImage)) {
-	forward('', '404');
+	return;
 }
 
 $watermark_text = elgg_get_plugin_setting('watermark_text', 'tidypics', '');

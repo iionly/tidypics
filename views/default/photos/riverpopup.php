@@ -15,36 +15,13 @@ if (!($image instanceof TidypicsImage)) {
 
 $image->addView();
 
-$owner_link = elgg_view('output/url', [
-	'href' => "photos/owner/" . $image->getOwnerEntity()->username,
-	'text' => $image->getOwnerEntity()->name,
-]);
-$author_text = elgg_echo('byline', [$owner_link]);
-$date = elgg_view_friendly_time($image->time_created);
-
-$comments_count = $image->countComments();
-//only display if there are commments
-if ($comments_count != 0) {
-	$text = elgg_echo("comments") . " ($comments_count)";
-	$comments_link = elgg_view('output/url', [
-		'href' => $image->getURL() . '#comments',
-		'text' => $text,
-		'is_trusted' => true,
-	]);
-} else {
-	$comments_link = '';
-}
-
 $owner_icon = elgg_view_entity_icon($image->getOwnerEntity(), 'tiny');
-$subtitle = "$author_text $date $comments_link";
-
 $title = elgg_view_title($image->getTitle());
 
 $params = [
 	'entity' => $image,
 	'title' => false,
 	'metadata' => '',
-	'subtitle' => $subtitle,
 ];
 $list_body = elgg_view('object/elements/summary', $params);
 

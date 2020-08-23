@@ -10,7 +10,7 @@ $batch = get_input('batch');
 $album_guid = (int) get_input('album_guid');
 $img_river_view = elgg_get_plugin_setting('img_river_view', 'tidypics');
 
-$images = elgg_get_entities_from_metadata([
+$images = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'metadata_names' => 'batch',
@@ -50,7 +50,7 @@ if ($img_river_view == "batch" && !($album->new_album)) {
 		'object_guid' => $batch->getGUID(),
 		'target_guid' => $album->getGUID(),
 	]);
-}  else if ($img_river_view == "1" && !($album->new_album)) {
+} else if ($img_river_view == "1" && !($album->new_album)) {
 	elgg_create_river_item([
 		'view' => 'river/object/tidypics_batch/create_single_image',
 		'action_type' => 'create',

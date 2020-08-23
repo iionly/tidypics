@@ -1,7 +1,7 @@
 <?php
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
 $owner_guid = elgg_extract('guid', $vars);
 $owner = get_entity($owner_guid);

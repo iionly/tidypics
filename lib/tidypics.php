@@ -139,8 +139,8 @@ function tidypics_is_upgrade_available() {
 	require_once elgg_get_plugins_path() . "tidypics/version.php";
 
 	$local_version = elgg_get_plugin_setting('version', 'tidypics');
-	if ($local_version === null) {
-		// set initial version for new install
+
+	if ($local_version === false) {
 		elgg_set_plugin_setting('version', $version, 'tidypics');
 		$local_version = $version;
 	}
@@ -266,7 +266,7 @@ function tidypics_can_add_new_photos(\ElggUser $user = null, \ElggEntity $contai
 	if (!isset($container)) {
 		$container = elgg_get_page_owner_entity();
 	}
-	if (!elgg_instanceof($container)) {
+	if (!($container instanceof ElggEntity)) {
 		return false;
 	}
 

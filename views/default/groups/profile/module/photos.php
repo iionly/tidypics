@@ -3,14 +3,21 @@
  * Group album module
  */
 
-$group = $vars['entity'];
-
-if ($group->photos_enable == "no") {
-	return true;
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof \ElggGroup)) {
+	return;
 }
 
+if (!$group->isToolEnabled('photos')) {
+	return;
+} 
+
+$group_guid = $group->getGUID();
+
 $all_link = elgg_view('output/url', [
-	'href' => "photos/group/$group->guid/all",
+	'href' => elgg_generate_url('collection:object:album:group', [
+		'guid' => $group_guid,
+	]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
@@ -24,20 +31,23 @@ $content = elgg_list_entities([
 	'full_view' => false,
 	'pagination' => false,
 	'no_results' =>  elgg_echo('tidypics:none'),
+	'distinct' => false,
 ]);
 elgg_pop_context();
 
-$new_link = '';
+$new_link = null;
 if ($group->canWriteToContainer(0, 'object', TidypicsAlbum::SUBTYPE)) {
 	$new_link = elgg_view('output/url', [
-		'href' => "photos/add/$group->guid",
-		'text' => elgg_echo('photos:add'),
+		'href' => elgg_generate_url('add:object:album', [
+			'guid' => $group_guid,
+		]),
+		'text' => elgg_echo('add:object:album'),
 		'is_trusted' => true,
 	]);
 }
 
 echo elgg_view('groups/profile/module', [
-	'title' => elgg_echo("tidypics:albums_mostrecent"),
+	'title' => elgg_echo('collection:object:album:group'),
 	'content' => $content,
 	'all_link' => $all_link,
 	'add_link' => $new_link,

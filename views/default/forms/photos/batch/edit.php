@@ -3,7 +3,7 @@
  * Edit properties on a batch of images
  *
  * @uses $vars['batch'] ElggObject
- * 
+ *
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
@@ -11,7 +11,7 @@
 $batch = $vars['batch'];
 $album = $batch->getContainerEntity();
 
-$images = elgg_get_entities_from_relationship([
+$images = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'relationship' => 'belongs_to_batch',

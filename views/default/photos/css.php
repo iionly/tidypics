@@ -17,6 +17,10 @@
 	margin: 5px auto;
 }
 
+.tidypics-gallery {
+	align-items: flex-end;
+}
+
 .tidypics-gallery-widget > li {
 	width: 69px;
 }
@@ -57,6 +61,7 @@
 .tidypics-album-nav {
 	margin: 3px 0;
 	text-align: center;
+	justify-content: center;
 	color: #aaa;
 }
 
@@ -136,6 +141,13 @@
 	background-color:#FFF;
 }
 
+.tidypics-slideshow-button {
+	font-size: 24px;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 400;
+	cursor: pointer;
+}
+
 #tidypics-uploader {
 	position:relative;
 	width:540px;
@@ -170,6 +182,7 @@
 
 #galleria-slideshow {
 	height: 100%;
+	padding: 0px !important;
 }
 
 .galleria-theme-tidypics {
@@ -191,7 +204,7 @@
 }
 .galleria-theme-tidypics .galleria-thumbnails-container {
 	height: 50px;
-	bottom: 0;
+	bottom: 0px;
 	position: absolute;
 	left: 10px;
 	right: 10px;
@@ -273,9 +286,10 @@
 }
 .galleria-theme-tidypics .galleria-info-close:before {
 	font-size: 20px;
-	font-family: FontAwesome;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 	cursor: pointer;
-	content: "\f2d4";
+	content: "\f410";
 }
 .galleria-theme-tidypics .galleria-info-link {
 	opacity: .7;
@@ -292,7 +306,8 @@
 }
 .galleria-theme-tidypics .galleria-info-link:before {
 	font-size: 20px;
-	font-family: FontAwesome;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 	cursor: pointer;
 	content: "\f05a";
 }
@@ -331,7 +346,8 @@
 }
 .galleria-theme-tidypics .galleria-image-nav-left:before {
 	font-size: 62px;
-	font-family: FontAwesome;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 	cursor: pointer;
 	content: "\f104";
 	background: #fff;
@@ -340,7 +356,8 @@
 }
 .galleria-theme-tidypics .galleria-image-nav-right:before {
 	font-size: 62px;
-	font-family: FontAwesome;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 	cursor: pointer;
 	content: "\f105";
 	background: #fff;
@@ -381,13 +398,15 @@
 }
 .galleria-theme-tidypics .galleria-thumb-nav-left:before {
 	font-size: 40px;
-	font-family: FontAwesome;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 	cursor: pointer;
 	content: "\f0d9";
 }
 .galleria-theme-tidypics .galleria-thumb-nav-right:before {
 	font-size: 40px;
-	font-family: FontAwesome;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 	cursor: pointer;
 	content: "\f0da";
 }

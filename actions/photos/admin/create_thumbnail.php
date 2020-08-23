@@ -25,9 +25,6 @@ $prefix = "image/$container_guid/";
 $filestorename = substr($filename, strlen($prefix));
 
 $image_lib = elgg_get_plugin_setting('image_lib', 'tidypics');
-if (!$image_lib) {
-	$image_lib = "GD";
-}
 
 // ImageMagick command line
 if ($image_lib == 'ImageMagick') {

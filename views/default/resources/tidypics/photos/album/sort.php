@@ -5,34 +5,21 @@
  * This displays a listing of all the photos so that they can be sorted
  */
 
-elgg_gatekeeper();
-elgg_group_gatekeeper();
+elgg_require_js('tidypics/tidypics');
+
+$album_guid = (int) elgg_extract('guid', $vars);
+elgg_entity_gatekeeper($album_guid, 'object', TidypicsAlbum::SUBTYPE);
 
 // get the album entity
-$album_guid = elgg_extract('guid', $vars);
 $album = get_entity($album_guid);
-
-// panic if we can't get it
-if (!($album instanceof TidypicsAlbum)) {
-	forward('', '404');
-}
 
 // container should always be set, but just in case
 $owner = $album->getContainerEntity();
 elgg_set_page_owner_guid($owner->getGUID());
 
-$title = elgg_echo('tidypics:sort', [$album->getTitle()]);
+$title = elgg_echo('sort:object:album', [$album->getTitle()]);
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if ($owner instanceof ElggGroup) {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-}
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb(elgg_echo('album:sort'));
+elgg_push_entity_breadcrumbs($album, false);
 
 if ($album->getSize()) {
 	$content = elgg_view_form('photos/album/sort', [], ['album' => $album]);
@@ -40,7 +27,7 @@ if ($album->getSize()) {
 	$content = elgg_echo('tidypics:sort:no_images');
 }
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'filter' => false,
 	'content' => $content,
 	'title' => $title,

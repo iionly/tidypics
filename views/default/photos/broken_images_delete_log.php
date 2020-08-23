@@ -12,5 +12,4 @@ if (!$logtime) {
 
 $log = tidypics_get_log_location($logtime);
 
-// echo tidypics_get_last_log_line($log);
 echo tidypics_get_last_log_line($log);

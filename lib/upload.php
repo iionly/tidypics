@@ -88,10 +88,7 @@ function tp_upload_memory_check($image_lib, $mem_required) {
  */
 function tp_upload_check_max_size($image_size) {
 	$max_file_size = (float) elgg_get_plugin_setting('maxfilesize', 'tidypics');
-	if (!$max_file_size) {
-		// default to 5 MB if not set
-		$max_file_size = 5;
-	}
+
 	// convert to bytes from MBs
 	$max_file_size = 1024 * 1024 * $max_file_size;
 	return $image_size <= $max_file_size;

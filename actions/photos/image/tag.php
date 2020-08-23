@@ -15,7 +15,7 @@ if ($image_guid == 0) {
 }
 
 $image = get_entity($image_guid);
-if (!$image) {
+if (!($image instanceof TidypicsImage)) {
 	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
 }
 
@@ -24,18 +24,18 @@ if (empty($username)) {
 }
 
 $album = get_entity($image->getContainerGUID());
-if (!$album) {
+if (!($album instanceof TidypicsAlbum)) {
 	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
 }
 
 $user = get_user_by_username($username);
-if (!$user) {
+if ($user instanceof ElggUser) {
+	$relationships_type = 'user';
+	$value = $user->guid;
+} else {
 	// plain tag
 	$relationships_type = 'word';
 	$value = $username;
-} else {
-	$relationships_type = 'user';
-	$value = $user->guid;
 }
 
 $tag = new stdClass();
@@ -50,11 +50,11 @@ if ($tag->type === 'word') {
 	if(!isset($image->tags)) {
 		$image->tags = $new_tags;
 	} else if (!is_array($image->tags)) {
-		if(in_array($image->tags, $new_tags)) {
+		if (in_array($image->tags, $new_tags)) {
 			$existing_tags = true;
 			$value = '';
 			$tagarray = string_to_tag_array($image->tags);
-			foreach($new_tags as $new_tag) {
+			foreach ($new_tags as $new_tag) {
 				if (!in_array($newtag, $tagarray)) {
 					$tagarray[] = $newtag;
 					$value .= ', ' . $newtag;
@@ -73,7 +73,7 @@ if ($tag->type === 'word') {
 	} else {
 		$tagarray = $image->tags;
 		$value = '';
-		foreach($new_tags as $newtag) {
+		foreach ($new_tags as $newtag) {
 			if (!in_array($newtag, $tagarray)) {
 				$tagarray[] = $newtag;
 				$value .= ', ' . $newtag;

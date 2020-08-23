@@ -24,7 +24,7 @@ define(function(require) {
 				spinner.stop();
 				$("#tidypics-im-results").html(json.result);
 			} else {
-				spinner.stop();	
+				spinner.stop();
 				$("#tidypics-im-results").html(elgg.echo('tidypics:lib_tools:error'));
 			}
 		});

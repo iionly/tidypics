@@ -3,8 +3,11 @@
  * EXIF sidebar module
  */
 
-$image = $vars['image'];
-
+$image = elgg_extract('image', $vars);
+if (!($image instanceof TidypicsImage)) {
+	return;
+}
+ 
 $exif = tp_exif_formatted($image);
 if ($exif) {
 	$row = '';

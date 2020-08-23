@@ -5,11 +5,14 @@
  *
  */
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
+elgg_require_js('tidypics/tidypics');
+
+elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE);
+
+$title = elgg_echo('collection:object:image:all');
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
 // grab the html to display the most recent images
 $result = elgg_list_entities([
@@ -25,8 +28,6 @@ $result = elgg_list_entities([
 	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
-
-$title = elgg_echo('tidypics:siteimagesall');
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
@@ -48,8 +49,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="far fa-images"></i>',
 		'title' => elgg_echo('album:slideshow'),
+		'item_class' => 'tidypics-slideshow-button',
 		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 	]);
 }
@@ -59,12 +61,21 @@ if (!empty($result)) {
 } else {
 	$content = elgg_echo('tidypics:siteimagesall:nosuccess');
 }
-$body = elgg_view_layout('content', [
-	'filter_override' => elgg_view('filter_override/siteimages', ['selected' => 'all']),
+
+$params = [
+	'filter_id' => 'tidypics_siteimages_tabs',
+	'filter_value' => 'all',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'all']),
-]);
+];
+
+if (!elgg_is_logged_in()) {
+	$params['filter_value'] = '';
+	$params['filter'] = '';
+}
+
+$body = elgg_view_layout('default', $params);
 
 // Draw it
 echo elgg_view_page($title, $body);

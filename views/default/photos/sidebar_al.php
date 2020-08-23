@@ -7,13 +7,13 @@ $base = elgg_get_site_url() . 'photos/';
 
 elgg_register_menu_item('page', [
 	'name' => 'A10_tiypics_siteimages',
-	'text' => elgg_echo('tidypics:siteimagesall'),
+	'text' => elgg_echo('collection:object:image:all'),
 	'href' => $base . 'siteimagesall',
 	'section' => 'A'
 ]);
 elgg_register_menu_item('page', [
 	'name' => 'A20_tiypics_albums',
-	'text' => elgg_echo('album:all'),
+	'text' => elgg_echo('collection:object:album:all'),
 	'href' => $base . 'all',
 	'section' => 'A'
 ]);

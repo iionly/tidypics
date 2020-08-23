@@ -127,7 +127,7 @@ class TidypicsAlbum extends ElggObject {
 
 		$defaults = [
 			'count' => $count,
-			'limit' => (int) get_input('limit', 16),
+			'limit' => (int) get_input('limit', 25),
 			'offset' => (int) get_input('offset', 0),
 			'full_view' => false,
 			'list_type' => 'gallery',
@@ -220,8 +220,12 @@ class TidypicsAlbum extends ElggObject {
 		$guidsString = implode(',', $list);
 
 		$list = elgg_get_entities([
-			'wheres' => ["e.guid IN ($guidsString)"],
-			'order_by' => "FIELD(e.guid, $guidsString)",
+			'wheres' => function(\Elgg\Database\QueryBuilder $qb, $alias) use ($guidsString) {
+ 				return $qb->compare('e.guid', 'IN', $guidsString); // comparison of int with string element of imploded array!
+			},
+			'order_by' => [
+				new \Elgg\Database\Clauses\OrderByClause("FIELD(e.guid, $guidsString)"),
+			],
 			'callback' => 'tp_guid_callback',
 			'limit' => false,
 		]);
@@ -313,7 +317,7 @@ class TidypicsAlbum extends ElggObject {
 	 * @param int $imageGuid
 	 * @return bool
 	 */
-	public function removeImage($imageGuid)  {
+	public function removeImage($imageGuid) {
 		$imageList = $this->getImageList();
 		$key = array_search($imageGuid, $imageList);
 		if ($key === false) {

@@ -335,7 +335,7 @@ function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $sq
 	if ($format == 'GIF') {
 		$img = $img->coalesceImages();
 
-		foreach($img as $frame) {
+		foreach ($img as $frame) {
 			$frame->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
 
 			// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
@@ -494,9 +494,7 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 	}
 
 	$im_path = elgg_get_plugin_setting('im_path', 'tidypics');
-	if (!$im_path) {
-		$im_path = "/usr/bin/";
-	}
+
 	if (substr($im_path, strlen($im_path)-1, 1) != "/") {
 		$im_path .= "/";
 	}
@@ -506,7 +504,7 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 	// see imagemagick web site for explanation of these parameters
 	// the ^ in the resize means those are minimum width and height values
 	$thumbnail_optimized = elgg_get_plugin_setting('thumbnail_optimization', 'tidypics');
-	switch($thumbnail_optimized) {
+	switch ($thumbnail_optimized) {
 		case "complex":
 			$command = $im_path . "convert \"$input_name\" ".$gif_to_convert." -filter Triangle -define filter:support=2 -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB -strip \"$output_name\"";
 			break;

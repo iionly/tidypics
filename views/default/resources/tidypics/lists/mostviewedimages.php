@@ -5,30 +5,30 @@
  *
  */
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:mostviewed'));
+elgg_require_js('tidypics/tidypics');
+
+elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE);
+
+$title = elgg_echo('collection:object:image:mostviewed');
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
-$result = elgg_list_entities_from_annotation_calculation([
+$result = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'limit' => $limit,
 	'offset' => $offset,
 	'annotation_name' => 'tp_view',
-	'calculation' => 'count',
-	'order_by' => 'annotation_calculation desc',
+	'annotation_sort_by_calculation' => 'count',
+	'order_by' => [
+		new \Elgg\Database\Clauses\OrderByClause('annotation_calculation', 'DESC'),
+	],
 	'full_view' => false,
-	'preload_owners' => true,
-	'preload_containers' => true,
 	'list_type' => 'gallery',
 	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
-
-$title = elgg_echo('tidypics:mostviewed');
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
@@ -50,8 +50,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="far fa-images"></i>',
 		'title' => elgg_echo('album:slideshow'),
+		'item_class' => 'tidypics-slideshow-button',
 		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 	]);
 }
@@ -61,12 +62,13 @@ if (!empty($result)) {
 } else {
 	$content = elgg_echo('tidypics:mostviewed:nosuccess');
 }
-$body = elgg_view_layout('content', [
-	'filter_override' => '',
+
+$body = elgg_view_layout('default', [
+	'filter' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'all']),
 ]);
 
 // Draw it
-echo elgg_view_page(elgg_echo('tidypics:mostviewed'), $body);
+echo elgg_view_page($title, $body);

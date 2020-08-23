@@ -7,13 +7,13 @@ $base = elgg_get_site_url() . 'photos/';
 
 elgg_register_menu_item('page', [
 	'name' => 'A10_tiypics_siteimages',
-	'text' => elgg_echo('tidypics:siteimagesall'),
+	'text' => elgg_echo('collection:object:image:all'),
 	'href' => $base . 'siteimagesall',
 	'section' => 'A'
 ]);
 elgg_register_menu_item('page', [
 	'name' => 'A20_tiypics_albums',
-	'text' => elgg_echo('album:all'),
+	'text' => elgg_echo('collection:object:album:all'),
 	'href' => $base . 'all',
 	'section' => 'A'
 ]);
@@ -56,7 +56,7 @@ switch ($page) {
 
 			// list of tagged members in an image (code from Tagged people plugin by Kevin Jardine)
 			if (elgg_get_plugin_setting('tagging', 'tidypics')) {
-				$body = elgg_list_entities_from_relationship([
+				$body = elgg_list_entities([
 					'relationship' => 'phototag',
 					'relationship_guid' => $image->guid,
 					'inverse_relationship' => true,

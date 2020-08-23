@@ -14,13 +14,7 @@
 $album = elgg_extract('entity', $vars);
 
 $max_uploads = (int) elgg_get_plugin_setting('max_uploads', 'tidypics');
-if (!$max_uploads) {
-	$max_uploads = 10;
-}
 $maxfilesize = (float) elgg_get_plugin_setting('maxfilesize', 'tidypics');
-if (!$maxfilesize) {
-	$maxfilesize = 5;
-}
 
 echo elgg_autop(elgg_echo('tidypics:uploader:basic', [$max_uploads, $maxfilesize]));
 

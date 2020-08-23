@@ -6,28 +6,44 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-elgg_gatekeeper();
+elgg_require_js('tidypics/tidypics');
 
 $owner = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-elgg_push_breadcrumb($owner->name, "photos/friends/$owner->username");
-elgg_push_breadcrumb(elgg_echo('friends'));
+if (!$owner) {
+	$guid = elgg_extract('guid', $vars);
+	$owner = get_user($guid);
+}
 
-$title = elgg_echo('album:friends');
+if (!$owner) {
+	$username = elgg_extract('username', $vars);
+	$owner = get_user_by_username($username);
+}
+
+if (!$owner) {
+	$owner = elgg_get_logged_in_user_entity();
+}
+
+if (!($owner instanceof ElggUser)) {
+	throw new \Elgg\EntityNotFoundException();
+}
+
+elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE, $owner, true);
+
+elgg_register_title_button(null, 'add', 'object', TidypicsAlbum::SUBTYPE); 
+
+$title = elgg_echo('collection:friends', [elgg_echo('collection:object:album')]);
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
-$content = elgg_list_entities_from_relationship([
+$content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsAlbum::SUBTYPE,
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
 	'relationship_join_on' => 'owner_guid',
-	'preload_owners' => true,
-	'preload_containers' => true,
+	'distinct' => false,
 	'limit' => $limit,
 	'offset' => $offset,
 	'full_view' => false,
@@ -48,10 +64,8 @@ if (tidypics_can_add_new_photos(null, $logged_in_user)) {
 	]);
 }
 
-elgg_register_title_button();
-
-$body = elgg_view_layout('content', [
-	'filter_context' => 'friends',
+$body = elgg_view_layout('default', [
+	'filter_value' => 'friends',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_al', ['page' => 'friends']),

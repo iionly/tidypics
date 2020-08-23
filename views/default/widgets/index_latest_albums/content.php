@@ -6,22 +6,18 @@
  *
  */
 
-/* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
-$limit = (int) $widget->tp_latest_albums_count;
-if ($limit < 1) {
-	$limit = 6;
-}
+$limit = (int) $widget->tp_latest_albums_count ?: 6;
 
 elgg_push_context('front');
-$image_html = elgg_list_entities([
+echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsAlbum::SUBTYPE,
 	'limit' => $limit,
 	'full_view' => false,
 	'pagination' => false,
+	'no_results' => elgg_echo('tidypics:widget:no_albums'),
+	'distinct' => false,
 ]);
 elgg_pop_context();
-
-echo $image_html;

@@ -6,20 +6,12 @@
  *
  */
 
-/* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
-$count = (int) $widget->tp_latest_albums_count;
-if ($count < 1) {
-	$count = 6;
-}
-
-echo elgg_view_field([
-	'#type' => 'number',
-	'#label' => elgg_echo('tidypics:widget:num_albums'),
-	'name' => 'params[tp_latest_albums_count]',
-	'value' => $count,
-	'min' => 1,
+echo elgg_view('object/widget/edit/num_display', [
+	'entity' => $widget,
+	'name' => 'tp_latest_albums_count',
+	'label' => elgg_echo('tidypics:widget:num_albums'),
 	'max' => 25,
-	'step' => 1,
+	'default' => 6,
 ]);

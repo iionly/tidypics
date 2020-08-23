@@ -5,26 +5,42 @@
  *
  */
 
-elgg_gatekeeper();
+elgg_require_js('tidypics/tidypics');
 
-$owner = elgg_get_logged_in_user_entity();
+$owner = elgg_get_page_owner_entity();
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb($owner->name, "photos/siteimagesfriends/$owner->username");
-elgg_push_breadcrumb(elgg_echo('friends'));
+if (!$owner) {
+	$guid = elgg_extract('guid', $vars);
+	$owner = get_user($guid);
+}
+
+if (!$owner) {
+	$username = elgg_extract('username', $vars);
+	$owner = get_user_by_username($username);
+}
+
+if (!$owner) {
+	$owner = elgg_get_logged_in_user_entity();
+}
+
+if (!($owner instanceof ElggUser)) {
+	throw new \Elgg\EntityNotFoundException();
+}
+
+elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE, $owner, true);
+
+$title = elgg_echo('collection:friends', [elgg_echo('collection:object:image')]);
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
-$result = elgg_list_entities_from_relationship([
+$result = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
 	'relationship_join_on' => 'owner_guid',
-	'preload_owners' => true,
-	'preload_containers' => true,
+	'distinct' => false,
 	'limit' => $limit,
 	'offset' => $offset,
 	'full_view' => false,
@@ -33,14 +49,6 @@ $result = elgg_list_entities_from_relationship([
 	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
-
-if (!empty($result)) {
-	$content = $result;
-} else {
-	$content = elgg_echo("tidypics:siteimagesfriends:nosuccess");
-}
-
-$title = elgg_echo('tidypics:siteimagesfriends');
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
@@ -62,14 +70,23 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="far fa-images"></i>',
 		'title' => elgg_echo('album:slideshow'),
+		'item_class' => 'tidypics-slideshow-button',
 		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 	]);
 }
 
-$body = elgg_view_layout('content', [
-	'filter_override' => elgg_view('filter_override/siteimages', ['selected' => 'friends']),
+if (!empty($result)) {
+	$content = $result;
+} else {
+	$content = elgg_echo("tidypics:siteimagesfriends:nosuccess");
+}
+
+$body = elgg_view_layout('default', [
+	'filter' => 'tidypics_siteimages_tabs',
+	'filter_id' => 'izap_videos_tabs',
+	'filter_value' => 'friends',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'friends']),

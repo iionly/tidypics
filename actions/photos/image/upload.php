@@ -24,7 +24,7 @@ if (count($_FILES) == 0) {
 
 // test to make sure at least 1 image was selected by user
 $num_images = 0;
-foreach($_FILES['images']['name'] as $name) {
+foreach ($_FILES['images']['name'] as $name) {
 	if (!empty($name)) {
 		$num_images++;
 	}

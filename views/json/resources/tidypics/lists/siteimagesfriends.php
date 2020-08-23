@@ -1,18 +1,16 @@
 <?php
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
 $owner = elgg_get_logged_in_user_entity();
 if ($friends = $owner->getFriends(['limit' => false])) {
-	$friendguids = [];
-	foreach ($friends as $friend) {
-		$friendguids[] = $friend->getGUID();
-	}
 	$images = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => TidypicsImage::SUBTYPE,
-		'owner_guids' => $friendguids,
+		'relationship' => 'friend',
+		'relationship_guid' => $owner->guid,
+		'relationship_join_on' => 'owner_guid',
 		'limit' => $limit,
 		'offset' => $offset,
 	]);

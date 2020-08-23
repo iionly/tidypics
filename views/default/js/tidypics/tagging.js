@@ -65,7 +65,7 @@ define(function(require) {
 	}
 
 	function startSelect(img, selection) {
-		if(selection.width < 2 && selection.height < 2) {
+		if (selection.width < 2 && selection.height < 2) {
 			return;
 		}
 
@@ -111,22 +111,21 @@ define(function(require) {
 		if (tag_hover == false) {
 			$('.tidypics-photo').hover(function() {
 				$('.tidypics-tag-wrapper').show();
-				}, function(event) {
-					// this check handles the tags appearing over the image
-					var mouseX = event.pageX;
-					var mouseY = event.pageY;
-					var offset = $('.tidypics-photo').offset();
-					var width = $('.tidypics-photo').outerWidth() - 1;
-					var height = $('.tidypics-photo').outerHeight() - 1;
+			}, function(event) {
+				// this check handles the tags appearing over the image
+				var mouseX = event.pageX;
+				var mouseY = event.pageY;
+				var offset = $('.tidypics-photo').offset();
+				var width = $('.tidypics-photo').outerWidth() - 1;
+				var height = $('.tidypics-photo').outerHeight() - 1;
 
-					mouseX -= offset.left;
-					mouseY -= offset.top;
+				mouseX -= offset.left;
+				mouseY -= offset.top;
 
-					if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
-						$('.tidypics-tag-wrapper').hide();
-					}
+				if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
+					$('.tidypics-tag-wrapper').hide();
 				}
-			);
+			});
 		} else {
 			$('.tidypics-photo').hover(
 				function() {

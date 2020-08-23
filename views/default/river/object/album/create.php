@@ -8,13 +8,18 @@
 
 elgg_require_js('tidypics/tidypics');
 
-$album = $vars['item']->getObjectEntity();
+$item = elgg_extract('item', $vars);
+if (!($item instanceof ElggRiverItem)) {
+	return;
+}
+
+$album = $item->getObjectEntity();
+if (!($album instanceof TidypicsAlbum)) {
+	return;
+}
 
 $album_river_view = elgg_get_plugin_setting('album_river_view', 'tidypics');
-$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics');
-if(!$preview_size) {
-	$preview_size = 'tiny';
-}
+$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics', 'tiny');
 
 if ($album_river_view == "set") {
 	$river_album_number = (int) elgg_get_plugin_setting('river_album_number', 'tidypics', 7);
@@ -29,12 +34,12 @@ if ($album_river_view == "set") {
 				'link_class' => 'tidypics-river-lightbox',
 			]));
 		}
-		$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], $attachments);
+		$vars['attachments'] = elgg_format_element('ul', ['class' => 'tidypics-river-list'], $attachments);
 	}
 } else {
 	$image = $album->getCoverImage();
 	if ($image) {
-		$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
+		$vars['attachments'] = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
 			elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
 				'href' => 'ajax/view/photos/riverpopup?guid=' . $image->getGUID(),
 				'title' => $image->title,
@@ -47,7 +52,4 @@ if ($album_river_view == "set") {
 	}
 }
 
-echo elgg_view('river/elements/layout', [
-	'item' => $vars['item'],
-	'attachments' => $attachments,
-]);
+echo elgg_view('river/elements/layout', $vars);

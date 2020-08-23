@@ -6,30 +6,31 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$owner = elgg_get_page_owner_entity();
-
-elgg_gatekeeper();
-elgg_group_gatekeeper();
-
-$title = elgg_echo('photos:add');
-
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if ($owner instanceof ElggUser) {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+$guid = elgg_extract('guid', $vars);
+if (!$guid) {
+	$guid = elgg_get_logged_in_user_guid();
 }
-elgg_push_breadcrumb($title);
+
+elgg_entity_gatekeeper($guid);
+
+$container = get_entity($guid);
+
+if (!$container->canWriteToContainer(0, 'object', TidypicsAlbum::SUBTYPE)) {
+	throw new \Elgg\EntityPermissionsException();
+}
+
+elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE, $container);
+elgg_push_breadcrumb(elgg_echo('add:object:album'));
+
+$title = elgg_echo('add:object:album');
 
 $vars = tidypics_prepare_form_vars();
 $content = elgg_view_form('photos/album/save', ['method' => 'post'], $vars);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
+	'filter' => '',
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 	'sidebar' => elgg_view('photos/sidebar_al', ['page' => 'upload']),
 ]);
 

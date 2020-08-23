@@ -1,5 +1,5 @@
-White screen when uploading images
-==================================
+#### White screen when uploading images ####
+
 Tidypics tries to calculate the maximum size of an image that your server will support. If it
 guesses incorrectly and someone uploads a photo that is too large, the script may crash when
 resizing the image if you are using GD. The easiest way to test this is to set display_errors
@@ -11,8 +11,8 @@ If it is not a memory issue, you should see some other error appear. Once you ha
 change display_error back to 0.
 
 
-Question mark images appear
-===========================
+#### Question mark images appear ####
+
 If you see question mark images when you look at your albums, this means the resizing of the images
 failed. This could be due to the memory limits as described above. There are other causes. Tidypics
 tries to detect these problems and write the cause to the error log. You should check your server
@@ -24,15 +24,15 @@ Another possible cause is using command line ImageMagick when your server does n
 support it or specifying the wrong path to the ImageMagick executables.
 
 
-Unable to save settings
-=======================
+#### Unable to save settings ####
+
 If you are unable to settings, Apache may be configured to block pages that use
 file paths as Tidypics does when setting the location of the ImageMagick executable.
 In this case, leave that field blank.
 
 
-Latest photos and latest albums widgets on index page
-=====================================================
+#### Latest photos and latest albums widgets on index page ####
+
 You can either use the Widget Manager plugin to add these widgets to the index page or in case you
 don't use this plugin you can also add them with customizing the Custom Index plugin index page. For
 adding the widgets with the Custom Index you need to add the following code to the file

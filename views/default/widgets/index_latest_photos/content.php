@@ -6,17 +6,13 @@
  *
  */
 
-/* @var $widget ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
-$limit = (int) $widget->tp_latest_photos_count;
-if ($limit < 1) {
-	$limit = 12;
-}
+$limit = (int) $widget->tp_latest_photos_count ?: 12;
 
 $prev_context = elgg_get_context();
 elgg_set_context('front');
-$image_html = elgg_list_entities([
+echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
 	'limit' => $limit,
@@ -25,7 +21,7 @@ $image_html = elgg_list_entities([
 	'list_type' => 'gallery',
 	'pagination' => false,
 	'gallery_class' => 'tidypics-gallery-widget',
+	'no_results' => elgg_echo('tidypics:widget:no_images'),
+	'distinct' => false,
 ]);
 elgg_set_context($prev_context);
-
-echo $image_html;

@@ -29,9 +29,10 @@ if (!isset($vars['title'])) {
 	$title = $entity->getTitle();
 } else {
 	$title = $vars['title'];
+	$title = htmlspecialchars($title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
 }
 
-$url = isset($vars['href']) ? $vars['href'] : $entity->getURL();
+$url = $entity->getURL();
 if (isset($vars['href'])) {
 	$url = $vars['href'];
 }
@@ -42,10 +43,8 @@ if (isset($vars['img_class'])) {
 }
 $class = "elgg-photo $class";
 
-$img_src = $entity->getIconURL($vars['size']);
-$img_src = elgg_format_url($img_src);
 $img = elgg_view('output/img', [
-	'src' => $img_src,
+	'src' => $entity->getIconURL($vars['size']),
 	'class' => $class,
 	'title' => $title,
 	'alt' => $title,

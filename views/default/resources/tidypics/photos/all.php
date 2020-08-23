@@ -6,12 +6,17 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:albums'));
+elgg_require_js('tidypics/tidypics');
+
+elgg_register_title_button(null, 'add', 'object', TidypicsAlbum::SUBTYPE);
+
+elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE);
+
+$title = elgg_echo('collection:object:album:all');
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
-
+$limit = (int) get_input('limit', 25);
+ 
 $content = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsAlbum::SUBTYPE,
@@ -27,8 +32,6 @@ $content = elgg_list_entities([
 	'no_results' => elgg_echo('tidypics:none'),
 ]);
 
-$title = elgg_echo('album:all');
-
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {
 	elgg_register_menu_item('title', [
@@ -39,10 +42,8 @@ if (tidypics_can_add_new_photos(null, $logged_in_user)) {
 	]);
 }
 
-elgg_register_title_button('photos');
-
-$body = elgg_view_layout('content', [
-	'filter_context' => 'all',
+$body = elgg_view_layout('default', [
+	'filter_value' => 'all',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_al', ['page' => 'all']),

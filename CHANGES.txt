@@ -1,6 +1,18 @@
 Changelog and contributors list
 ===============================
 
+Version 3.0.0 (Release Date: 23/08/2020)
+----------------------------------------
+
+* Minimum Elgg version required is Elgg 3.0.0,
+* Updated for Elgg 3,
+* Never used migration.php lib removed (idea was to allow for migration of images uploaded with the Elgg core Files plugin to Tidypics - maybe will re-implemented and made working at a later time).
+
+Contributors:
+
+* iionly
+* rohit1290
+
 Version 2.3.7 (Release Date: 23/08/2020)
 ----------------------------------------
 
@@ -37,7 +49,6 @@ Version 2.3.5 (Release Date: 07/07/2018)
 Contributors:
 
 * iionly
-
 
 Version 2.3.4 (Release Date: 20/05/2018)
 ----------------------------------------

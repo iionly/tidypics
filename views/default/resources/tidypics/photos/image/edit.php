@@ -6,47 +6,27 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-$guid = elgg_extract('guid', $vars);
-$entity = get_entity($guid);
-if (!($entity instanceof TidypicsImage)) {
-	forward('photos/all');
+$guid = (int) elgg_extract('guid', $vars);
+elgg_entity_gatekeeper($guid, 'object', TidypicsImage::SUBTYPE);
+
+$image = get_entity($guid);
+
+if (!$image->canEdit()) {
+	throw new \Elgg\EntityPermissionsException();
 }
 
-if (!$entity->canEdit()) {
-	forward($entity->getContainerEntity()->getURL());
-}
+elgg_push_entity_breadcrumbs($image);
+elgg_push_breadcrumb(elgg_echo('edit'));
 
-$album = $entity->getContainerEntity();
-if (!$album) {
-	forward('photos/all');
-}
+$title = elgg_echo('edit:object:image');
 
-elgg_set_page_owner_guid($album->getContainerGUID());
-$owner = elgg_get_page_owner_entity();
-
-elgg_gatekeeper();
-elgg_group_gatekeeper();
-
-$title = elgg_echo('image:edit');
-
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-if ($owner instanceof ElggUser) {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
-}
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
-elgg_push_breadcrumb($title);
-
-$vars = tidypics_prepare_form_vars($entity);
+$vars = tidypics_prepare_form_vars($image);
 $content = elgg_view_form('photos/image/save', ['method' => 'post'], $vars);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
+	'filter' => '',
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'upload']),
 ]);
 

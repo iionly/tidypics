@@ -6,81 +6,76 @@
  *
  */
 
-$batch_run_time_in_secs = 5;
-
 // Offset is the total amount of images processed so far.
 $offset = (int) get_input("offset", 0);
-$limit = 5;
 
 $image_lib = elgg_get_plugin_setting('image_lib', 'tidypics');
-if (!$image_lib) {
-	$image_lib = "GD";
-}
 
-$access_status = access_get_show_hidden_status();
-access_show_hidden_entities(true);
+$output = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use($offset, $image_lib) {
 
-_elgg_services()->db->disableQueryCache();
+	$batch_run_time_in_secs = 5.0;
+	$limit = 5;
 
-$success_count = 0;
-$error_count_invalid_image = 0;
-$error_count_recreate_failed = 0;
+	$success_count = 0;
+	$error_count_invalid_image = 0;
+	$error_count_recreate_failed = 0;
 
-while (((float) (microtime(true) - $GLOBALS['START_MICROTIME'])) < $batch_run_time_in_secs) {
+	_elgg_services()->db->disableQueryCache();
 
-	$batch = elgg_get_entities([
-		'type' => 'object',
-		'subtype' => TidypicsImage::SUBTYPE,
-		'limit' => $limit,
-		'offset' => $offset,
-	]);
+	while (((float) (microtime(true) - $GLOBALS['START_MICROTIME'])) < $batch_run_time_in_secs) {
 
-	foreach($batch as $image) {
-		$filename = $image->getFilename();
-		$container_guid = $image->container_guid;
+		$batch = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => TidypicsImage::SUBTYPE,
+			'limit' => $limit,
+			'offset' => $offset,
+		]);
 
-		if (!$filename || !$container_guid) {
-			$error_count_invalid_image++;
-		} else {
-			$prefix = "image/$container_guid/";
-			$filestorename = substr($filename, strlen($prefix));
+		foreach($batch as $image) {
+			$filename = $image->getFilename();
+			$container_guid = $image->container_guid;
 
-			switch ($image_lib) {
-				case "ImageMagick":
-					if (!tp_create_im_cmdline_thumbnails($image, $prefix, $filestorename)) {
-						$error_count_recreate_failed++;
-					} else {
-						$success_count++;
-					}
-					break;
-				case "ImageMagickPHP":
-					if (!tp_create_imagick_thumbnails($image, $prefix, $filestorename)) {
-						$error_count_recreate_failed++;
-					} else {
-						$success_count++;
-					}
-					break;
-				default:
-					if (!tp_create_gd_thumbnails($image, $prefix, $filestorename)) {
-						$error_count_recreate_failed++;
-					} else {
-						$success_count++;
-					}
-					break;
+			if (!$filename || !$container_guid) {
+				$error_count_invalid_image++;
+			} else {
+				$prefix = "image/$container_guid/";
+				$filestorename = substr($filename, strlen($prefix));
+
+				switch ($image_lib) {
+					case "ImageMagick":
+						if (!tp_create_im_cmdline_thumbnails($image, $prefix, $filestorename)) {
+							$error_count_recreate_failed++;
+						} else {
+							$success_count++;
+						}
+						break;
+					case "ImageMagickPHP":
+						if (!tp_create_imagick_thumbnails($image, $prefix, $filestorename)) {
+							$error_count_recreate_failed++;
+						} else {
+							$success_count++;
+						}
+						break;
+					default:
+						if (!tp_create_gd_thumbnails($image, $prefix, $filestorename)) {
+							$error_count_recreate_failed++;
+						} else {
+							$success_count++;
+						}
+						break;
+				}
 			}
 		}
+		$offset += $limit;
 	}
-	$offset += $limit;
-}
 
-access_show_hidden_entities($access_status);
+	_elgg_services()->db->enableQueryCache();
 
-_elgg_services()->db->enableQueryCache();
-
-$output = json_encode([
-	'numSuccess' => $success_count,
-	'numErrorsInvalidImage' => $error_count_invalid_image,
-	'numErrorsRecreateFailed' => $error_count_recreate_failed,
-]);
+	return json_encode([
+		'numSuccess' => $success_count,
+		'numErrorsInvalidImage' => $error_count_invalid_image,
+		'numErrorsRecreateFailed' => $error_count_recreate_failed,
+	]);
+});
 
 return elgg_ok_response($output, '');

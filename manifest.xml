@@ -3,7 +3,7 @@
 	<name>Tidypics</name>
 	<id>tidypics</id>
 	<author>iionly, Cash Costello</author>
-	<version>2.3.7</version>
+	<version>3.0.0</version>
 	<description>A photo gallery with albums, tagging, and a slideshow.</description>
 	<category>content</category>
 	<category>multimedia</category>
@@ -12,22 +12,12 @@
 	<license>GNU General Public License Version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>2.3.0</version>
+		<version>3.0.0</version>
 	</requires>
 	<suggests>
 		<type>plugin</type>
 		<name>widget_manager</name>
 	</suggests>
-	<requires>
-		<type>priority</type>
-		<plugin>widget_pack</plugin>
-		<priority>after</priority>
-	</requires>
-	<requires>
-		<type>priority</type>
-		<plugin>group_tools</plugin>
-		<priority>after</priority>
-	</requires>
 	<suggests>
 		<type>plugin</type>
 		<name>elggx_fivestar</name>

@@ -30,8 +30,8 @@ foreach ($tabs as $tab => $tab_settings) {
 	}
 
 	$params['tabs'][] = [
-		'title' => elgg_echo("tidypics:{$tab}"),
-		'url' => $href,
+		'text' => elgg_echo("tidypics:{$tab}"),
+		'href' => $href,
 		'selected' => ($tab === $selected_tab),
 	];
 }

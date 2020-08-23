@@ -5,23 +5,35 @@
 
 elgg_require_js('tidypics/tidypics');
 
-$tagger = $vars['item']->getSubjectEntity();
-$tagged_image = $vars['item']->getObjectEntity();
-$annotation = $vars['item']->getAnnotation();
-if (!$annotation) {
+$item = elgg_extract('item', $vars);
+if (!($item instanceof ElggRiverItem)) {
 	return;
-}
-$image = get_entity($annotation->entity_guid);
-// viewer may not have permission to view image
-if (!$image) {
-	return;
-}
-$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics');
-if(!$preview_size) {
-	$preview_size = 'tiny';
 }
 
-$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
+$tagger = $item->getSubjectEntity();
+if (!($tagger instanceof ElggUser)) {
+	return;
+}
+
+$tagged_image = $item->getObjectEntity();
+if (!($tagged_image instanceof TidypicsImage)) {
+	return;
+}
+
+$annotation = $item->getAnnotation();
+if (!($annotation instanceof ElggAnnotation)) {
+	return;
+}
+
+$image = get_entity($annotation->entity_guid);
+// viewer may not have permission to view image
+if (!($image instanceof TidypicsImage)) {
+	return;
+}
+
+$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics', 'tiny');
+
+$vars['attachments'] = elgg_format_element('ul', ['class' => 'tidypics-river-list'],
 	elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
 		'href' => 'ajax/view/photos/riverpopup?guid=' . $image->getGUID(),
 		'title' => $image->title,
@@ -47,15 +59,11 @@ $value = $annotation->value;
 $tag = unserialize($value);
 $tag_array = string_to_tag_array($tag->value);
 $message = elgg_view('output/tags', ['value' => $tag_array]);
+$vars['message'] = elgg_view('output/tags', ['value' => $tag_array]);
 if (count($tag_array) > 1) {
-	$summary = elgg_echo('image:river:wordtagged', [$tagger_link, $image_link]);
+	$vars['summary'] = elgg_echo('river:object:image:wordtagged', [$tagger_link, $image_link]);
 } else {
-	$summary = elgg_echo('image:river:wordtagged_single', [$tagger_link, $image_link]);
+	$vars['summary'] = elgg_echo('river:object:image:wordtagged_single', [$tagger_link, $image_link]);
 }
 
-echo elgg_view('river/elements/layout', [
-	'item' => $vars['item'],
-	'attachments' => $attachments,
-	'message' => $message,
-	'summary' => $summary
-]);
+echo elgg_view('river/elements/layout', $vars);

@@ -10,6 +10,10 @@
 
 $image = elgg_extract('entity', $vars);
 
+if (!($image instanceof TidypicsImage)) {
+	return true;
+}
+
 $img = elgg_view_entity_icon($image, 'small');
 
 $img_title = $image->getTitle();

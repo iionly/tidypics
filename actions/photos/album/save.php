@@ -31,7 +31,7 @@ if ($guid) {
 			'limit' => false,
 			'batch' => true,
 		]);
-		foreach($images as $image) {
+		foreach ($images as $image) {
 			$image->access_id = $access_id;
 			$image->save();
 		}
@@ -42,7 +42,7 @@ if ($guid) {
 			'limit' => false,
 			'batch' => true,
 		]);
-		foreach($batches as $batch) {
+		foreach ($batches as $batch) {
 			$batch->access_id = $access_id;
 			$batch->save();
 		}
@@ -56,7 +56,7 @@ $album->owner_guid = elgg_get_logged_in_user_guid();
 $album->access_id = $access_id;
 $album->title = $title;
 $album->description = $description;
-if($tags) {
+if ($tags) {
 	$album->tags = string_to_tag_array($tags);
 } else {
 	$album->deleteMetadata('tags');

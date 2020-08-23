@@ -5,11 +5,25 @@
 
 elgg_require_js('tidypics/tidypics');
 
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+if (!($item instanceof ElggRiverItem)) {
+	return;
+}
 
 $comment = $item->getObjectEntity();
+if (!($comment instanceof ElggComment)) {
+	return;
+}
+
+$album = $item->getTargetEntity();
+if (!($album instanceof TidypicsAlbum)) {
+	return;
+}
+
 $subject = $item->getSubjectEntity();
-$target = $item->getTargetEntity();
+if (!($subject instanceof ElggUser)) {
+	return;
+}
 
 $subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
@@ -19,23 +33,23 @@ $subject_link = elgg_view('output/url', [
 ]);
 
 $target_link = elgg_view('output/url', [
-	'href' => $target->getURL(),
-	'text' => $target->getDisplayName(),
+	'href' => $album->getURL(),
+	'text' => $album->getDisplayName(),
 	'class' => 'elgg-river-target',
 	'is_trusted' => true,
 ]);
 
-$attachments = '';
+$vars['summary'] = elgg_echo('river:object:comment:album', [$subject_link, $target_link]);
+
+$vars['message'] = elgg_get_excerpt($comment->description);
+
 $river_comments_thumbnails = elgg_get_plugin_setting('river_comments_thumbnails', 'tidypics');
 if ($river_comments_thumbnails == "show") {
-	$album = $target;
 	$image = $album->getCoverImage();
 	if ($image) {
-		$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics');
-		if(!$preview_size) {
-			$preview_size = 'tiny';
-		}
-		$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
+		$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics', 'tiny');
+
+		$vars['attachments'] = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
 			elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
 				'href' => 'ajax/view/photos/riverpopup?guid=' . $image->getGUID(),
 				'title' => $image->title,
@@ -46,11 +60,4 @@ if ($river_comments_thumbnails == "show") {
 	}
 }
 
-$summary = elgg_echo('river:comment:object:album', [$subject_link, $target_link]);
-
-echo elgg_view('river/elements/layout', [
-	'item' => $vars['item'],
-	'attachments' => $attachments,
-	'message' => elgg_get_excerpt($comment->description),
-	'summary' => $summary,
-]);
+echo elgg_view('river/elements/layout', $vars);

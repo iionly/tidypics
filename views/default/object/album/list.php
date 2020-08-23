@@ -9,18 +9,10 @@
  */
 
 $album = elgg_extract('entity', $vars);
-$owner = $album->getOwnerEntity();
 
-$owner_link = elgg_view('output/url', [
-	'href' => "photos/owner/$owner->username",
-	'text' => $owner->name,
-	'is_trusted' => true,
-]);
-$author_text = elgg_echo('byline', [$owner_link]);
-$date = elgg_view_friendly_time($album->time_created);
-$categories = elgg_view('output/categories', $vars);
-
-$subtitle = "$author_text $date $categories";
+if (!($album instanceof TidypicsAlbum)) {
+	return true;
+}
 
 $title = elgg_view('output/url', [
 	'text' => $album->getTitle(),
@@ -31,8 +23,6 @@ $params = [
 	'entity' => $album,
 	'title' => $title,
 	'metadata' => null,
-	'subtitle' => $subtitle,
-	'tags' => elgg_view('output/tags', ['tags' => $album->tags]),
 ];
 $params = $params + $vars;
 $summary = elgg_view('object/elements/summary', $params);

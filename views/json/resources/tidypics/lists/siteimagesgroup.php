@@ -1,22 +1,23 @@
 <?php
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
-$container_guid = elgg_extract('guid', $vars);
-elgg_set_page_owner_guid($container_guid);
+$group_guid = elgg_extract('guid', $vars);
+elgg_set_page_owner_guid($group_guid);
 elgg_group_gatekeeper();
-$container = get_entity($container_guid);
+$group = get_entity($group_guid);
 
-if($container instanceof ElggGroup) {
-	$db_prefix = elgg_get_config('dbprefix');
+if($group instanceof ElggGroup) {
 	$images = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => TidypicsImage::SUBTYPE,
 		'owner_guid' => null,
-		'joins' => ["join {$db_prefix}entities u on e.container_guid = u.guid"],
-		'wheres' => ["u.container_guid = {$container_guid}"],
-		'order_by' => "e.time_created desc",
+		'wheres' => function(\Elgg\Database\QueryBuilder $qb, $alias) use($group_guid) {
+			$qb->innerJoin($alias, 'entities', 'u', "u.guid = e.container_guid");
+			$qb->orderBy('e.time_created', 'DESC');
+			return $qb->compare('u.container_guid', '=', $group_guid, ELGG_VALUE_INTEGER);
+		},
 		'limit' => $limit,
 		'offset' => $offset,
 	]);

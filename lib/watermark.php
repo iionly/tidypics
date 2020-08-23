@@ -142,9 +142,6 @@ function tp_im_cmdline_watermark($filename, $album_guid) {
 	}
 
 	$im_path = elgg_get_plugin_setting('im_path', 'tidypics');
-	if (!$im_path) {
-		$im_path = "/usr/bin/";
-	}
 
 	// make sure end of path is /
 	if (substr($im_path, strlen($im_path)-1, 1) != "/") {
@@ -168,7 +165,7 @@ function tp_im_cmdline_watermark($filename, $album_guid) {
 		$commands[] = 'rm "' . $user_stamp_base . '_mask' . $ext . '"';
 		$commands[] = 'rm "' . $user_stamp_base . '_fgnd' . $ext . '"';
 
-		foreach($commands as $command) {
+		foreach ($commands as $command) {
 			exec($command);
 		}
 	}
@@ -177,7 +174,7 @@ function tp_im_cmdline_watermark($filename, $album_guid) {
 	$commands = [];
 	$commands[] = $im_path . 'composite -gravity south -geometry +0+10 "' . $user_stamp_base . $ext . '" "' . $filename . '" "' . $filename . '_watermarked"';
 	$commands[] = "mv \"$filename" . "_watermarked\" \"$filename\"";
-	foreach($commands as $command) {
+	foreach ($commands as $command) {
 		exec($command);
 	}
 }

@@ -5,7 +5,7 @@
  * List all photos tagged with a user
  */
 
-elgg_gatekeeper();
+elgg_require_js('tidypics/tidypics');
 
 // Get user guid (of logged in user, so everyone only gets the images their tagged in)
 $guid = elgg_get_logged_in_user_guid();
@@ -13,18 +13,17 @@ $guid = elgg_get_logged_in_user_guid();
 $user = get_entity($guid);
 
 if(!($user instanceof ElggUser)) {
-	forward('', '404');
+	throw new \Elgg\EntityNotFoundException();
 }
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
-elgg_push_breadcrumb(elgg_echo('tidypics:usertagged'));
+elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE, $owner);
+
+$title = elgg_echo('collection:object:image:usertagged');
 
 $offset = (int) get_input('offset', 0);
-$limit = (int) get_input('limit', 16);
+$limit = (int) get_input('limit', 25);
 
-$title = elgg_echo('tidypics:usertag', [$user->name]);
-$result = elgg_list_entities_from_relationship([
+$result = elgg_list_entities([
 	'relationship' => 'phototag',
 	'relationship_guid' => $user->guid,
 	'inverse_relationship' => false,
@@ -38,14 +37,12 @@ $result = elgg_list_entities_from_relationship([
 	'list_type' => 'gallery',
 	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
-	'no_results' => elgg_echo('tidypics:usertags_photos:nosuccess'),
 ]);
 
-$logged_in_user = elgg_get_logged_in_user_entity();
-if (tidypics_can_add_new_photos(null, $logged_in_user)) {
+if (tidypics_can_add_new_photos(null, $user)) {
 	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_user->getGUID(),
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $user->getGUID(),
 		'text' => elgg_echo("photos:addphotos"),
 		'link_class' => 'elgg-button elgg-button-action tidypics-selectalbum-lightbox',
 	]);
@@ -61,8 +58,9 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && !empty($result)) {
 		'data-limit' => $limit,
 		'data-offset' => $offset,
 		'href' => 'ajax/view/photos/galleria',
-		'text' => "<img src=\"" . elgg_get_simplecache_url("tidypics/slideshow.png") . "\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => '<i class="far fa-images"></i>',
 		'title' => elgg_echo('album:slideshow'),
+		'item_class' => 'tidypics-slideshow-button',
 		'link_class' => 'elgg-button elgg-button-action tidypics-slideshow-lightbox',
 	]);
 }
@@ -73,8 +71,8 @@ if (!empty($result)) {
 	$content = elgg_echo('tidypics:usertags_photos:nosuccess');
 }
 
-$body = elgg_view_layout('content', [
-	'filter_override' => '',
+$body = elgg_view_layout('default', [
+	'filter' => '',
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_im', ['page' => 'friends']),

@@ -6,44 +6,40 @@
  *
  */
 
-/* @var $widget ElggWidget */
+elgg_require_js('tidypics/tidypics');
+
 $widget = elgg_extract('entity', $vars);
 
-$limit = (int) $widget->tp_latest_photos_count;
-if ($limit < 1) {
-	$limit = 12;
-}
+$limit = (int) $widget->tp_latest_photos_count ?: 12;
 
-$group = elgg_get_page_owner_entity();
-$group_guid =  $group->getGUID();
+$group_guid = elgg_get_page_owner_guid();
+$group = get_entity($group_guid);
 
-$db_prefix = elgg_get_config('dbprefix');
-
-$prev_context = elgg_get_context();
-elgg_set_context('groups');
-$image_html = elgg_list_entities([
+elgg_push_context('groups');
+echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
-	'joins' => ["join {$db_prefix}entities u on e.container_guid = u.guid"],
-	'wheres' => ["u.container_guid = {$group_guid}"],
-	'order_by' => "e.time_created desc",
+	'wheres' => function(\Elgg\Database\QueryBuilder $qb, $alias) use($group_guid) {
+		$qb->innerJoin($alias, 'entities', 'u', "u.guid = e.container_guid");
+		$qb->orderBy('e.time_created', 'DESC');
+		return $qb->compare('u.container_guid', '=', $group_guid, ELGG_VALUE_INTEGER);
+	},
 	'limit' => $limit,
 	'full_view' => false,
 	'list_type_toggle' => false,
 	'list_type' => 'gallery',
 	'pagination' => false,
 	'gallery_class' => 'tidypics-gallery-widget',
+	'no_results' => elgg_echo('tidypics:widget:no_images'),
 ]);
-elgg_set_context($prev_context);
+elgg_pop_context();
 
 if (tidypics_can_add_new_photos(null, $group)) {
-	$image_html .= elgg_view('output/url', [
-		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid,
-		'text' => elgg_echo("photos:addphotos"),
+	echo elgg_view('output/url', [
+		'href' => "ajax/view/photos/selectalbum?owner_guid=" . $group->getGUID(),
+		'text' => elgg_echo('photos:addphotos'),
 		'class' => 'elgg-lightbox',
 		'link_class' => 'tidypics-selectalbum-lightbox',
 		'is_trusted' => true,
 	]);
 }
-
-echo $image_html;
