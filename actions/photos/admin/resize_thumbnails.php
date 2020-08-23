@@ -6,7 +6,6 @@
  *
  */
 
-global $START_MICROTIME;
 $batch_run_time_in_secs = 5;
 
 // Offset is the total amount of images processed so far.
@@ -27,7 +26,7 @@ $success_count = 0;
 $error_count_invalid_image = 0;
 $error_count_recreate_failed = 0;
 
-while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs) {
+while (((float) (microtime(true) - $GLOBALS['START_MICROTIME'])) < $batch_run_time_in_secs) {
 
 	$batch = elgg_get_entities([
 		'type' => 'object',

@@ -109,6 +109,7 @@ return [
 	'tidypics:settings:exif' => "Display EXIF data",
 	'tidypics:settings:view_count' => "Display view count",
 	'tidypics:settings:slideshow' => 'Enable slideshow',
+	'tidypics:settings:extended_sidebar_menu' => 'Display additional Tidypics menu entries in sidebar for additional listing options',
 	'tidypics:settings:uploader' => "Use Plupload HTML5/HTML4 uploader",
 	'tidypics:settings:grp_perm_override' => "Allow group members full access to group albums",
 	'tidypics:settings:site_menu_link' => "Site menu entry target?",

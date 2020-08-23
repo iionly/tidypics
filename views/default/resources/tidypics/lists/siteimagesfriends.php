@@ -17,31 +17,27 @@ elgg_push_breadcrumb(elgg_echo('friends'));
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 16);
 
-if ($friends = $owner->getFriends(['limit' => false])) {
-	$friendguids = [];
-	foreach ($friends as $friend) {
-		$friendguids[] = $friend->getGUID();
-	}
-	$result = elgg_list_entities([
-		'type' => 'object',
-		'subtype' => TidypicsImage::SUBTYPE,
-		'owner_guids' => $friendguids,
-		'limit' => $limit,
-		'offset' => $offset,
-		'full_view' => false,
-		'pagination' => true,
-		'list_type' => 'gallery',
-		'list_type_toggle' => false,
-		'gallery_class' => 'tidypics-gallery',
-	]);
+$result = elgg_list_entities_from_relationship([
+	'type' => 'object',
+	'subtype' => TidypicsImage::SUBTYPE,
+	'relationship' => 'friend',
+	'relationship_guid' => $owner->guid,
+	'relationship_join_on' => 'owner_guid',
+	'preload_owners' => true,
+	'preload_containers' => true,
+	'limit' => $limit,
+	'offset' => $offset,
+	'full_view' => false,
+	'pagination' => true,
+	'list_type' => 'gallery',
+	'list_type_toggle' => false,
+	'gallery_class' => 'tidypics-gallery',
+]);
 
-	if (!empty($result)) {
-		$content = $result;
-	} else {
-		$content = elgg_echo("tidypics:siteimagesfriends:nosuccess");
-	}
+if (!empty($result)) {
+	$content = $result;
 } else {
-	$content = elgg_echo("friends:none:you");
+	$content = elgg_echo("tidypics:siteimagesfriends:nosuccess");
 }
 
 $title = elgg_echo('tidypics:siteimagesfriends');

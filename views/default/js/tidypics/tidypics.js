@@ -1,6 +1,7 @@
 define(function(require) {
 	var elgg = require("elgg");
 	var $ = require("jquery");
+	require('jquery.colorbox');
 
 	function init() {
 		if ($(".tidypics-lightbox").length) {
@@ -15,6 +16,7 @@ define(function(require) {
 
 		if ($(".tidypics-river-lightbox").length) {
 			$(".tidypics-river-lightbox").colorbox({
+				width:'640px',
 				maxWidth:'95%',
 				maxHeight:'95%',
 				onComplete: function() {

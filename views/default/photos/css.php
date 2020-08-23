@@ -123,8 +123,17 @@
 }
 
 .tidypics-river-popup {
-	max-width: 610px;
-	height: auto;
+	width:100%;
+	height:auto;
+}
+
+.tidypicsRiverPhotoPopup {
+	width:100%;
+	height:auto;
+	min-height:60%;
+	text-align: center;
+	justify-content: center;
+	background-color:#FFF;
 }
 
 #tidypics-uploader {

@@ -15,11 +15,14 @@ $limit = (int) get_input('limit', 16);
 $result = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => TidypicsImage::SUBTYPE,
-	'owner_guid' => null,
 	'limit' => $limit,
 	'offset' => $offset,
 	'full_view' => false,
+	'preload_owners' => true,
+	'preload_containers' => true,
+	'distinct' => false,
 	'list_type' => 'gallery',
+	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
 

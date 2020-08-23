@@ -58,19 +58,19 @@ if ($images) {
 	if(!$preview_size) {
 		$preview_size = 'tiny';
 	}
-
+	$first_image = $images[0];
 	$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
-		elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($images[0], $preview_size, [
-			'href' => 'photos/riverpopup/' . $images[0]->getGUID(),
-			'title' => $images[0]->title,
+		elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($first_image, $preview_size, [
+			'href' => 'ajax/view/photos/riverpopup?guid=' . $first_image->getGUID(),
+			'title' => $first_image->title,
 			'img_class' => 'tidypics-photo',
 			'link_class' => 'tidypics-river-lightbox',
 		]))
 	);
 
 	$image_link = elgg_view('output/url', [
-		'href' => $images[0]->getURL(),
-		'text' => $images[0]->getTitle(),
+		'href' => $first_image->getURL(),
+		'text' => $first_image->getTitle(),
 		'is_trusted' => true,
 	]);
 }
@@ -89,7 +89,7 @@ if ($images_count > 1) {
 	]);
 } else {
 	// View the comments of the image
-	$vars['item']->object_guid = $images[0]->guid;
+	$vars['item']->object_guid = $first_image->guid;
 	$responses = elgg_view('river/elements/responses', $vars);
 	if ($responses) {
 		$responses = elgg_format_element('div', ['class' => 'elgg-river-responses'], $responses);

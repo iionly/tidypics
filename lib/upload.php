@@ -18,6 +18,9 @@ function tp_upload_get_mimetype($originalName) {
 		case 'gif':
 			return 'image/gif';
 			break;
+		case 'webp':
+			return 'image/webp';
+			break;
 		case 'jpg':
 		case 'jpeg':
 			return 'image/jpeg';
@@ -42,6 +45,11 @@ function tp_upload_check_format($mime) {
 		'image/pjpeg',
 		'image/x-png',
 	];
+	
+	$imageLib = elgg_get_plugin_setting('image_lib', 'tidypics');
+	if ($imageLib == 'ImageMagick') {
+		$accepted_formats[] = 'image/webp';
+	}
 
 	if (!in_array($mime, $accepted_formats)) {
 		return false;

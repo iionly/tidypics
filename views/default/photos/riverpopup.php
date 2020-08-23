@@ -1,7 +1,7 @@
 <?php
 
 // get the photo entity
-$image_guid = elgg_extract('guid', $vars);
+$image_guid = get_input('guid', false);
 
 if (!$image_guid) {
 	return true;
@@ -52,8 +52,8 @@ $summary = elgg_view_image_block($owner_icon, $list_body, $params);
 
 $content = elgg_format_element('div', ['style' => 'word-wrap:break-word;'], $title);
 $content .= elgg_format_element('div', ['class' => ''], $summary);
-$content .= elgg_format_element('div', ['align' => 'center', 'class' => 'mbm'], elgg_view_entity_icon($image, 'large', ['img_class' => 'tidypics-photo']));
-$content .= elgg_format_element('div', ['align' => 'center', 'class' => 'mbn'], elgg_view('output/url', [
+$content .= elgg_format_element('div', ['class' => 'tidypicsRiverPhotoPopup'], elgg_view_entity_icon($image, 'large', ['img_class' => 'tidypics-photo']));
+$content .= elgg_format_element('div', ['align' => 'center', 'class' => 'mts mbs'], elgg_view('output/url', [
 	'href' => $image->getURL() . '#comments',
 	'text' => elgg_echo('generic_comments:add'),
 	'is_trusted' => true,

@@ -33,7 +33,10 @@ $result = elgg_list_entities_from_relationship([
 	'limit' => $limit,
 	'offset' => $offset,
 	'full_view' => false,
+	'preload_owners' => true,
+	'preload_containers' => true,
 	'list_type' => 'gallery',
+	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 	'no_results' => elgg_echo('tidypics:usertags_photos:nosuccess'),
 ]);

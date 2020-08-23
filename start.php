@@ -28,6 +28,9 @@ function tidypics_init() {
 	// Register an ajax view for the Galleria slideshow
 	elgg_register_ajax_view('photos/galleria');
 
+	// Register an ajax view for the River image popups
+	elgg_register_ajax_view('photos/riverpopup');
+
 	// Set up site menu
 	$site_menu_links_to = elgg_get_plugin_setting('site_menu_link', 'tidypics');
 	if ($site_menu_links_to == 'albums') {
@@ -139,7 +142,7 @@ function tidypics_init() {
 	elgg_register_action("photos/admin/create_thumbnail", dirname(__FILE__) . '/actions/photos/admin/create_thumbnail.php', 'admin');
 	elgg_register_action("photos/admin/resize_thumbnails", dirname(__FILE__) . '/actions/photos/admin/resize_thumbnails.php', 'admin');
 	elgg_register_action("photos/admin/delete_image", dirname(__FILE__) . '/actions/photos/admin/delete_image.php', 'admin');
-	elgg_register_action("photos/admin/upgrade", dirname(__FILE__) . '/actions/hotos/admin/upgrade.php', 'admin');
+	elgg_register_action("photos/admin/upgrade", dirname(__FILE__) . '/actions/photos/admin/upgrade.php', 'admin');
 	elgg_register_action("photos/admin/broken_images", dirname(__FILE__) . '/actions/photos/admin/broken_images.php', 'admin');
 	elgg_register_action("photos/admin/imtest", dirname(__FILE__) . '/actions/photos/admin/imtest.php', 'admin');
 }
@@ -268,17 +271,6 @@ function tidypics_page_handler($page) {
 
 		case "tagged": // all photos tagged with logged in user
 			echo elgg_view_resource('tidypics/photos/tagged');
-			break;
-
-		case "riverpopup": // show image in lightbox on activity page
-			if (isset($page[1])) {
-				$resource_vars['guid'] = (int) $page[1];
-			}
-			if (elgg_is_xhr()) {
-				echo elgg_view_resource('tidypics/photos/riverpopup', $resource_vars);
-			} else {
-				return elgg_redirect_response('photos/image/' . $resource_vars['guid']);
-			}
 			break;
 
 		case "mostviewed": // images with the most views

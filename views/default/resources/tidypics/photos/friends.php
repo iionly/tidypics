@@ -20,27 +20,23 @@ $title = elgg_echo('album:friends');
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 16);
 
-if ($friends = $owner->getFriends(['limit' => false])) {
-	$friendguids = [];
-	foreach ($friends as $friend) {
-		$friendguids[] = $friend->getGUID();
-	}
-	$content = elgg_list_entities([
-		'type' => 'object',
-		'subtype' => TidypicsAlbum::SUBTYPE,
-		'owner_guids' => $friendguids,
-		'limit' => $limit,
-		'offset' => $offset,
-		'full_view' => false,
-		'pagination' => true,
-		'list_type' => 'gallery',
-		'list_type_toggle' => false,
-		'gallery_class' => 'tidypics-gallery',
-		'no_results' => elgg_echo('tidypics:none'),
-	]);
-} else {
-	$content = elgg_echo("friends:none:you");
-}
+$content = elgg_list_entities_from_relationship([
+	'type' => 'object',
+	'subtype' => TidypicsAlbum::SUBTYPE,
+	'relationship' => 'friend',
+	'relationship_guid' => $owner->guid,
+	'relationship_join_on' => 'owner_guid',
+	'preload_owners' => true,
+	'preload_containers' => true,
+	'limit' => $limit,
+	'offset' => $offset,
+	'full_view' => false,
+	'pagination' => true,
+	'list_type' => 'gallery',
+	'list_type_toggle' => false,
+	'gallery_class' => 'tidypics-gallery',
+	'no_results' => elgg_echo('tidypics:none'),
+]);
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 if (tidypics_can_add_new_photos(null, $logged_in_user)) {

@@ -109,6 +109,7 @@ return [
 	'tidypics:settings:exif' => "EXIF-Daten anzeigen",
 	'tidypics:settings:view_count' => "Zugriffszähler anzeigen",
 	'tidypics:settings:slideshow' => 'Slideshow erlauben',
+	'tidypics:settings:extended_sidebar_menu' => 'Zusätzliche Menueinträge von Tidypics in der Seitenleise anzeigen',
 	'tidypics:settings:uploader' => "Plupload HTML5/HTML4-Uploader verwenden",
 	'tidypics:settings:grp_perm_override' => "Gruppen-Mitgliedern unbeschränkten Zugriff auf die Verwaltung von Gruppen-Alben geben",
 	'tidypics:settings:site_menu_link' => "Ziel des Eintrags im Seitenmenu?",

@@ -37,7 +37,11 @@ $result = elgg_list_entities([
 	'limit' => $limit,
 	'offset' => $offset,
 	'full_view' => false,
+	'preload_owners' => true,
+	'preload_containers' => true,
+	'distinct' => false,
 	'list_type' => 'gallery',
+	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
 

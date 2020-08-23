@@ -302,7 +302,7 @@ function tidypics_comments_handler($hook, $type, $value, $params) {
 	}
 	$target_entity = get_entity($target_guid);
 
-	if ($target_entity instanceof Tidypics) {
+	if ($target_entity instanceof TidypicsImage) {
 		// update river entry attributes
 		$result['view'] = 'river/object/comment/image';
 	} else if ($target_entity instanceof TidypicsAlbum) {

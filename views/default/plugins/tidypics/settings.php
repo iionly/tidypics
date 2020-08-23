@@ -21,7 +21,7 @@ echo elgg_view('photos/tabs', ['tab' => 'settings']);
 $content_main = '';
 
 // enable/disable some options
-$checkboxes = ['tagging', 'restrict_tagging', 'view_count', 'uploader', 'exif', 'download_link' , 'slideshow'];
+$checkboxes = ['tagging', 'restrict_tagging', 'view_count', 'uploader', 'exif', 'download_link' , 'slideshow', 'extended_sidebar_menu'];
 foreach ($checkboxes as $checkbox) {
 	$content_main .= elgg_view_field([
 		'#type' => 'checkbox',

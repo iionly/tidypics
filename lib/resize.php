@@ -484,6 +484,7 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 		'image/pjpeg' => 'jpeg',
 		'image/png' => 'png',
 		'image/x-png' => 'png',
+		'image/webp' => 'webp',
 		'image/gif' => 'gif',
 	];
 
@@ -500,7 +501,7 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 		$im_path .= "/";
 	}
 
-	$gif_to_convert = ($imgsizearray['mime'] == 'image/gif') ? '-coalesce' : '';
+	$gif_to_convert = (($imgsizearray['mime'] == 'image/gif') || ($imgsizearray['mime'] == 'image/webp')) ? '-coalesce' : '';
 
 	// see imagemagick web site for explanation of these parameters
 	// the ^ in the resize means those are minimum width and height values

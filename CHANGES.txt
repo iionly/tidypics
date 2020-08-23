@@ -1,6 +1,23 @@
 Changelog and contributors list
 ===============================
 
+Version 2.3.7 (Release Date: 23/08/2020)
+----------------------------------------
+
+* Old upgrade scripts (which were necessary during Tidypics 1.x upgrades) removed. Either you had run them back then when your site was still on Elgg 1.x or you would never have needed them if you started your site with a more recent version of Tidypics... sadly a new upgrade script became necessary (see below in Changelog; please go to the Tidypics plugin settings page where you'll find the "Upgrade" link on top to run the script),
+* Little changes in resource listing views for improved loading performance (hopefully),
+* New plugin option to enable / disable the sidebar menu entries of Tidypics ("Recently viewed photos" etc.),
+* Webp image format support - BUT ONLY WORKS with Image Magick executable image library!
+* Restored functionality of resize all thumbnail routine on Tidypics settings page (was broken on Elgg 2.x so far),
+* Updated Galleria slideshow script to version 1.6.1,
+* Improved "responsiveness" of image displayed in lightbox popups on activity page,
+* If (optionally) Widget Pack and/or Group Tools plugins are used require Tidypics to be below these plugins in plugin list to allow for overriding index page and group profile page activity widgets for the Tidypics image popup to work,
+* Fixed (optional) display of preview image in river entry when commenting on image (please go to the Tidypics plugin settings page and run the update to fix existing river entries!).
+
+Contributors:
+
+* iionly
+
 Version 2.3.6 (Release Date: 16/09/2018)
 ----------------------------------------
 

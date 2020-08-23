@@ -41,6 +41,12 @@ $client_image_height = (int) elgg_get_plugin_setting('client_image_height', 'tid
 if (!$client_image_height) {
 	$client_image_height = 2000;
 }
+$imageLib = elgg_get_plugin_setting('image_lib', 'tidypics');
+if ($imageLib == 'ImageMagick') {
+	$allowed_extensions = "jpg,jpeg,gif,png,webp";
+} else {
+	$allowed_extensions = "jpg,jpeg,gif,png";
+}
 
 echo elgg_autop(elgg_echo('tidypics:uploader:instructs', [$max_uploads, $maxfilesize]));
 
@@ -84,4 +90,5 @@ echo elgg_format_element('div', [
 	'data-remove-exif' => $remove_exif,
 	'data-client-width' => $client_image_width,
 	'data-client-height' => $client_image_height,
+	'data-allext' => $allowed_extensions,
 ], $content);

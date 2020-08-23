@@ -16,7 +16,8 @@ define(function(require) {
 				data[name] = value;
 			}
 		});
-		
+
+		var allowed_ext = $("#uploader").data('allext');
 		var maxfilesize = $("#uploader").data('maxfilesize');
 		var maxfiles = $("#uploader").data('maxnumber');
 		
@@ -50,7 +51,7 @@ define(function(require) {
 			max_file_size : maxfilesize + 'mb',
 
 			filters : [
-				{title : elgg.echo('tidypics:uploader:filetype'), extensions : "jpg,jpeg,gif,png"}
+				{title : elgg.echo('tidypics:uploader:filetype'), extensions : allowed_ext}
 			],
 
 			// Views to activate

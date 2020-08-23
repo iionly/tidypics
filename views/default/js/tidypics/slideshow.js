@@ -34,7 +34,7 @@ define(function(require) {
 			 */
 			Galleria.addTheme({
 				name: 'tidypics',
-				version: 1.5,
+				version: 1.6,
 				author: 'Galleria',
 				defaults: {
 					transition: 'slide',

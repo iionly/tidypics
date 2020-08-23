@@ -34,7 +34,7 @@ if ($river_comments_thumbnails == "show") {
 	}
 	$attachments = elgg_format_element('ul', ['class' => 'tidypics-river-list'], 
 		elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($target, $preview_size, [
-			'href' => 'photos/riverpopup/' . $target->getGUID(),
+			'href' => 'ajax/view/photos/riverpopup?guid=' . $target->getGUID(),
 			'title' => $target->title,
 			'img_class' => 'tidypics-photo',
 			'link_class' => 'tidypics-river-lightbox',

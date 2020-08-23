@@ -140,18 +140,9 @@ function tidypics_is_upgrade_available() {
 
 	$local_version = elgg_get_plugin_setting('version', 'tidypics');
 	if ($local_version === null) {
-		// no version set so either new install or really old one
-		if (!get_subtype_class('object', TidypicsImage::SUBTYPE) || !get_subtype_class('object', TidypicsAlbum::SUBTYPE)) {
-			$local_version = 0;
-		} else {
-			// set initial version for new install
-			elgg_set_plugin_setting('version', $version, 'tidypics');
-			$local_version = $version;
-		}
-	} elseif ($local_version === '1.62') {
-		// special work around to handle old upgrade system
-		$local_version = 2010010101;
-		elgg_set_plugin_setting('version', $local_version, 'tidypics');
+		// set initial version for new install
+		elgg_set_plugin_setting('version', $version, 'tidypics');
+		$local_version = $version;
 	}
 
 	if ($local_version == $version) {

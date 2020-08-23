@@ -26,7 +26,10 @@ $result = elgg_list_entities_from_annotation_calculation([
 	'annotation_created_time_upper' => $end,
 	'order_by' => 'annotation_calculation desc',
 	'full_view' => false,
+	'preload_owners' => true,
+	'preload_containers' => true,
 	'list_type' => 'gallery',
+	'list_type_toggle' => false,
 	'gallery_class' => 'tidypics-gallery',
 ]);
 

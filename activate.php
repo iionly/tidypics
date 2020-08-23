@@ -34,6 +34,7 @@ $defaults = [
 	'exif' => false,
 	'download_link' => true,
 	'slideshow' => false,
+	'extended_sidebar_menu' => true,
 
 	'maxfilesize' => 5,
 	'image_lib' => 'GD',
@@ -86,3 +87,13 @@ if ($image_sizes) {
 }
 $image_sizes = serialize($image_sizes);
 elgg_set_plugin_setting('image_sizes', $image_sizes, 'tidypics');
+
+// sets $version based on code
+require_once elgg_get_plugins_path() . "tidypics/version.php";
+
+$local_version = elgg_get_plugin_setting('version', 'tidypics');
+if ($local_version === null) {
+	// set initial version for new install
+	elgg_set_plugin_setting('version', $version, 'tidypics');
+	$local_version = $version;
+}

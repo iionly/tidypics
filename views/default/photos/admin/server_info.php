@@ -99,6 +99,11 @@ $rows[] = elgg_format_element('tr', [], implode('', [
 	elgg_format_element('td', [], ''),
 ]));
 $rows[] = elgg_format_element('tr', [], implode('', [
+	elgg_format_element('td', [], 'GD imagewebp'),
+	elgg_format_element('td', [], is_callable('imagewebp') ? elgg_echo('tidypics:enabled') : elgg_echo('tidypics:disabled')),
+	elgg_format_element('td', [], ''),
+]));
+$rows[] = elgg_format_element('tr', [], implode('', [
 	elgg_format_element('td', [], 'EXIF'),
 	elgg_format_element('td', [], is_callable('exif_read_data') ? elgg_echo('tidypics:enabled') : elgg_echo('tidypics:disabled')),
 	elgg_format_element('td', [], ''),

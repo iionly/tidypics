@@ -49,7 +49,7 @@ if (count($images)) {
 	$attachments = '';
 	foreach($images as $image) {
 		$attachments .= elgg_format_element('li', ['class' => 'tidypics-photo-item'], elgg_view_entity_icon($image, $preview_size, [
-			'href' => 'photos/riverpopup/' . $image->getGUID(),
+			'href' => 'ajax/view/photos/riverpopup?guid=' . $image->getGUID(),
 			'title' => $image->title,
 			'img_class' => 'tidypics-photo',
 			'link_class' => 'tidypics-river-lightbox',
