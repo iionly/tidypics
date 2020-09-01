@@ -1,6 +1,16 @@
 Changelog and contributors list
 ===============================
 
+Version 3.0.1 (Release Date: 29/08/2020)
+----------------------------------------
+
+* Fixed: Download link does really downloading the image instead of showing inline.
+
+Contributors:
+
+* iionly
+
+
 Version 3.0.0 (Release Date: 23/08/2020)
 ----------------------------------------
 

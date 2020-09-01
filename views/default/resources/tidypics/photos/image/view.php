@@ -55,7 +55,7 @@ if (elgg_get_plugin_setting('download_link', 'tidypics')) {
 	// add download button to title menu
 	elgg_register_menu_item('title', [
 		'name' => 'download',
-		'href' => "photos/download/$photo_guid",
+		'href' => "photos/download/$photo_guid/attachment",
 		'text' => elgg_echo('image:download'),
 		'link_class' => 'elgg-button elgg-button-action',
 	]);
