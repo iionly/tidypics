@@ -7,9 +7,10 @@
  */
 
 $guid = (int) elgg_extract('guid', $vars);
-$disposition = elgg_extract('disposition', $vars, 'attachment');
-
 $image = get_entity($guid);
+
+$disposition = elgg_extract('disposition', $vars);
+$disposition = ($disposition == 'inline') ? 'inline' : 'attachment';
 
 if ($image instanceof TidypicsImage) {
 	$filename = $image->originalfilename;
