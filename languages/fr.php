@@ -1,14 +1,22 @@
 <?php
+
 /**
  * Thanks to BenaeSan for providing the French translation
  * On 2017-04-06 17:05
  */
 
 return [
-	// Hack for core bug
+	'river:object:tidypics_batch:created' => '%s a ajouté des photos %s dans l\'album %s',
+	'tidypics:exif_title' => 'EXIF',
+	'tidypics:album:nosuccess' => 'Aucune photo n\'a encore été ajoutée à cet album.',
+	'tidypics:settings:river_album_number' => 'Nombre maximum de photos présentées dans les nouvels albums :',
+	'tidypics:option:river_tags' => 'Créer une entrée dans le flux d\'activités',
+	'tidypics:album_select' => 'Choisir ou créer un nouvel album',
+	'tidypics:settings:extended_sidebar_menu' => 'Afficher des entrées supplémentaires du menu dans la barre latérale pour des options supplémentaires',
+	'tidypics:settings:river_tags' => 'Faut-il créer une entrée dans le flux d\'activité lorsqu\'une photo est taguée ?',
+	'river:object:tidypics_batch:multiple' => '%s a ajouté %u photo(s) dans l\'album %s',
+	'tidypics:upgrade:not_required' => 'Aucune mise à niveau requise.',
 	'untitled' => 'Sans titre',
-
-	// Menu items and titles
 	'image' => 'Image',
 	'images' => 'Images',
 	'caption' => 'Légende',
@@ -18,19 +26,16 @@ return [
 	'tidypics:disabled' => 'Désactivé',
 	'tidypics:enabled' => 'Activé',
 	'admin:settings:photos' => 'Tidypics',
-
-	
 	'photos:addphotos' => 'Envoyer des photos',
 	'images:upload' => 'Charger des images',
-
-	'collection:object:album' => "Albums photo",
-	'collection:object:album:owner' => "Albums photo de %s",
-	'collection:object:album:group' => "Albums photo de groupe",
+	'collection:object:album' => 'Albums photo',
+	'collection:object:album:owner' => 'Albums photo de %s',
+	'collection:object:album:group' => 'Albums photo de groupe',
 	'sort:object:album' => 'Tri de l\'album %s',
 	'add:object:album' => 'Ajouter un Album photo',
 	'collection:object:image' => 'Images',
 	'collection:object:image:owner' => 'les photos de %s',
-	'collection:object:image:group' => "Photos du groupe",
+	'collection:object:image:group' => 'Photos du groupe',
 	'collection:object:image:tagged' => 'Photos où vous êtes taggé',
 	'add:object:image' => 'Ajouter des photos à l\'album',
 	'edit:object:album' => 'Modifier l\'album',
@@ -54,8 +59,7 @@ return [
 	'collection:object:image:recentlycommented' => 'Image récemment commentées',
 	'collection:object:image:highestrated' => 'Les images les mieux notées',
 	'collection:object:image:highestvotecount' => 'Les photos les mieux notées',
-	'collection:object:image:recentlyvoted' => 'Photos notées récemment',	
-
+	'collection:object:image:recentlyvoted' => 'Photos notées récemment',
 	'item:object:tidypics_batch' => 'Envoies de photo',
 	'tidypics:enable_group_images' => 'Activer le module de photos de groupe',
 	'tidypics:mostcommented:nosuccess' => 'Il n\'y a eu aucune photo commentée jusqu’à maintenant.',
@@ -174,7 +178,6 @@ Dans TOUT les cas, avant d\'utiliser cet utilitaire faite une sauvegarde de votr
 	'tidypics:viewsbyowner' => 'par %s membres (vous exclus)',
 	'tidypics:newalbum' => '%s a créé un nouvel album photo',
 	'tidypics:taginstruct' => 'Sélectionnez la zone que vous souhaitez tagger ou %s.<br>Taper le nom d\'un membre du site ou ajoutez un tag à la photo.',
-
 	'tidypics:nophotosingroup' => 'Ce groupe n\'a aucune photo pour le moment',
 	'tidypics:upgrade' => 'Mettre à jour',
 	'tidypics:none' => 'Aucun album photo',
@@ -243,10 +246,7 @@ Dans TOUT les cas, avant d\'utiliser cet utilitaire faite une sauvegarde de votr
 	'album:cannot_save_cover_image' => 'Impossible d\'enregistrer l\'image de couverture',
 	'image:blank' => 'Veuillez donner un titre à cette image.',
 	'image:error' => 'Impossible d\'enregistrer l\'image.',
-
-
 	'album:slideshow' => 'Voir diaporama',
-	'album:yours' => 'Vos albums photo',
 	'album:yours:friends' => 'Les albums photo de vos amis',
 	'item:object:image' => 'Photos',
 	'item:object:album' => 'Albums',
@@ -318,19 +318,14 @@ La photo peut être consultée ici: %s',
 	'widgets:groups_latest_albums:name' => 'Les albums les plus récent',
 	'widgets:groups_latest_albums:description' => 'Ce widget liste les albums les plus récemment créés.',
 	'album:more' => 'Voir tout les albums',
-
-	// River
 	'river:object:album:create' => '%s a créé un nouvel album photo %s',
 	'river:object:image:created' => '%s a ajouté la photo %s à l\'album %s',
 	'river:object:image:tagged' => '%s a été taggé %s sur la photo %s',
 	'river:object:image:wordtagged' => '%s a ajouté de nouveau tags sur la photo %s',
 	'river:object:image:wordtagged_single' => '%s a ajouté un nouveau tag sur la photo %s',
-	'river:object:image:created' => '%s a ajouté la photo %s à l\'album %s',
 	'river:object:tidypics_batch:created_single_entry' => '%s a ajouté la photo %s et %s de plus dans l\'album %s',
-	'river:object:tidypics_batch:created:multiple' => '%s a ajouté %u photos à l\'album %s',
 	'river:object:comment:image' => '%s a commenté la photo %s',
 	'river:object:comment:album' => '%s a commenté l\'album %s',
-
 	'tidypics:upl_success' => 'Vos images ont été correctement chargées.',
 	'image:saved' => 'Votre image a été correctement enregistrée',
 	'images:saved' => 'Toutes les images ont été correctement enregistrées',
@@ -361,5 +356,5 @@ La photo peut être consultée ici: %s',
 	'album:uploadfailed' => 'Désolé, nous ne pouvons pas enregistrer l\'album',
 	'album:deletefailed' => 'Votre album ne peut pas être supprimé pour le moment',
 	'album:blank' => 'Donnez un titre et une description à cet album',
-	'tidypics:upgrade:failed' => 'Mise à jour de Tydipics infructueuse',
+	'tidypics:upgrade:failed' => 'Echec de la mise à jour de Tydipics',
 ];

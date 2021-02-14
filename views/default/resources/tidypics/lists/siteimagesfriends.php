@@ -84,8 +84,7 @@ if (!empty($result)) {
 }
 
 $body = elgg_view_layout('default', [
-	'filter' => 'tidypics_siteimages_tabs',
-	'filter_id' => 'izap_videos_tabs',
+	'filter_id' => 'tidypics_siteimages_tabs',
 	'filter_value' => 'friends',
 	'content' => $content,
 	'title' => $title,

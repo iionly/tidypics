@@ -1,6 +1,17 @@
 Changelog and contributors list
 ===============================
 
+Version 3.3.2 (Release Date: 14/02/20210)
+----------------------------------------
+
+* Fixed: Display of Friend's Photos tab now working correctly,
+* French translation updated.
+
+Contributors:
+
+* iionly
+* danhype
+
 Version 3.3.1 (Release Date: 29/08/2020)
 ----------------------------------------
 
