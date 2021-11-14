@@ -1,7 +1,16 @@
 Changelog and contributors list
 ===============================
 
-Version 3.3.2 (Release Date: 14/02/20210)
+Version 3.3.3 (Release Date: 14/11/2021)
+----------------------------------------
+
+* Fixed: show HTML5 uploader in user's language if different from site language (former way of fixing stuff of Elgg API deprecated with Elgg 3.1 didn't work as intended as caching different languages failed to work).
+
+Contributors:
+
+* iionly
+
+Version 3.3.2 (Release Date: 14/02/2021)
 ----------------------------------------
 
 * Fixed: Display of Friend's Photos tab now working correctly,

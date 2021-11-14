@@ -36,20 +36,12 @@ class TidypicsBootstrap extends DefaultPluginBootstrap {
 		}
 
 		// Register the JavaScript libs
-		elgg_define_js('jquery.plupload-tp', [
-			'deps' => ['jquery'],
-			'src' => elgg_get_simplecache_url('tidypics/js/plupload/plupload.full.min.js'),
-			'exports' => 'jQuery.plupload',
-		]);
-		elgg_define_js('jquery.plupload.ui-tp', [
-			'deps' => ['jquery-ui', 'jquery.plupload-tp'],
-			'src' => elgg_get_simplecache_url('tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js'),
-		]);
+		elgg_register_external_file('js', 'jquery.plupload-tp', elgg_get_simplecache_url('tidypics/js/plupload/plupload.full.min.js'), 'footer');
+		elgg_register_external_file('js', 'jquery.plupload.ui-tp', elgg_get_simplecache_url('tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js'), 'footer');
 		$plupload_language = tidypics_get_plugload_language();
-		elgg_define_js('jquery.plupload.ui.lang-tp', [
-			'deps' => ['jquery.plupload-tp'],
-			'src' => elgg_get_simplecache_url('tidypics/js/plupload/i18n/' . $plupload_language . '.js'),
-		]);
+		elgg_register_external_file('js', 'jquery.plupload.ui.lang-tp', elgg_get_simplecache_url('tidypics/js/plupload/i18n/' . $plupload_language . '.js'), 'footer');
+		elgg_register_external_file('css', 'jquery.plupload.jqueryui-theme', elgg_get_simplecache_url('tidypics/css/jqueryui-theme.css'), 'head');
+		elgg_register_external_file('css', 'jquery.plupload.ui', elgg_get_simplecache_url('tidypics/css/plupload/css/jquery.ui.plupload.css'), 'head');
 
 		// RSS extensions for embedded media
 		elgg_extend_view('extensions/xmlns', 'extensions/photos/xmlns');
