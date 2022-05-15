@@ -1,6 +1,16 @@
 Changelog and contributors list
 ===============================
 
+Version 3.3.4 (Release Date: 15/05/2022)
+----------------------------------------
+
+* Fixed: no longer use deprecated elgg_group_gatekeeper() function on fetching group images for slideshow,
+* Fixed: use correct language string for "Photos you are tagged in" page.
+
+Contributors:
+
+* iionly
+
 Version 3.3.3 (Release Date: 14/11/2021)
 ----------------------------------------
 

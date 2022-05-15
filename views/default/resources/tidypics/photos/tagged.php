@@ -18,7 +18,7 @@ if(!($user instanceof ElggUser)) {
 
 elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE, $owner);
 
-$title = elgg_echo('collection:object:image:usertagged');
+$title = elgg_echo('collection:object:image:tagged');
 
 $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 25);
