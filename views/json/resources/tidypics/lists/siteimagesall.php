@@ -11,4 +11,4 @@ $images = elgg_get_entities([
 	'offset' => $offset,
 ]);
 
-echo tidypics_slideshow_json_data($images);
+echo TidypicsTidypics::tidypics_slideshow_json_data($images);

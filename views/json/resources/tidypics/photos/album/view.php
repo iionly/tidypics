@@ -8,7 +8,7 @@ $album = get_entity($album_guid);
 
 if ($album instanceof TidypicsAlbum) {
 	$images = $album->getImages($limit, $offset);
-	echo tidypics_slideshow_json_data($images);
+	echo TidypicsTidypics::tidypics_slideshow_json_data($images);
 } else {
 	echo json_encode([]);
 }

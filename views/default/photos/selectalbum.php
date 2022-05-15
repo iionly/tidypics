@@ -17,7 +17,7 @@ if (!($owner instanceof ElggUser || $owner instanceof ElggGroup)) {
 	$owner = elgg_get_logged_in_user_entity();
 }
 
-if (!tidypics_can_add_new_photos(null, $owner)) {
+if (!TidypicsTidypics::tidypics_can_add_new_photos(null, $owner)) {
 	echo elgg_format_element('p', [
 			'class' => 'elgg-help-text tidypics-selectalbum',
 		],

@@ -10,6 +10,6 @@ if (!$logtime) {
 	$logtime = elgg_get_plugin_setting('tidypics_current_log', 'tidypics');
 }
 
-$log = tidypics_get_log_location($logtime);
+$log = TidypicsTidypics::tidypics_get_log_location($logtime);
 
-echo tidypics_get_last_log_line($log);
+echo TidypicsTidypics::tidypics_get_last_log_line($log);

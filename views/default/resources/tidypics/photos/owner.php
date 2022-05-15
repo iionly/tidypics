@@ -47,7 +47,7 @@ $content = elgg_list_entities([
 ]);
 
 $owner = elgg_get_logged_in_user_entity();
-if (tidypics_can_add_new_photos(null, $owner)) {
+if (TidypicsTidypics::tidypics_can_add_new_photos(null, $owner)) {
 	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
 		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),

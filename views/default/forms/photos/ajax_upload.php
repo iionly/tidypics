@@ -72,7 +72,7 @@ $content .= elgg_view_field([
 $content .= elgg_view_field([
 	'#type' => 'hidden',
 	'name' => 'plupload_language',
-	'value' => tidypics_get_plugload_language(),
+	'value' => TidypicsTidypics::tidypics_get_plugload_language(),
 ]);
 
 $content .= elgg_autop(elgg_echo('tidypics:uploader:no_flash'));

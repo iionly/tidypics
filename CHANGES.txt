@@ -1,6 +1,16 @@
 Changelog and contributors list
 ===============================
 
+Version 4.0.1 (Release Date: 15/05/2022)
+----------------------------------------
+
+* Fix: not using class constants in elgg-plugin.php as it totally fucks up the site on activating / deactivating Tidypics,
+* Migrating all libraries into classes.
+
+Contributors:
+
+* iionly
+
 Version 4.0.0 (Release Date: 15/05/2022)
 ----------------------------------------
 

@@ -24,7 +24,7 @@ elgg_push_breadcrumb(elgg_echo('add:object:album'));
 
 $title = elgg_echo('add:object:album');
 
-$vars = tidypics_prepare_form_vars();
+$vars = TidypicsTidypics::tidypics_prepare_form_vars();
 $content = elgg_view_form('photos/album/save', ['method' => 'post'], $vars);
 
 $body = elgg_view_layout('default', [

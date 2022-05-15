@@ -50,7 +50,7 @@ foreach ($_FILES['images']['name'] as $index => $value) {
 
 	$name = htmlspecialchars($data['name'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
-	$mime = tp_upload_get_mimetype($name);
+	$mime = TidypicsUpload::tp_upload_get_mimetype($name);
 
 	$image = new TidypicsImage();
 	$image->title = $name;

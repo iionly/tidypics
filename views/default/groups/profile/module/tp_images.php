@@ -25,7 +25,7 @@ $all_link = elgg_view('output/url', [
 ]);
 
 $new_link = null;
-if (tidypics_can_add_new_photos(null, $group)) {
+if (TidypicsTidypics::tidypics_can_add_new_photos(null, $group)) {
 	$new_link .= elgg_view('output/url', [
 		'href' => "ajax/view/photos/selectalbum?owner_guid=" . $group_guid,
 		'text' => elgg_echo("photos:addphotos"),

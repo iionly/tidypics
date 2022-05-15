@@ -20,7 +20,7 @@ elgg_push_breadcrumb(elgg_echo('edit'));
 
 $title = elgg_echo('edit:object:album');
 
-$vars = tidypics_prepare_form_vars($album);
+$vars = TidypicsTidypics::tidypics_prepare_form_vars($album);
 $content = elgg_view_form('photos/album/save', ['method' => 'post'], $vars);
 
 $body = elgg_view_layout('default', [

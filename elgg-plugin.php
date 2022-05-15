@@ -1,15 +1,9 @@
 <?php
 
-require_once(dirname(__FILE__) . '/lib/tidypics.php');
-require_once(dirname(__FILE__) . '/lib/exif.php');
-require_once(dirname(__FILE__) . '/lib/watermark.php');
-require_once(dirname(__FILE__) . '/lib/resize.php');
-require_once(dirname(__FILE__) . '/lib/upload.php');
-
 return [
 	'plugin' => [
 		'name' => 'Tidypics',
-		'version' => '4.0.0',
+		'version' => '4.0.1',
 	],
 	'bootstrap' => \TidypicsBootstrap::class,
 	'entities' => [
@@ -464,7 +458,7 @@ return [
 	],
 	'notifications' => [
 		'object' => [
-			TidypicsAlbum::SUBTYPE => [
+			'album' => [
 				'album_first' => true,
 				'album_more' => true,
 			],

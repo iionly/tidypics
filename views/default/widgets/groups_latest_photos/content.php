@@ -34,7 +34,7 @@ echo elgg_list_entities([
 ]);
 elgg_pop_context();
 
-if (tidypics_can_add_new_photos(null, $group)) {
+if (TidypicsTidypics::tidypics_can_add_new_photos(null, $group)) {
 	echo elgg_view('output/url', [
 		'href' => "ajax/view/photos/selectalbum?owner_guid=" . $group->getGUID(),
 		'text' => elgg_echo('photos:addphotos'),

@@ -14,7 +14,7 @@ if ($friends = $owner->getFriends(['limit' => false])) {
 		'limit' => $limit,
 		'offset' => $offset,
 	]);
-	echo tidypics_slideshow_json_data($images);
+	echo TidypicsTidypics::tidypics_slideshow_json_data($images);
 } else {
 	echo json_encode([]);
 }

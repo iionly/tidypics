@@ -53,7 +53,7 @@ class TidypicsAlbum extends ElggObject {
 			return false;
 		}
 
-		mkdir(tp_get_img_dir($this->guid), 0755, true);
+		mkdir(TidypicsTidypics::tp_get_img_dir($this->guid), 0755, true);
 
 		return true;
 	}
@@ -226,7 +226,7 @@ class TidypicsAlbum extends ElggObject {
 			'order_by' => [
 				new \Elgg\Database\Clauses\OrderByClause("FIELD(e.guid, $guidsString)"),
 			],
-			'callback' => 'tp_guid_callback',
+			'callback' => 'TidypicsTidypics::tp_guid_callback',
 			'limit' => false,
 		]);
 		return $list;

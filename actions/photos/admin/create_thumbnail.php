@@ -28,20 +28,20 @@ $image_lib = elgg_get_plugin_setting('image_lib', 'tidypics');
 
 // ImageMagick command line
 if ($image_lib == 'ImageMagick') {
-	if (!tp_create_im_cmdline_thumbnails($image, $prefix, $filestorename)) {
+	if (!TidypicsResize::tp_create_im_cmdline_thumbnails($image, $prefix, $filestorename)) {
 		trigger_error('Tidypics warning: failed to create thumbnails - ImageMagick command line', E_USER_WARNING);
 		return elgg_error_response(elgg_echo('tidypics:thumbnail_tool:create_failed'), REFERER);
 	}
 
 // imagick PHP extension
 } else if ($image_lib == 'ImageMagickPHP') {
-	if (!tp_create_imagick_thumbnails($image, $prefix, $filestorename)) {
+	if (!TidypicsResize::tp_create_imagick_thumbnails($image, $prefix, $filestorename)) {
 		trigger_error('Tidypics warning: failed to create thumbnails - ImageMagick PHP', E_USER_WARNING);
 		return elgg_error_response(elgg_echo('tidypics:thumbnail_tool:create_failed'), REFERER);
 	}
 // gd
 } else {
-	if (!tp_create_gd_thumbnails($image, $prefix, $filestorename)) {
+	if (!TidypicsResize::tp_create_gd_thumbnails($image, $prefix, $filestorename)) {
 		trigger_error('Tidypics warning: failed to create thumbnails - GD', E_USER_WARNING);
 		return elgg_error_response(elgg_echo('tidypics:thumbnail_tool:create_failed'), REFERER);
 	}

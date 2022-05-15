@@ -15,4 +15,4 @@ $images = elgg_get_entities([
 	],
 ]);
 
-echo tidypics_slideshow_json_data($images);
+echo TidypicsTidypics::tidypics_slideshow_json_data($images);

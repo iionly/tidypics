@@ -1,7 +1,7 @@
 Tidypics plugin for Elgg 4.0 and newer Elgg 4.X
 ===============================================
 
-Latest Version: 4.0.0  
+Latest Version: 4.0.1  
 Released: 2022-05-15  
 Contact: iionly@gmx.de  
 License: GNU General Public License version 2  

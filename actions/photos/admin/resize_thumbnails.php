@@ -43,21 +43,21 @@ $output = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use($offset, $image_
 
 				switch ($image_lib) {
 					case "ImageMagick":
-						if (!tp_create_im_cmdline_thumbnails($image, $prefix, $filestorename)) {
+						if (!TidypicsResize::tp_create_im_cmdline_thumbnails($image, $prefix, $filestorename)) {
 							$error_count_recreate_failed++;
 						} else {
 							$success_count++;
 						}
 						break;
 					case "ImageMagickPHP":
-						if (!tp_create_imagick_thumbnails($image, $prefix, $filestorename)) {
+						if (!TidypicsResize::tp_create_imagick_thumbnails($image, $prefix, $filestorename)) {
 							$error_count_recreate_failed++;
 						} else {
 							$success_count++;
 						}
 						break;
 					default:
-						if (!tp_create_gd_thumbnails($image, $prefix, $filestorename)) {
+						if (!TidypicsResize::tp_create_gd_thumbnails($image, $prefix, $filestorename)) {
 							$error_count_recreate_failed++;
 						} else {
 							$success_count++;

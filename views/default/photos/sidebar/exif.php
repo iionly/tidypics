@@ -8,7 +8,7 @@ if (!($image instanceof TidypicsImage)) {
 	return;
 }
  
-$exif = tp_exif_formatted($image);
+$exif = TidypicsExif::tp_exif_formatted($image);
 if ($exif) {
 	$row = '';
 	foreach ($exif as $key => $value) {

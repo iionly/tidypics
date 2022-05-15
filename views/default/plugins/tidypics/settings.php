@@ -6,7 +6,7 @@
 /* @var $plugin ElggPlugin */
 $plugin = elgg_extract('entity', $vars);
 
-// if (tidypics_is_upgrade_available()) {
+// if (TidypicsTidypics::tidypics_is_upgrade_available()) {
 // 	echo elgg_format_element('div', ['class' => 'elgg-admin-notices'], elgg_autop(elgg_view('output/url', [
 // 		'text' => elgg_echo('tidypics:upgrade'),
 // 		'href' => 'action/photos/admin/upgrade',
@@ -119,7 +119,7 @@ $content_img_lib .= elgg_view_field([
 	'#type' => 'select',
 	'#label' => elgg_echo('tidypics:settings:image_lib'),
 	'name' => 'params[image_lib]',
-	'options_values' => tidypics_get_image_libraries(),
+	'options_values' => TidypicsTidypics::tidypics_get_image_libraries(),
 	'value' => $plugin->image_lib,
 ]);
 

@@ -40,7 +40,7 @@ $result = elgg_list_entities([
 	'gallery_class' => 'tidypics-gallery',
 ]);
 
-if (tidypics_can_add_new_photos(null, $group)) {
+if (TidypicsTidypics::tidypics_can_add_new_photos(null, $group)) {
 	elgg_register_menu_item('title', [
 		'name' => 'addphotos',
 		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $group_guid,

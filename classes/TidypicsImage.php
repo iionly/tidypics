@@ -195,7 +195,7 @@ class TidypicsImage extends ElggFile {
 			$viewer_guid = elgg_get_logged_in_user_guid();
 		}
 
-		if ($viewer_guid != $this->owner_guid && tp_is_person()) {
+		if ($viewer_guid != $this->owner_guid && TidypicsTidypics::tp_is_person()) {
 			$this->annotate('tp_view', 1, ACCESS_PUBLIC, $viewer_guid);
 		}
 	}
@@ -405,7 +405,7 @@ class TidypicsImage extends ElggFile {
 
 		// we need to make sure the directory for the album exists
 		// @note for group albums, the photos are distributed among the users
-		$dir = tp_get_img_dir($this->getContainerGUID());
+		$dir = TidypicsTidypics::tp_get_img_dir($this->getContainerGUID());
 		if (!file_exists($dir)) {
 			mkdir($dir, 0755, true);
 		}
@@ -440,12 +440,12 @@ class TidypicsImage extends ElggFile {
 		}
 
 		// must be an image
-		if (!tp_upload_check_format($data['type'])) {
+		if (!TidypicsUpload::tp_upload_check_format($data['type'])) {
 			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:not_image'));
 		}
 
 		// make sure file does not exceed memory limit
-		if (!tp_upload_check_max_size($data['size'])) {
+		if (!TidypicsUpload::tp_upload_check_max_size($data['size'])) {
 			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:image_mem'));
 		}
 
@@ -455,13 +455,13 @@ class TidypicsImage extends ElggFile {
 		$requiredMemory2 = ceil($imginfo[0] * $imginfo[1] * ($imginfo['bits'] / 8) * $imginfo['channels'] * 2.5);
 		$requiredMemory = (int) max($requiredMemory1, $requiredMemory2);
 		$image_lib = elgg_get_plugin_setting('image_lib', 'tidypics');
-		if (!tp_upload_memory_check($image_lib, $requiredMemory)) {
+		if (!TidypicsUpload::tp_upload_memory_check($image_lib, $requiredMemory)) {
 			trigger_error('Tidypics warning: image memory size too large for resizing so rejecting', E_USER_WARNING);
 			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:image_pixels'));
 		}
 
 		// make sure file fits quota
-		if (!tp_upload_check_quota($data['size'], elgg_get_logged_in_user_guid())) {
+		if (!TidypicsUpload::tp_upload_check_quota($data['size'], elgg_get_logged_in_user_guid())) {
 			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:cannot_upload_exceeds_quota'));
 		}
 	}
@@ -478,16 +478,16 @@ class TidypicsImage extends ElggFile {
 
 		if ($imageLib == 'ImageMagick') {
 			// ImageMagick command line
-			if (tp_create_im_cmdline_thumbnails($this, $prefix, $filename) != true) {
+			if (TidypicsResize::tp_create_im_cmdline_thumbnails($this, $prefix, $filename) != true) {
 				trigger_error('Tidypics warning: failed to create thumbnails - ImageMagick command line', E_USER_WARNING);
 			}
 		} else if ($imageLib == 'ImageMagickPHP') {
 			// imagick php extension
-			if (tp_create_imagick_thumbnails($this, $prefix, $filename) != true) {
+			if (TidypicsResize::tp_create_imagick_thumbnails($this, $prefix, $filename) != true) {
 				trigger_error('Tidypics warning: failed to create thumbnails - ImageMagick PHP', E_USER_WARNING);
 			}
 		} else {
-			if (tp_create_gd_thumbnails($this, $prefix, $filename) != true) {
+			if (TidypicsResize::tp_create_gd_thumbnails($this, $prefix, $filename) != true) {
 				trigger_error('Tidypics warning: failed to create thumbnails - GD', E_USER_WARNING);
 			}
 		}
@@ -535,7 +535,7 @@ class TidypicsImage extends ElggFile {
 	 * @warning image file must be saved first
 	 */
 	public function extractExifData() {
-		td_get_exif($this);
+		TidypicsExif::td_get_exif($this);
 	}
 
 	/**
