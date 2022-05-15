@@ -13,7 +13,7 @@ $guid = elgg_get_logged_in_user_guid();
 $user = get_entity($guid);
 
 if(!($user instanceof ElggUser)) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new \Elgg\Exceptions\Http\EntityNotFoundException();
 }
 
 elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE, $owner);

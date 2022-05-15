@@ -69,6 +69,12 @@ $content .= elgg_view_field([
 	'value' => session_id(),
 ]);
 
+$content .= elgg_view_field([
+	'#type' => 'hidden',
+	'name' => 'plupload_language',
+	'value' => tidypics_get_plugload_language(),
+]);
+
 $content .= elgg_autop(elgg_echo('tidypics:uploader:no_flash'));
 
 echo elgg_format_element('div', [

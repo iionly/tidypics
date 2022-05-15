@@ -22,7 +22,7 @@ if ($image instanceof TidypicsImage) {
 	$contents = $image->grabFile();
 
 	if (empty($contents)) {
-		forward(elgg_get_simplecache_url("tidypics/image_error_large.png"));
+		elgg_redirect_response(elgg_get_simplecache_url("tidypics/image_error_large.png"));
 	} else {
 		// expires every 60 days
 		$expires = 60*60*60*24;
@@ -37,5 +37,5 @@ if ($image instanceof TidypicsImage) {
 
 	exit;
 } else {
-	register_error(elgg_echo("image:downloadfailed"));
+	elgg_error_response(elgg_echo("image:downloadfailed"));
 }

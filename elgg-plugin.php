@@ -1,13 +1,16 @@
 <?php
 
 require_once(dirname(__FILE__) . '/lib/tidypics.php');
-require_once(dirname(__FILE__) . '/lib/hooks.php');
 require_once(dirname(__FILE__) . '/lib/exif.php');
 require_once(dirname(__FILE__) . '/lib/watermark.php');
 require_once(dirname(__FILE__) . '/lib/resize.php');
 require_once(dirname(__FILE__) . '/lib/upload.php');
 
 return [
+	'plugin' => [
+		'name' => 'Tidypics',
+		'version' => '4.0.0',
+	],
 	'bootstrap' => \TidypicsBootstrap::class,
 	'entities' => [
 		[
@@ -76,9 +79,9 @@ return [
 		'photos/admin/delete_image' => [
 			'access' => 'admin',
 		],
-		'photos/admin/upgrade' => [
-			'access' => 'admin',
-		],
+// 		'photos/admin/upgrade' => [
+// 			'access' => 'admin',
+// 		],
 		'photos/admin/broken_images' => [
 			'access' => 'admin',
 		],
@@ -330,6 +333,82 @@ return [
 			'resource' => 'tidypics/photos/default',
 		],
 	],
+	'hooks' => [
+		'container_permissions_check' => [
+			'object' => [
+				"\TidypicsHooks::tidypics_group_permission_override" => [],
+			],
+		],
+		'permissions_check:metadata' => [
+			'object' => [
+				"\TidypicsHooks::tidypics_group_permission_override" => [],
+			],
+		],
+		'entity:url' => [
+			'object' => [
+				"\TidypicsHooks::tidypics_widget_urls" => [],
+				"\TidypicsHooks::tidypics_batch_url_handler" => [],
+			],
+		],
+		'search' => [
+			'object:tidypics_batch' => [
+				'Elgg\Values::getFalse' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'object:album' => [
+				'Elgg\Values::getTrue' => [],
+			],
+			'object:image' => [
+				'Elgg\Values::getTrue' => [],
+			],
+			'object:tidypics_batch' => [
+				'Elgg\Values::getFalse' => [],
+			],
+		],
+		'register' => [
+			'menu:owner_block' => [
+				"\TidypicsHooks::tidypics_owner_block_menu" => [],
+			],
+			'menu:site' => [
+				"\TidypicsHooks::tidypics_site_menu" => [],
+			],
+			'menu:entity' => [
+				"\TidypicsHooks::tidypics_entity_menu_setup" => [],
+			],
+			'menu:social' => [
+				"\TidypicsHooks::tidypics_social_menu_setup" => [],
+			],
+			'menu:filter:tidypics_siteimages_tabs' => [
+				"\TidypicsHooks::tidypics_setup_tabs" => [],
+			],
+		],
+		'prepare' => [
+			'notification:album_first:object:album' => [
+				"\TidypicsHooks::tidypics_notify_message" => [],
+			],
+			'notification:album_more:object:album' => [
+				"\TidypicsHooks::tidypics_notify_message" => [],
+			],
+		],
+		'group_tool_widgets' => [
+			'widget_manager' => [
+				"\TidypicsHooks::tidypics_tool_widgets_handler" => [],
+			],
+		],
+		'public_pages' => [
+			'walled_garden' => [
+				"\TidypicsHooks::tidypics_walled_garden_override" => [],
+			],
+		],
+	],
+	'events' => [
+		'create:before' => [
+			'river' => [
+				"\TidypicsEvents::tidypics_comments_handler" => [],
+			],
+		],
+	],
 	'widgets' => [
 		'album_view' => [
 			'context' => ['profile'],
@@ -350,17 +429,26 @@ return [
 			'context' => ['groups'],
 		],
 	],
+	'group_tools' => [
+		'photos' => [
+			'default_on' => true,
+		],
+		'tp_images' => [
+			'default_on' => true,
+		],
+	],
 	'views' => [
 		'default' => [
 			'tidypics/' => __DIR__ . '/graphics',
 			'tidypics/js/plupload/plupload.full.min.js' => __DIR__ . '/vendors/plupload/js/plupload.full.min.js',
 			'tidypics/js/plupload/' => __DIR__ . '/vendors/plupload/js',
 			'tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js' => __DIR__ . '/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js',
-			'tidypics/js/plupload/i18n/' => __DIR__ . '/vendors/plupload/js/i18n/',
-			'tidypics/css/jqueryui-theme.css' => 'vendor/bower-asset/jquery-ui/themes/smoothness/jquery-ui.min.css',
-			'tidypics/css/images/' => 'vendor/bower-asset/jquery-ui/themes/smoothness/images',
+			'tidypics/css/jqueryui-smoothness.css' => 'vendor/npm-asset/components-jqueryui/themes/smoothness/jquery-ui.css',
+			'tidypics/css/images/' => 'vendor/npm-asset/components-jqueryui/themes/smoothness/images',
 			'tidypics/css/plupload/css/jquery.ui.plupload.css' => __DIR__ . '/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css',
 			'tidypics/css/plupload/img/' => __DIR__ . '/vendors/plupload/js/jquery.ui.plupload/img',
+			'tidypics/css/jquery-imgareaselect.css' => __DIR__ . '/vendors/jquery.imgareaselect/distfiles/css/imgareaselect-default.css',
+			'tidypics/js/jquery-imgareaselect.js' => __DIR__ . '/vendors/jquery.imgareaselect/jquery.imgareaselect.dev.js',
 		],
 	],
 	'view_extensions' => [
@@ -369,6 +457,17 @@ return [
 		],
 		'css/admin' => [
 			'photos/css' => [],
+		],
+	'extensions/xmlns' => [
+			'extensions/photos/xmlns' => [],
+		],
+	],
+	'notifications' => [
+		'object' => [
+			TidypicsAlbum::SUBTYPE => [
+				'album_first' => true,
+				'album_more' => true,
+			],
 		],
 	],
 ];

@@ -12,8 +12,9 @@ $exif = tp_exif_formatted($image);
 if ($exif) {
 	$row = '';
 	foreach ($exif as $key => $value) {
-		$cell = elgg_format_element('td', [], elgg_view("output/text", ["value" => filter_tags($key)]));
-		$cell .= elgg_format_element('td', [], elgg_view("output/text", ["value" => filter_tags($value)]));
+		$cell_content = elgg_view("output/text", ["value" => filter_tags($key)]) . "<br>";
+		$cell_content .= elgg_view("output/text", ["value" => filter_tags($value)]);
+		$cell = elgg_format_element('td', [], $cell_content);
 		$row .= elgg_format_element('tr', [], $cell);
 	}
 	$body = elgg_format_element('table', ['class' => 'elgg-table elgg-table-alt'], $row);

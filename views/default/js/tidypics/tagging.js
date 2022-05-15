@@ -1,6 +1,8 @@
 define(function(require) {
 	var elgg = require("elgg");
 	var $ = require("jquery");
+	
+	require('tidypics.imgareaselect');
 
 	function init() {
 		active = false;

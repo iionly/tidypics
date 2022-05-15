@@ -13,7 +13,7 @@ if (!$owner) {
 	$owner = elgg_get_logged_in_user_entity();
 }
 if (!$owner) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new \Elgg\Exceptions\Http\EntityNotFoundException();
 }
 
 elgg_push_collection_breadcrumbs('object', TidypicsImage::SUBTYPE, $owner);

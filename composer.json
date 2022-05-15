@@ -20,5 +20,14 @@
     },
     "require": {
         "composer/installers": ">=1.0.8"
+    },
+    "conflict": {
+        "elgg/elgg": "<4.0"
+    },
+    "suggest": {
+        "coldtrick/widget_manager": "With the Widget Manager plugin available the Tidypics plugin offers widgets for the index page (homepage) and group profile pages listing the latest albums and photos.",
+        "iionly/hammertime": "The Hammertime plugin adds support for swipe touch gestures (left/right) to navigate in Elgg item lists (with pagination) and to load previous/next images in Tidypics full size image views.",
+        "iionly/elggx_fivestar": "With the Elggx Fivestar plugin enabled the site members can rate albums and photos.",
+        "iionly/elggx_userpoints": "With the Elggx Userpoints plugin enabled the site members gain userpoints on creating albums and uploading photos."
     }
 }

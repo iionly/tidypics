@@ -12,7 +12,7 @@ elgg_entity_gatekeeper($guid, 'object', TidypicsBatch::SUBTYPE);
 $batch = get_entity($guid);
 
 if (!$batch->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new \Elgg\Exceptions\Http\EntityPermissionsException();
 }
 
 elgg_push_entity_breadcrumbs($batch);

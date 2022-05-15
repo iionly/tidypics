@@ -43,6 +43,7 @@ if ($handle = opendir($base_dir)) {
 	}
 }
 
-elgg_set_plugin_setting('version', $version, 'tidypics');
+$plugin = elgg_get_plugin_from_id('tidypics');
+$plugin->setSetting('version', $version);
 
 return elgg_ok_response('', elgg_echo('tidypics:upgrade:success'), REFERER);

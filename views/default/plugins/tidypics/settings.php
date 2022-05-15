@@ -6,13 +6,13 @@
 /* @var $plugin ElggPlugin */
 $plugin = elgg_extract('entity', $vars);
 
-if (tidypics_is_upgrade_available()) {
-	echo elgg_format_element('div', ['class' => 'elgg-admin-notices'], elgg_autop(elgg_view('output/url', [
-		'text' => elgg_echo('tidypics:upgrade'),
-		'href' => 'action/photos/admin/upgrade',
-		'is_action' => true,
-	])));
-}
+// if (tidypics_is_upgrade_available()) {
+// 	echo elgg_format_element('div', ['class' => 'elgg-admin-notices'], elgg_autop(elgg_view('output/url', [
+// 		'text' => elgg_echo('tidypics:upgrade'),
+// 		'href' => 'action/photos/admin/upgrade',
+// 		'is_action' => true,
+// 	])));
+// }
 
 // show navigation tabs
 echo elgg_view('photos/tabs', ['tab' => 'settings']);

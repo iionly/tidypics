@@ -36,26 +36,6 @@ if (tidypics_can_add_new_photos(null, $owner)) {
 	]);
 }
 
-if ($album->canWriteToContainer(0, 'object', TidypicsImage::SUBTYPE)) {
-	elgg_register_menu_item('title', [
-			'name' => 'upload',
-			'href' => 'photos/upload/' . $album->getGUID(),
-			'text' => elgg_echo('images:upload'),
-			'link_class' => 'elgg-button elgg-button-action',
-	]);
-}
-
-// only show sort button if there are images
-if ($album->canEdit() && $album->getSize() > 0) {
-	elgg_register_menu_item('title', [
-		'name' => 'sort',
-		'href' => "photos/sort/" . $album->getGUID(),
-		'text' => elgg_echo('album:sort'),
-		'link_class' => 'elgg-button elgg-button-action',
-		'priority' => 200,
-	]);
-}
-
 // only show slideshow link if slideshow is enabled in plugin settings and there are images
 if (elgg_get_plugin_setting('slideshow', 'tidypics') && ($album->getSize() > 0)) {
 	elgg_require_js('tidypics/slideshow');
@@ -80,6 +60,7 @@ $body = elgg_view_layout('default', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
+	'entity' => $album,
 	'sidebar' => elgg_view('photos/sidebar_al', ['page' => 'album']),
 ]);
 

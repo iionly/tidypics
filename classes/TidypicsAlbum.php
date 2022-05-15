@@ -40,7 +40,7 @@ class TidypicsAlbum extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function save() {
+	public function save() : bool {
 		if (!isset($this->new_album)) {
 			$this->new_album = 1;
 		}
@@ -372,7 +372,7 @@ class TidypicsAlbum extends ElggObject {
 	protected function deleteAlbumDir() {
 		$tmpfile = new ElggFile();
 		$tmpfile->setFilename('image/' . $this->guid . '/._tmp_del_tidypics_album_');
-		$tmpfile->subtype = TidypicsImage::SUBTYPE;
+		$tmpfile->setSubtype(TidypicsImage::SUBTYPE);
 		$tmpfile->owner_guid = $this->owner_guid;
 		$tmpfile->container_guid = $this->guid;
 		$tmpfile->open("write");

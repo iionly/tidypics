@@ -33,8 +33,8 @@ if ($running_logtime == $logtime && !$delete) {
 	return elgg_error_response('duplicate thread', REFERER);
 }
 
-elgg_set_plugin_setting('tidypics_current_log', $logtime, 'tidypics');
-
+$plugin = elgg_get_plugin_from_id('tidypics');
+$plugin->setSetting('tidypics_current_log', $logtime);
 
 function tidypics_batch_delete_images() {
 	// delete

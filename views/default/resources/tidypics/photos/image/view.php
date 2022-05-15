@@ -34,8 +34,7 @@ elgg_push_entity_breadcrumbs($photo, false);
 $photo->addView();
 
 if (elgg_get_plugin_setting('tagging', 'tidypics')) {
-	elgg_load_external_file('js', 'jquery.imgareaselect');
-	elgg_load_external_file('css', 'jquery.imgareaselect');
+	elgg_require_css('tidypics/css/jquery-imgareaselect');
 	elgg_require_js('tidypics/tagging');
 }
 
@@ -52,22 +51,13 @@ if (tidypics_can_add_new_photos(null, $owner)) {
 	]);
 }
 
-if (elgg_get_plugin_setting('download_link', 'tidypics')) {
-	// add download button to title menu
-	elgg_register_menu_item('title', [
-		'name' => 'download',
-		'href' => "photos/download/$photo_guid/attachment",
-		'text' => elgg_echo('image:download'),
-		'link_class' => 'elgg-button elgg-button-action',
-	]);
-}
-
 $content = elgg_view_entity($photo, ['full_view' => true]);
 
 $body = elgg_view_layout('default', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
+	'entity' => $photo,
 	'sidebar' => elgg_view('photos/sidebar_im', [
 		'page' => 'tp_view',
 		'image' => $photo,

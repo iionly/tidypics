@@ -36,8 +36,8 @@ return [
 
 	'item:object:image' => "Kuvat",
 	'item:object:album' => "Kuva-albumit",
-	'tidypics:enablephotos' => 'Ota käyttöön ryhmän albumit',
-	'tidypics:enable_group_images' => 'Ota käyttöön ryhmän kuvagalleria',
+	'groups:tool:photos' => 'Ota käyttöön ryhmän albumit',
+	'groups:tool:tp_images' => 'Ota käyttöön ryhmän kuvagalleria',
 	'tidypics:mostcommented:nosuccess' => 'Ei kuvia',
 	'tidypics:mostcommentedtoday:nosuccess' => 'Ei kuvia',
 	'tidypics:mostcommentedthismonth:nosuccess' => 'Ei kuvia',

@@ -134,23 +134,24 @@ function tidypics_get_image_libraries() {
  *
  * @return bool
  */
-function tidypics_is_upgrade_available() {
-	// sets $version based on code
-	require_once elgg_get_plugins_path() . "tidypics/version.php";
-
-	$local_version = elgg_get_plugin_setting('version', 'tidypics');
-
-	if ($local_version === false) {
-		elgg_set_plugin_setting('version', $version, 'tidypics');
-		$local_version = $version;
-	}
-
-	if ($local_version == $version) {
-		return false;
-	} else {
-		return true;
-	}
-}
+// function tidypics_is_upgrade_available() {
+// 	// sets $version based on code
+// 	require_once elgg_get_plugins_path() . "tidypics/version.php";
+// 
+// 	$local_version = elgg_get_plugin_setting('version', 'tidypics');
+// 
+// 	if ($local_version === false) {
+// 		$plugin = elgg_get_plugin_from_id('tidypics');
+// 		$plugin->setSetting('version', $version);
+// 		$local_version = $version;
+// 	}
+// 
+// 	if ($local_version == $version) {
+// 		return false;
+// 	} else {
+// 		return true;
+// 	}
+// }
 
 /**
  * This lists the photos in an album as sorted by metadata
@@ -290,11 +291,10 @@ function tidypics_can_add_new_photos(\ElggUser $user = null, \ElggEntity $contai
 }
 
 function tidypics_get_plugload_language() {
-	if ($current_language = get_current_language()) {
-		$path = elgg_get_plugins_path() . "tidypics/vendors/plupload/js/i18n";
-		if (file_exists("$path/$current_language.js")) {
-			return $current_language;
-		}
+	$user_language = get_current_language();
+	
+	if (in_array($user_language, ['de', 'es', 'fi', 'fr'])) {
+		return $user_language;
 	}
 
 	return 'en';

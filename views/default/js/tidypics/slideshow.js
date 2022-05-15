@@ -1,9 +1,6 @@
-define(function(require) {
-	var elgg = require("elgg");
-	var $ = require("jquery");
-	var Ajax = require('elgg/Ajax');
+define(['jquery', 'elgg', 'elgg/Ajax', 'tidypics/galleria'], function($, elgg, Ajax, Galleria) {
+
 	var ajax = new Ajax();
-	require("tidypics/galleria");
 
 	var slideshowurl; // Defines which category of images are displayed in slideshow (e.g. all site images, image of an album etc.)
 	var limit; // How many images in one batch?
@@ -45,7 +42,7 @@ define(function(require) {
 					// set this to false if you want to show the caption all the time:
 					_toggleInfo: true
 				},
-				init: function(options) {
+				init: function( options) {
 
 					Galleria.requires(1.4, 'This version of Classic theme requires Galleria 1.4 or later');
 

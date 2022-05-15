@@ -12,7 +12,7 @@ elgg_entity_gatekeeper($guid, 'object', TidypicsAlbum::SUBTYPE);
 $album = get_entity($guid);
 
 if (!$album->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new \Elgg\Exceptions\Http\EntityPermissionsException();
 }
 
 elgg_push_entity_breadcrumbs($album);

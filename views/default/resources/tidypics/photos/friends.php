@@ -25,7 +25,7 @@ if (!$owner) {
 }
 
 if (!($owner instanceof ElggUser)) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new \Elgg\Exceptions\Http\EntityNotFoundException();
 }
 
 elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE, $owner, true);

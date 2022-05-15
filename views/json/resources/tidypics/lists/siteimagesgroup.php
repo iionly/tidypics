@@ -5,7 +5,7 @@ $limit = (int) get_input('limit', 25);
 
 $group_guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($group_guid);
-elgg_entity_gatekeeper($group_guid);
+elgg_entity_gatekeeper($group_guid)
 $group = get_entity($group_guid);
 
 if($group instanceof ElggGroup) {

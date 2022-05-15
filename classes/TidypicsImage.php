@@ -35,7 +35,7 @@ class TidypicsImage extends ElggFile {
 	 * @param array $data
 	 * @return bool
 	 */
-	public function save($data = null) {
+	public function save($data = null) : bool {
 		if (!parent::save()) {
 			return false;
 		}
@@ -433,20 +433,20 @@ class TidypicsImage extends ElggFile {
 		if ($data['error']) {
 			if ($data['error'] == 1) {
 				trigger_error('Tidypics warning: image exceeded server php upload limit', E_USER_WARNING);
-				throw new Exception(elgg_echo('tidypics:image_mem'));
+				throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:image_mem'));
 			} else {
-				throw new Exception(elgg_echo('tidypics:unk_error'));
+				throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:unk_error'));
 			}
 		}
 
 		// must be an image
 		if (!tp_upload_check_format($data['type'])) {
-			throw new Exception(elgg_echo('tidypics:not_image'));
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:not_image'));
 		}
 
 		// make sure file does not exceed memory limit
 		if (!tp_upload_check_max_size($data['size'])) {
-			throw new Exception(elgg_echo('tidypics:image_mem'));
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:image_mem'));
 		}
 
 		// make sure the in memory image size does not exceed memory available
@@ -457,12 +457,12 @@ class TidypicsImage extends ElggFile {
 		$image_lib = elgg_get_plugin_setting('image_lib', 'tidypics');
 		if (!tp_upload_memory_check($image_lib, $requiredMemory)) {
 			trigger_error('Tidypics warning: image memory size too large for resizing so rejecting', E_USER_WARNING);
-			throw new Exception(elgg_echo('tidypics:image_pixels'));
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:image_pixels'));
 		}
 
 		// make sure file fits quota
 		if (!tp_upload_check_quota($data['size'], elgg_get_logged_in_user_guid())) {
-			throw new Exception(elgg_echo('tidypics:cannot_upload_exceeds_quota'));
+			throw new \Elgg\Exceptions\PluginException(elgg_echo('tidypics:cannot_upload_exceeds_quota'));
 		}
 	}
 
