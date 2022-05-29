@@ -41,7 +41,7 @@ if ($user instanceof ElggUser) {
 $tag = new stdClass();
 $tag->coords = $coordinates_str;
 $tag->type = $relationships_type;
-$access_id = $image->getAccessID();
+$access_id = $image->access_id;
 
 $existing_tags = false;
 if ($tag->type === 'word') {

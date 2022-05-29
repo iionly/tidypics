@@ -2,6 +2,8 @@ define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 	var Ajax = require('elgg/Ajax');
+	var messages = require('elgg/system_messages');
+	var i18n = require('elgg/i18n');
 
 	// manage Spinner manually
 	var ajax = new Ajax(false);
@@ -79,10 +81,10 @@ define(function(require) {
 
 				if (errorCount > 0) {
 					// Upgrade finished with errors. Give instructions on how to proceed.
-					elgg.register_error(elgg.echo('tidypics:resize_thumbnails:finished_with_errors', [errorCountInvalidImage, errorCountRecreateFailed]));
+					messages.error(i18n.echo('tidypics:resize_thumbnails:finished_with_errors', [errorCountInvalidImage, errorCountRecreateFailed]));
 				} else {
 					// Upgrade is finished. Make one more call to mark it complete.
-					elgg.system_message(elgg.echo('tidypics:resize_thumbnails:finished', [successCount]));
+					messages.success(i18n.echo('tidypics:resize_thumbnails:finished', [successCount]));
 				}
 			}
 

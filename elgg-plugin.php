@@ -3,7 +3,7 @@
 return [
 	'plugin' => [
 		'name' => 'Tidypics',
-		'version' => '4.0.1',
+		'version' => '4.2.0',
 	],
 	'bootstrap' => \TidypicsBootstrap::class,
 	'entities' => [
@@ -11,19 +11,31 @@ return [
 			'type' => 'object',
 			'subtype' => 'album',
 			'class' => 'TidypicsAlbum',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => true,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 		[
 			'type' => 'object',
 			'subtype' => 'image',
 			'class' => 'TidypicsImage',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => true,
+				'searchable' => true,
+				'likable' => true,
+			],
 		],
 		[
 			'type' => 'object',
 			'subtype' => 'tidypics_batch',
 			'class' => 'TidypicsBatch',
-			'searchable' => true,
+			'capabilities' => [
+				'commentable' => false,
+				'searchable' => false,
+				'likable' => false,
+			],
 		],
 	],
 	'actions' => [
@@ -344,22 +356,6 @@ return [
 				"\TidypicsHooks::tidypics_batch_url_handler" => [],
 			],
 		],
-		'search' => [
-			'object:tidypics_batch' => [
-				'Elgg\Values::getFalse' => [],
-			],
-		],
-		'likes:is_likable' => [
-			'object:album' => [
-				'Elgg\Values::getTrue' => [],
-			],
-			'object:image' => [
-				'Elgg\Values::getTrue' => [],
-			],
-			'object:tidypics_batch' => [
-				'Elgg\Values::getFalse' => [],
-			],
-		],
 		'register' => [
 			'menu:owner_block' => [
 				"\TidypicsHooks::tidypics_owner_block_menu" => [],
@@ -437,8 +433,9 @@ return [
 			'tidypics/js/plupload/plupload.full.min.js' => __DIR__ . '/vendors/plupload/js/plupload.full.min.js',
 			'tidypics/js/plupload/' => __DIR__ . '/vendors/plupload/js',
 			'tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js' => __DIR__ . '/vendors/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js',
-			'tidypics/css/jqueryui-smoothness.css' => 'vendor/npm-asset/components-jqueryui/themes/smoothness/jquery-ui.css',
-			'tidypics/css/images/' => 'vendor/npm-asset/components-jqueryui/themes/smoothness/images',
+			'tidypics-jquery-ui/' => __DIR__ . '/vendors/components-jqueryui/ui',
+			'tidypics/css/jqueryui-smoothness.css' => __DIR__ . '/vendors/components-jqueryui/themes/smoothness/jquery-ui.css',
+			'tidypics/css/images/' => __DIR__ . '/vendors/components-jqueryui/themes/smoothness/images',
 			'tidypics/css/plupload/css/jquery.ui.plupload.css' => __DIR__ . '/vendors/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css',
 			'tidypics/css/plupload/img/' => __DIR__ . '/vendors/plupload/js/jquery.ui.plupload/img',
 			'tidypics/css/jquery-imgareaselect.css' => __DIR__ . '/vendors/jquery.imgareaselect/distfiles/css/imgareaselect-default.css',

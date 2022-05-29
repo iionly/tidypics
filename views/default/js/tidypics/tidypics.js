@@ -2,7 +2,7 @@ define(function(require) {
 	var elgg = require("elgg");
 	var $ = require("jquery");
 	require('jquery.colorbox');
-	require('jquery-ui/widgets/sortable');
+	require('tidypics-jquery-ui/widgets/sortable');
 
 	function boxstyle(identifier) {
 		var opts = {};

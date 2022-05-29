@@ -1,4 +1,8 @@
-define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/core', 'jquery-ui/widget', 'jquery-ui/widgets/button', 'jquery-ui/widgets/progressbar', 'jquery-ui/widgets/sortable', 'jquery.plupload-tp', 'jquery.plupload.ui-tp'], function($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'tidypics-jquery-ui/core', 'tidypics-jquery-ui/widget', 'tidypics-jquery-ui/widgets/button', 'tidypics-jquery-ui/widgets/progressbar', 'tidypics-jquery-ui/widgets/sortable', 'jquery.plupload-tp', 'jquery.plupload.ui-tp'], function($, elgg, Ajax) {
+	var messages = require('elgg/system_messages');
+	var security = require('elgg/security');
+	var i18n = require('elgg/i18n');
+
 	// manage Spinner manually
 	var ajax = new Ajax(false);
 
@@ -10,7 +14,9 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/core', 'jquery-ui/widget', 'jq
 
 	function init() {
 		var fields = ['Elgg', 'user_guid', 'album_guid', 'batch', 'tidypics_token', 'plupload_language'];
-		var data = elgg.security.token;
+
+		var data;
+		data = security.addToken(data);
 
 		$(fields).each(function(i, name) {
 			var value = $('input[name=' + name + ']').val();
@@ -55,7 +61,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/core', 'jquery-ui/widget', 'jq
 			max_file_size : maxfilesize + 'mb',
 
 			filters : [
-				{title : elgg.echo('tidypics:uploader:filetype'), extensions : allowed_ext}
+				{title : i18n.echo('tidypics:uploader:filetype'), extensions : allowed_ext}
 			],
 
 			// Views to activate
@@ -92,7 +98,7 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/core', 'jquery-ui/widget', 'jq
 
 				FilesAdded: function(up, files) {
 					if (up.files.length > maxfiles ) {
-						alert(elgg.echo('tidypics:exceedmax_number', [maxfiles]));
+						alert(i18n.echo('tidypics:exceedmax_number', [maxfiles]));
 					}
 					if (up.files.length > maxfiles ) {
 						up.splice(maxfiles);
@@ -109,9 +115,9 @@ define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/core', 'jquery-ui/widget', 'jq
 				},
 
 				FileUploaded: function(up, file, info) {
-					var response = jQuery.parseJSON(info.response);
+					var response = JSON.parse(info.response);
 					if (response.error.message.length) {
-						elgg.register_error(response.error.message);
+						messages.error(response.error.message);
 						up.stop();
 						return;
 					}

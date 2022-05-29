@@ -24,7 +24,7 @@ class TidypicsBootstrap extends DefaultPluginBootstrap {
 			'exports' => 'jQuery.plupload',
 		]);
 		elgg_define_js('jquery.plupload.ui-tp', [
-			'deps' => ['jquery-ui/core', 'jquery-ui/widget', 'jquery-ui/widgets/button', 'jquery-ui/widgets/progressbar', 'jquery-ui/widgets/sortable', 'jquery.plupload-tp'],
+			'deps' => ['tidypics-jquery-ui/core', 'tidypics-jquery-ui/widget', 'tidypics-jquery-ui/widgets/button', 'tidypics-jquery-ui/widgets/progressbar', 'tidypics-jquery-ui/widgets/sortable', 'jquery.plupload-tp'],
 			'src' => elgg_get_simplecache_url('tidypics/js/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js'),
 		]);
 		elgg_define_js('tidypics.imgareaselect', [
