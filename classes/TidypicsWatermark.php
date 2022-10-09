@@ -16,7 +16,7 @@ class TidypicsWatermark {
 	public static function tp_process_watermark_text($text, $owner) {
 		$text = str_replace("%name%", $owner->name, $text);
 		$text = str_replace("%username%", $owner->username, $text);
-		$text = str_replace("%sitename%", elgg_get_config('sitename'), $text);
+		$text = str_replace("%sitename%", elgg_get_site_entity()->getDisplayName(), $text);
 		$text = str_replace("%siteurl%", elgg_get_site_url(), $text);
 
 		return $text;

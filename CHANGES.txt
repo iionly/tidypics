@@ -1,6 +1,19 @@
 Changelog and contributors list
 ===============================
 
+Version 4.3.0 (Release Date: 08/10/2022)
+----------------------------------------
+
+* Updated for Elgg 4.3,
+* Fixed deprecation issues,
+* Fixed download url of images in their title menu entry,
+* Dutch translations added (thanks to Jan Storms).
+
+Contributors:
+
+* iionly
+* Jan Storms
+
 Version 4.2.0 (Release Date: 29/05/2022)
 ----------------------------------------
 

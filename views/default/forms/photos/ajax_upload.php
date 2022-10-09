@@ -10,7 +10,7 @@ $album = $vars['entity'];
 $ts = time();
 $batch = time();
 $tidypics_token = elgg()->csrf->generateActionToken($ts);
-$basic_uploader_url = current_page_url() . '/basic';
+$basic_uploader_url = elgg_get_current_url() . '/basic';
 
 $maxfilesize = (float) elgg_get_plugin_setting('maxfilesize', 'tidypics');
 $maxfilesize_int = (int) $maxfilesize;

@@ -292,7 +292,7 @@ class TidypicsTidypics {
 	}
 
 	public static function tidypics_get_plugload_language() {
-		$user_language = get_current_language();
+		$user_language = elgg_get_current_language();
 		
 		if (in_array($user_language, ['de', 'es', 'fi', 'fr'])) {
 			return $user_language;

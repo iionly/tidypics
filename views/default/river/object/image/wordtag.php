@@ -57,7 +57,11 @@ $image_link = elgg_view('output/url', [
 
 $value = $annotation->value;
 $tag = unserialize($value);
-$tag_array = string_to_tag_array($tag->value);
+if (is_string($tag->value)) {
+	$tag_array = elgg_string_to_array($tag->value);
+} else {
+	$tag_array = $tag->value;
+}
 $message = elgg_view('output/tags', ['value' => $tag_array]);
 $vars['message'] = elgg_view('output/tags', ['value' => $tag_array]);
 if (count($tag_array) > 1) {

@@ -4,7 +4,7 @@ $offset = (int) get_input('offset', 0);
 $limit = (int) get_input('limit', 25);
 
 $owner = elgg_get_logged_in_user_entity();
-if ($friends = $owner->getFriends(['limit' => false])) {
+if ($friends = $owner->getEntitiesFromRelationship(['limit' => false])) {
 	$images = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => TidypicsImage::SUBTYPE,

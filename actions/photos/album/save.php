@@ -57,7 +57,11 @@ $album->access_id = $access_id;
 $album->title = $title;
 $album->description = $description;
 if ($tags) {
-	$album->tags = string_to_tag_array($tags);
+	if (is_string($tags) {
+		$album->tags = elgg_string_to_array($tags);
+	} else {
+		$album->tags = $tags;
+	}
 } else {
 	$album->deleteMetadata('tags');
 }

@@ -18,7 +18,7 @@ $images = elgg_get_entities([
 	'limit' => $limit,
 	'offset' => $offset,
 	'annotation_name' => 'tp_view',
-	'order_by' => [
+	'sort_by' => [
 		new \Elgg\Database\Clauses\OrderByClause('n_table.time_created', 'DESC'),
 	],
 ]);

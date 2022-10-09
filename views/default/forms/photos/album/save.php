@@ -9,7 +9,7 @@
 $title = elgg_extract('title', $vars, '');
 $description = elgg_extract('description', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
-$access_id = elgg_extract('access_id', $vars, get_default_access());
+$access_id = elgg_extract('access_id', $vars, elgg_get_default_access());
 $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
 $guid = elgg_extract('guid', $vars, 0);
 

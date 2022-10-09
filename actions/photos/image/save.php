@@ -23,7 +23,11 @@ $image = get_entity($guid);
 $image->title = $title;
 $image->description = $description;
 if ($tags) {
-	$image->tags = string_to_tag_array($tags);
+	if (is_string($tags) {
+		$image->tags = elgg_string_to_array($tags);
+	} else {
+		$image->tags = $tags;
+	}
 } else {
 	$image->deleteMetadata('tags');
 }

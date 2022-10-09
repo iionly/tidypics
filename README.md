@@ -1,8 +1,8 @@
-Tidypics plugin for Elgg 4.2 and newer Elgg 4.X
+Tidypics plugin for Elgg 4.3 and newer Elgg 4.X
 ===============================================
 
-Latest Version: 4.2.0  
-Released: 2022-05-29  
+Latest Version: 4.3.0  
+Released: 2022-10-08  
 Contact: iionly@gmx.de  
 License: GNU General Public License version 2  
 Copyright: (c) iionly 2013, (C) Cash Costello 2011
@@ -11,7 +11,7 @@ Copyright: (c) iionly 2013, (C) Cash Costello 2011
 Description
 -----------
 
-The photo gallery plugin for Elgg 4.2 (and later versions 4.X).
+The photo gallery plugin for Elgg 4.3 (and later versions 4.X).
 
 
 Features

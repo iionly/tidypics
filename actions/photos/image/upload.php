@@ -89,7 +89,8 @@ if (count($uploaded_images)) {
 	$batch->container_guid = $album->getGUID();
 	if ($batch->save()) {
 		foreach ($uploaded_images as $uploaded_guid) {
-			add_entity_relationship($uploaded_guid, "belongs_to_batch", $batch->getGUID());
+			$uploaded_image = get_entity($uploaded_guid);
+			$uploaded_image->addRelationship($batch->getGUID(), 'belongs_to_batch');
 		}
 	}
 

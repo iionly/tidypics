@@ -71,6 +71,7 @@ class TidypicsHooks {
 		if ($entity instanceof TidypicsImage) {
 			if (elgg_get_plugin_setting('download_link', 'tidypics')) {
 				// add download button to title menu
+				$photo_guid = $entity->guid;
 				$options = [
 					'name' => 'download',
 					'href' => "photos/download/$photo_guid/attachment",

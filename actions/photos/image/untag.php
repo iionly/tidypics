@@ -29,10 +29,15 @@ if (!$annotation->delete()) {
 // KJ - now remove any user tag relationship
 $tag = unserialize($value);
 if ($tag->type == 'user') {
-	remove_entity_relationship($tag->value, 'phototag', $entity_guid);
+	if ($tagging_user = get_user($tag->value)) {
+		$tagging_user->removeRelationship($entity_guid, 'phototag');
+	}
 } else if ($tag->type == 'word') {
-	$obsolete_tags = string_to_tag_array($tag->value);
-
+	if (is_string($tag->value)) {
+		$obsolete_tags = elgg_string_to_array($tag->value);
+	} else {
+		$obsolete_tags = $tag->value;
+	}
 	// delete normal tags if they exists
 	if (is_array($image->tags)) {
 		$tagarray = [];

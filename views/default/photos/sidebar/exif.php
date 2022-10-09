@@ -12,8 +12,8 @@ $exif = TidypicsExif::tp_exif_formatted($image);
 if ($exif) {
 	$row = '';
 	foreach ($exif as $key => $value) {
-		$cell_content = elgg_view("output/text", ["value" => filter_tags($key)]) . "<br>";
-		$cell_content .= elgg_view("output/text", ["value" => filter_tags($value)]);
+		$cell_content = elgg_view("output/text", ["value" => elgg_sanitize_input($key)]) . "<br>";
+		$cell_content .= elgg_view("output/text", ["value" => elgg_sanitize_input($value)]);
 		$cell = elgg_format_element('td', [], $cell_content);
 		$row .= elgg_format_element('tr', [], $cell);
 	}

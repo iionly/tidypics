@@ -30,7 +30,12 @@ foreach ($guids as $key => $guid) {
 
 		// set description appropriately
 		$image->description = $captions[$key];
-		$image->tags = string_to_tag_array($tags[$key]);
+
+		if (is_string($tags[$key]) {
+			$image->tags = elgg_string_to_array($tags[$key]);
+		} else {
+			$image->tags = $tags[$key];
+		}
 
 		if (!$image->save()) {
 			array_push($not_updated, $image->getGUID());
