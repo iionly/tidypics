@@ -1,6 +1,17 @@
 Changelog and contributors list
 ===============================
 
+
+Version 4.3.1 (Release Date: 09/10/2022)
+----------------------------------------
+
+* Fixed syntax errors caused by missing closing closures,
+* Removed some unused code.
+
+Contributors:
+
+* iionly
+
 Version 4.3.0 (Release Date: 08/10/2022)
 ----------------------------------------
 

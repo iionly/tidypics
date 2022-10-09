@@ -57,7 +57,7 @@ $album->access_id = $access_id;
 $album->title = $title;
 $album->description = $description;
 if ($tags) {
-	if (is_string($tags) {
+	if (is_string($tags)) {
 		$album->tags = elgg_string_to_array($tags);
 	} else {
 		$album->tags = $tags;

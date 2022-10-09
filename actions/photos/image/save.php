@@ -23,7 +23,7 @@ $image = get_entity($guid);
 $image->title = $title;
 $image->description = $description;
 if ($tags) {
-	if (is_string($tags) {
+	if (is_string($tags)) {
 		$image->tags = elgg_string_to_array($tags);
 	} else {
 		$image->tags = $tags;
