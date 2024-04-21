@@ -19,7 +19,7 @@ $index = $album->getIndex($image->getGUID());
 
 if ($previous_image && $next_image) {
 	$list_item = elgg_format_element('li', [], elgg_view('output/url', [
-		'text' => elgg_view_icon('arrow-left'),
+		'text' => elgg_view_icon('arrow-left', []),
 		'href' => $previous_image->getURL(),
 		'is_trusted' => true,
 	]));
@@ -27,7 +27,7 @@ if ($previous_image && $next_image) {
 	$list_item .= elgg_format_element('li', [], elgg_format_element('span', [], elgg_echo('image:index', [$index, $size])));
 
 	$list_item .= elgg_format_element('li', [], elgg_view('output/url', [
-		'text' => elgg_view_icon('arrow-right'),
+		'text' => elgg_view_icon('arrow-right', []),
 		'href' => $next_image->getURL(),
 		'is_trusted' => true,
 	]));

@@ -13,13 +13,13 @@ set_input('tidypics_action_name', 'tidypics_photo_upload');
 $guid = (int) get_input('guid');
 $album = get_entity($guid);
 if (!($album instanceof TidypicsAlbum)) {
-	return elgg_error_response(elgg_echo('tidypics:baduploadform'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:baduploadform'), REFERRER);
 }
 
 // post limit exceeded
 if (count($_FILES) == 0) {
 	trigger_error('Tidypics warning: user exceeded post limit on image upload', E_USER_WARNING);
-	return elgg_error_response(elgg_echo('tidypics:exceedpostlimit'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:exceedpostlimit'), REFERRER);
 }
 
 // test to make sure at least 1 image was selected by user
@@ -31,7 +31,7 @@ foreach ($_FILES['images']['name'] as $name) {
 }
 if ($num_images == 0) {
 	// have user try again
-	return elgg_error_response(elgg_echo('tidypics:noimages'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:noimages'), REFERRER);
 }
 
 // create the image object for each upload
@@ -165,7 +165,7 @@ if (count($not_uploaded) > 0) {
 
 	if (count($uploaded_images) == 0) {
 		//upload failed, so forward to previous page
-		return elgg_error_response($error, REFERER);
+		return elgg_error_response($error, REFERRER);
 	} else {
 		// some images did upload so we fall through
 		return elgg_error_response($error, "photos/edit/$batch->guid");

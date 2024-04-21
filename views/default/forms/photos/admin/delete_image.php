@@ -16,7 +16,7 @@ echo elgg_view_field([
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('delete'),
+	'text' => elgg_echo('delete'),
 ]);
 
 elgg_set_form_footer($footer);

@@ -56,7 +56,7 @@ class TidypicsImage extends ElggFile {
 	 *
 	 * @return bool
 	 */
-	public function delete($follow_symlinks = true) {
+	public function delete(bool $follow_symlinks = true): bool {
 		// check if batch should be deleted
 		$batch = elgg_get_entities([
 			'relationship' => 'belongs_to_batch',
@@ -109,7 +109,7 @@ class TidypicsImage extends ElggFile {
 	 *
 	 * @return string
 	 */
-	public function getURL() {
+	public function getURL(): string {
 		$title = elgg_get_friendly_title($this->getTitle());
 		$url = "photos/image/$this->guid/$title";
 		return elgg_normalize_url($url);
@@ -120,7 +120,16 @@ class TidypicsImage extends ElggFile {
 	 *
 	 * @return string
 	 */
-	public function getIconURL($size = 'small') {
+	public function getIconURL(string|array $params = []): string {
+		$size = 'small';
+		if (is_string($params)) {
+			$size = $params;
+		} else if (is_array($params)) {
+			if (isset($params['size'])) {
+				$size = $params['size'];
+			}
+		}
+		
 		if ($size == 'tiny') {
 			$size = 'thumb';
 		}

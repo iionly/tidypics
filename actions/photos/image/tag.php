@@ -11,24 +11,24 @@ $username = htmlspecialchars(get_input('username', '', false), ENT_QUOTES | ENT_
 $image_guid = (int) get_input('guid');
 
 if ($image_guid == 0) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERRER);
 }
 
 $image = get_entity($image_guid);
 if (!($image instanceof TidypicsImage)) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERRER);
 }
 
 if (empty($username)) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERRER);
 }
 
 $album = get_entity($image->getContainerGUID());
 if (!($album instanceof TidypicsAlbum)) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERRER);
 }
 
-$user = get_user_by_username($username);
+$user = elgg_get_user_by_username($username);
 if ($user instanceof ElggUser) {
 	$relationships_type = 'user';
 	$value = $user->guid;
@@ -102,7 +102,7 @@ if ($tag->type === 'word') {
 }
 
 if (strlen($value) < 1) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:nosuccess'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:nosuccess'), REFERRER);
 }
 
 $tag->value = $value;
@@ -112,7 +112,7 @@ $river_tags = elgg_get_plugin_setting('river_tags', 'tidypics');
 if ($annotation_id) {
 	// if tag is a user id, add relationship for searching (find all images with user x)
 	if ($tag->type === 'user') {
-		if ($tagging_user = get_user($tag->value)) {
+		if ($tagging_user = get_user((int) $tag->value)) {
 			if (!$tagging_user->hasRelationship($image_guid, 'phototag')) {
 				$tagging_user->addRelationship($image_guid, 'phototag');
 
@@ -159,7 +159,7 @@ if ($annotation_id) {
 }
 
 if ($existing_tags) {
-	return elgg_ok_response('', elgg_echo('tidypics:phototagging:success_partly'), REFERER);
+	return elgg_ok_response('', elgg_echo('tidypics:phototagging:success_partly'), REFERRER);
 }
 
-return elgg_ok_response('', elgg_echo('tidypics:phototagging:success'), REFERER);
+return elgg_ok_response('', elgg_echo('tidypics:phototagging:success'), REFERRER);

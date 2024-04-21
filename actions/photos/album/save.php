@@ -18,7 +18,7 @@ $guid = (int) get_input('guid');
 elgg_make_sticky_form('tidypics');
 
 if (empty($title)) {
-	return elgg_error_response(elgg_echo('album:blank'), REFERER);
+	return elgg_error_response(elgg_echo('album:blank'), REFERRER);
 }
 
 if ($guid) {
@@ -67,7 +67,7 @@ if ($tags) {
 }
 
 if (!$album->save()) {
-	return elgg_error_response(elgg_echo('album:error'), REFERER);
+	return elgg_error_response(elgg_echo('album:error'), REFERRER);
 }
 
 elgg_clear_sticky_form('tidypics');

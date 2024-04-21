@@ -3,7 +3,7 @@
 return [
 	'plugin' => [
 		'name' => 'Tidypics',
-		'version' => '4.3.1',
+		'version' => '5.0.0',
 	],
 	'bootstrap' => \TidypicsBootstrap::class,
 	'entities' => [
@@ -339,63 +339,61 @@ return [
 			'resource' => 'tidypics/photos/default',
 		],
 	],
-	'hooks' => [
-		'container_permissions_check' => [
-			'object' => [
-				"\TidypicsHooks::tidypics_group_permission_override" => [],
-			],
-		],
-		'permissions_check:metadata' => [
-			'object' => [
-				"\TidypicsHooks::tidypics_group_permission_override" => [],
-			],
-		],
-		'entity:url' => [
-			'object' => [
-				"\TidypicsHooks::tidypics_widget_urls" => [],
-				"\TidypicsHooks::tidypics_batch_url_handler" => [],
-			],
-		],
-		'register' => [
-			'menu:owner_block' => [
-				"\TidypicsHooks::tidypics_owner_block_menu" => [],
-			],
-			'menu:site' => [
-				"\TidypicsHooks::tidypics_site_menu" => [],
-			],
-			'menu:entity' => [
-				"\TidypicsHooks::tidypics_entity_menu_setup" => [],
-			],
-			'menu:social' => [
-				"\TidypicsHooks::tidypics_social_menu_setup" => [],
-			],
-			'menu:filter:tidypics_siteimages_tabs' => [
-				"\TidypicsHooks::tidypics_setup_tabs" => [],
-			],
-		],
-		'prepare' => [
-			'notification:album_first:object:album' => [
-				"\TidypicsHooks::tidypics_notify_message" => [],
-			],
-			'notification:album_more:object:album' => [
-				"\TidypicsHooks::tidypics_notify_message" => [],
-			],
-		],
-		'group_tool_widgets' => [
-			'widget_manager' => [
-				"\TidypicsHooks::tidypics_tool_widgets_handler" => [],
-			],
-		],
-		'public_pages' => [
-			'walled_garden' => [
-				"\TidypicsHooks::tidypics_walled_garden_override" => [],
-			],
-		],
-	],
 	'events' => [
 		'create:before' => [
 			'river' => [
 				"\TidypicsEvents::tidypics_comments_handler" => [],
+			],
+		],
+		'container_permissions_check' => [
+			'object' => [
+				"\TidypicsEvents::tidypics_group_permission_override" => [],
+			],
+		],
+		'permissions_check:metadata' => [
+			'object' => [
+				"\TidypicsEvents::tidypics_group_permission_override" => [],
+			],
+		],
+		'entity:url' => [
+			'object' => [
+				"\TidypicsEvents::tidypics_widget_urls" => [],
+				"\TidypicsEvents::tidypics_batch_url_handler" => [],
+			],
+		],
+		'register' => [
+			'menu:owner_block' => [
+				"\TidypicsEvents::tidypics_owner_block_menu" => [],
+			],
+			'menu:site' => [
+				"\TidypicsEvents::tidypics_site_menu" => [],
+			],
+			'menu:entity' => [
+				"\TidypicsEvents::tidypics_entity_menu_setup" => [],
+			],
+			'menu:social' => [
+				"\TidypicsEvents::tidypics_social_menu_setup" => [],
+			],
+			'menu:filter:tidypics_siteimages_tabs' => [
+				"\TidypicsEvents::tidypics_setup_tabs" => [],
+			],
+		],
+		'prepare' => [
+			'notification:album_first:object:album' => [
+				"\TidypicsEvents::tidypics_notify_message" => [],
+			],
+			'notification:album_more:object:album' => [
+				"\TidypicsEvents::tidypics_notify_message" => [],
+			],
+		],
+		'group_tool_widgets' => [
+			'widget_manager' => [
+				"\TidypicsEvents::tidypics_tool_widgets_handler" => [],
+			],
+		],
+		'public_pages' => [
+			'walled_garden' => [
+				"\TidypicsEvents::tidypics_walled_garden_override" => [],
 			],
 		],
 	],

@@ -9,11 +9,11 @@ $guid = (int) get_input('guid');
 $entity = get_entity($guid);
 
 if (!($entity instanceof TidypicsImage)) {
-	return elgg_error_response(elgg_echo('tidypics:delete_image:no_image'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:delete_image:no_image'), REFERRER);
 }
 
 if (!$entity->delete()) {
-	return elgg_error_response(elgg_echo('tidypics:delete_image:deletefailed'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:delete_image:deletefailed'), REFERRER);
 }
 
-return elgg_ok_response('', elgg_echo('tidypics:delete_image:success'), REFERER);
+return elgg_ok_response('', elgg_echo('tidypics:delete_image:success'), REFERRER);

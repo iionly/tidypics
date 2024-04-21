@@ -6,7 +6,7 @@
 $album_guid = (int) get_input('album_guid');
 $album = get_entity($album_guid);
 if (!($album instanceof TidypicsAlbum)) {
-	return elgg_error_response(elgg_echo('album:invalid_album'), REFERER);
+	return elgg_error_response(elgg_echo('album:invalid_album'), REFERRER);
 }
 
 $guids = get_input('guids');

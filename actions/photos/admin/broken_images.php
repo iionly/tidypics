@@ -18,7 +18,7 @@ $logtime = get_input('time', false);
 
 if (!$logtime) {
 	error_log('invalid log time');
-	return elgg_error_response('invalid log time', REFERER);
+	return elgg_error_response('invalid log time', REFERRER);
 }
 
 $log = tidypics_get_log_location($logtime);
@@ -30,7 +30,7 @@ $running_logtime = elgg_get_plugin_setting('tidypics_current_log', 'tidypics');
 if ($running_logtime == $logtime && !$delete) {
 	// this is a duplicate thread
 	error_log('duplicate thread');
-	return elgg_error_response('duplicate thread', REFERER);
+	return elgg_error_response('duplicate thread', REFERRER);
 }
 
 $plugin = elgg_get_plugin_from_id('tidypics');

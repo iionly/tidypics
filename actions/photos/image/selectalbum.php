@@ -21,7 +21,7 @@ if ($album_guid == -1) {
 
 $album = get_entity($album_guid);
 if (!$album->getContainerEntity()->canWriteToContainer(elgg_get_logged_in_user_guid(), 'object', TidypicsAlbum::SUBTYPE)) {
-	return elgg_ok_response('', '', REFERER);
+	return elgg_ok_response('', '', REFERRER);
 }
 
 return elgg_ok_response('', '', "photos/upload/$album_guid");

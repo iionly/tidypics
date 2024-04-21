@@ -6,24 +6,24 @@
 $annotation = elgg_get_annotation_from_id(get_input('annotation_id'));
 
 if (!$annotation instanceof ElggAnnotation || $annotation->name != 'phototag') {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:delete:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:delete:error'), REFERRER);
 }
 
 if (!$annotation->canEdit()) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:delete:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:delete:error'), REFERRER);
 }
 
 $entity_guid = $annotation->entity_guid;
 
 $image = get_entity($entity_guid);
 if (!($image instanceof TidypicsImage) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:error'), REFERRER);
 }
 
 $value = $annotation->value;
 
 if (!$annotation->delete()) {
-	return elgg_error_response(elgg_echo('tidypics:phototagging:delete:error'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:phototagging:delete:error'), REFERRER);
 }
 
 // KJ - now remove any user tag relationship
@@ -39,7 +39,7 @@ if ($tag->type == 'user') {
 		$obsolete_tags = $tag->value;
 	}
 	// delete normal tags if they exists
-	if (is_array($image->tags)) {
+	if (isset($image->tags) && is_array($image->tags)) {
 		$tagarray = [];
 		$removed_tags = [];
 		foreach ($image->tags as $image_tag) {
@@ -60,4 +60,4 @@ if ($tag->type == 'user') {
 	}
 }
 
-return elgg_ok_response('', elgg_echo('tidypics:phototagging:delete:success'), REFERER);
+return elgg_ok_response('', elgg_echo('tidypics:phototagging:delete:success'), REFERRER);

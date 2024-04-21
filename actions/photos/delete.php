@@ -10,12 +10,12 @@ $guid = (int) get_input('guid');
 $entity = get_entity($guid);
 if (!$entity) {
 	// unable to get Elgg entity
-	return elgg_error_response(elgg_echo('tidypics:deletefailed'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:deletefailed'), REFERRER);
 }
 
 if (!$entity->canEdit()) {
 	// user doesn't have permissions
-	return elgg_error_response(elgg_echo('tidypics:deletefailed'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:deletefailed'), REFERRER);
 }
 
 $container = $entity->getContainerEntity();
@@ -33,7 +33,7 @@ switch ($subtype) {
 		$forward_url = $container->getURL();
 		break;
 	default:
-		return elgg_ok_response('', '', REFERER);
+		return elgg_ok_response('', '', REFERRER);
 		break;
 }
 

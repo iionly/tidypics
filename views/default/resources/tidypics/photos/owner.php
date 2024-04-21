@@ -10,7 +10,7 @@ elgg_require_js('tidypics/tidypics');
 
 $username = elgg_extract('username', $vars);
 
-$owner = get_user_by_username($username);
+$owner = elgg_get_user_by_username($username);
 if (!$owner) {
 	$owner = elgg_get_logged_in_user_entity();
 }
@@ -18,7 +18,7 @@ if (!$owner) {
 	throw new \Elgg\Exceptions\Http\EntityNotFoundException();
 }
 
-elgg_register_title_button(null, 'add', 'object', TidypicsAlbum::SUBTYPE);
+elgg_register_title_button('Add', 'add', 'object', TidypicsAlbum::SUBTYPE);
 
 elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE, $owner);
 

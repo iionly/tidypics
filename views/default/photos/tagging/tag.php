@@ -37,7 +37,7 @@ if ($annotation->canEdit()) {
 	]);
 	$delete = elgg_view('output/url', [
 		'href' => $url,
-		'text' => elgg_view_icon('delete', 'float mas'),
+		'text' => elgg_view_icon('delete', ['class' => 'float mas']),
 		'confirm' => elgg_echo('tidypics:phototagging:delete:confirm')
 	]);
 }

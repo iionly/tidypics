@@ -29,11 +29,11 @@ class TidypicsExif {
 		if (is_array($exif)) {
 			// What data is in the image file?
 			$data = false; // We start with no data
-			if (is_array($exif['IFD0']) && is_array($exif['EXIF'])) {
+			if (isset($exif['IFD0']) && is_array($exif['IFD0']) && isset($exif['EXIF']) && is_array($exif['EXIF'])) {
 				$data = array_merge($exif['IFD0'], $exif['EXIF']);
-			} else if (is_array($exif['IFD0'])) {
+			} else if (isset($exif['IFD0']) && is_array($exif['IFD0'])) {
 				$data = $exif['IFD0'];
-			} else if (is_array($exif['EXIF'])) {
+			} else if (isset($exif['EXIF']) && is_array($exif['EXIF'])) {
 				$data = $exif['EXIF'];
 			}
 
@@ -46,14 +46,14 @@ class TidypicsExif {
 				}
 			}
 
-			if (is_array($exif['GPS'])) {
+			if (isset($exif['GPS']) && is_array($exif['GPS'])) {
 				// GPS data
 				$gps_exif = array_intersect_key($exif['GPS'], array_flip(['GPSLatitudeRef', 'GPSLatitude', 'GPSLongitudeRef', 'GPSLongitude']));
 
 				if (count($gps_exif) == 4) {
 					if (
-						is_array($gps_exif['GPSLatitude']) && in_array($gps_exif['GPSLatitudeRef'], ['S', 'N']) &&
-						is_array($gps_exif['GPSLongitude']) && in_array($gps_exif['GPSLongitudeRef'], ['W', 'E'])
+						isset($exif['GPSLatitude']) && is_array($gps_exif['GPSLatitude']) && in_array($gps_exif['GPSLatitudeRef'], ['S', 'N']) &&
+						isset($exif['GPSLongitude']) && is_array($gps_exif['GPSLongitude']) && in_array($gps_exif['GPSLongitudeRef'], ['W', 'E'])
 					) {
 						$data['latitude'] = self::parse_exif_gps_data($gps_exif['GPSLatitude'], $gps_exif['GPSLatitudeRef']);
 						$data['longitude'] = self::parse_exif_gps_data($gps_exif['GPSLongitude'], $gps_exif['GPSLongitudeRef']);

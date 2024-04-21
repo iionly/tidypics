@@ -16,7 +16,7 @@ if (!$owner) {
 
 if (!$owner) {
 	$username = elgg_extract('username', $vars);
-	$owner = get_user_by_username($username);
+	$owner = elgg_get_user_by_username($username);
 }
 
 if (!$owner) {

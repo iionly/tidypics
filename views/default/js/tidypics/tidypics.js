@@ -1,6 +1,7 @@
 define(function(require) {
 	var elgg = require("elgg");
 	var $ = require("jquery");
+	var hooks = require("elgg/hooks");
 	require('jquery.colorbox');
 	require('tidypics-jquery-ui/widgets/sortable');
 
@@ -12,7 +13,7 @@ define(function(require) {
 			defaults.reposition = $(window).height() > 600;
 		}
 		var settings = $.extend({}, defaults, opts);
-		var values = elgg.trigger_hook('getOptions', 'ui.lightbox', null, settings);
+		var values = hooks.trigger('getOptions', 'ui.lightbox', null, settings);
 		$(identifier).colorbox(values);
 	}
 

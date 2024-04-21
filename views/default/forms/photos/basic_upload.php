@@ -38,7 +38,7 @@ echo elgg_view_field([
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo("photos:addphotos"),
+	'text' => elgg_echo("photos:addphotos"),
 ]);
 
 elgg_set_form_footer($footer);

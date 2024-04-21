@@ -15,7 +15,7 @@ $guid = (int) get_input('guid');
 elgg_make_sticky_form('tidypics');
 
 if (empty($title)) {
-	return elgg_error_response(elgg_echo('image:blank'), REFERER);
+	return elgg_error_response(elgg_echo('image:blank'), REFERRER);
 }
 
 $image = get_entity($guid);
@@ -33,7 +33,7 @@ if ($tags) {
 }
 
 if (!$image->save()) {
-	return elgg_error_response(elgg_echo('image:error'), REFERER);
+	return elgg_error_response(elgg_echo('image:error'), REFERRER);
 }
 
 elgg_clear_sticky_form('tidypics');

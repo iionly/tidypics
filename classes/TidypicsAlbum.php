@@ -63,7 +63,7 @@ class TidypicsAlbum extends ElggObject {
 	 *
 	 * @return bool
 	 */
-	public function delete($recursive = true) {
+	public function delete(bool $recursive = true): bool {
 		$this->deleteImages();
 		$this->deleteAlbumDir();
 
@@ -84,7 +84,7 @@ class TidypicsAlbum extends ElggObject {
 	 *
 	 * @return string
 	 */
-	public function getURL() {
+	public function getURL(): string {
 		$title = elgg_get_friendly_title($this->getTitle());
 		$url = "photos/album/$this->guid/$title";
 		return elgg_normalize_url($url);

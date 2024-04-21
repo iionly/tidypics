@@ -8,7 +8,7 @@
 
 elgg_require_js('tidypics/tidypics');
 
-elgg_register_title_button(null, 'add', 'object', TidypicsAlbum::SUBTYPE);
+elgg_register_title_button('Add', 'add', 'object', TidypicsAlbum::SUBTYPE);
 
 elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE);
 

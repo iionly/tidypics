@@ -19,7 +19,7 @@ $images = elgg_get_entities([
 ]);
 
 if (!$images) {
-	return elgg_error_response(elgg_echo('tidypics:noimages'), REFERER);
+	return elgg_error_response(elgg_echo('tidypics:noimages'), REFERRER);
 }
 
 $album = get_entity($album_guid);
@@ -27,7 +27,7 @@ if (!($album instanceof TidypicsAlbum)) {
 	foreach ($images as $image) {
 		$image->delete();
 	}
-	return elgg_error_response(elgg_echo('album:invalid_album'), REFERER);
+	return elgg_error_response(elgg_echo('album:invalid_album'), REFERRER);
 }
 
 // Create a new batch object to contain these photos

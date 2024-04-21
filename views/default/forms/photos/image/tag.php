@@ -28,7 +28,7 @@ echo elgg_view_field([
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('tidypics:actiontag'),
+	'text' => elgg_echo('tidypics:actiontag'),
 ]);
 
 elgg_set_form_footer($footer);

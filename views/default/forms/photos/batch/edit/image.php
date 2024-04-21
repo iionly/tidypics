@@ -20,7 +20,7 @@ $content .= elgg_format_element('div', ['class' => 'elgg-body'], elgg_view_field
 			'#type' => 'text',
 			'#label' => elgg_echo('album:title'),
 			'name' => 'title[]',
-			'value' => $title,
+			'value' => $image->title,
 		],
 		[
 			'#type' => 'longtext',

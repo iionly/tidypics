@@ -2,6 +2,16 @@ Changelog and contributors list
 ===============================
 
 
+Version 5.0.0 (Release Date: 14/04/2024)
+----------------------------------------
+
+* Minimum Elgg version required is Elgg 5.0.0,
+* Updated for Elgg 5.
+
+Contributors:
+
+* iionly
+
 Version 4.3.1 (Release Date: 09/10/2022)
 ----------------------------------------
 

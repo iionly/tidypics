@@ -26,7 +26,7 @@ echo elgg_format_element('ul', ['class' => 'mvl', 'id' => 'tidypics-resizethumbn
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('tidypics:settings:resize_thumbnails_start'),
+	'text' => elgg_echo('tidypics:settings:resize_thumbnails_start'),
 	'id' => 'tidypics-resizethumbnails-run',
 ]);
 

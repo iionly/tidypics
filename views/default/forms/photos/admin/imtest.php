@@ -20,7 +20,7 @@ echo '<div id="tidypics-im-results"></div>';
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('submit'),
+	'text' => elgg_echo('submit'),
 ]);
 
 elgg_set_form_footer($footer);
