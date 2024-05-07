@@ -7,7 +7,7 @@
 
 elgg_require_js('tidypics/tidypics');
 
-$owner_guid = elgg_extract('guid', $vars);
+$owner_guid = (int) elgg_extract('guid', $vars);
 $owner = get_entity($owner_guid);
 if (!$owner) {
 	$owner = elgg_get_logged_in_user_entity();

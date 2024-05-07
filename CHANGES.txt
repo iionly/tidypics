@@ -1,6 +1,15 @@
 Changelog and contributors list
 ===============================
 
+Version 5.0.1 (Release Date: 07/05/2024)
+----------------------------------------
+
+* Fixed type casting issues in resource views.
+
+
+Contributors:
+
+* iionly
 
 Version 5.0.0 (Release Date: 14/04/2024)
 ----------------------------------------

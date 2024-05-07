@@ -8,7 +8,7 @@
 
 elgg_require_js('tidypics/tidypics');
 
-$group_guid = elgg_extract('guid', $vars);
+$group_guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($group_guid, 'group');
 
