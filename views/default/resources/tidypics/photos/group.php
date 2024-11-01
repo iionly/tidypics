@@ -16,7 +16,7 @@ elgg_group_tool_gatekeeper('photos', $group_guid);
 
 $group = get_entity($group_guid);
 
-elgg_register_title_button('Add', 'add', 'object', TidypicsAlbum::SUBTYPE);
+elgg_register_title_button('add', 'object', TidypicsAlbum::SUBTYPE);
 
 elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE, $group);
 

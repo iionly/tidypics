@@ -30,7 +30,7 @@ if (!($owner instanceof ElggUser)) {
 
 elgg_push_collection_breadcrumbs('object', TidypicsAlbum::SUBTYPE, $owner, true);
 
-elgg_register_title_button('Add', 'add', 'object', TidypicsAlbum::SUBTYPE); 
+elgg_register_title_button('add', 'object', TidypicsAlbum::SUBTYPE); 
 
 $title = elgg_echo('collection:friends', [elgg_echo('collection:object:album')]);
 
